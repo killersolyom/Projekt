@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">SapiNews</string>
+    <string name="title_activity_login">Sign in</string>
+    <string name="fName">First Name</string>
+    <string name="lName">Last Name</string>
+    <string name="Phone">Phone Number</string>
 </resources>
