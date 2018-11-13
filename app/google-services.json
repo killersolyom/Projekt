@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "1002621624887",
+    "firebase_url": "https://sapinews-b39ac.firebaseio.com",
+    "project_id": "sapinews-b39ac",
+    "storage_bucket": "sapinews-b39ac.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1002621624887:android:7222cd317482ea8a",
+        "android_client_info": {
+          "package_name": "com.example.killersolyom.projekt"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1002621624887-pvv9p7gaspuvjfkv527vgcrsbp5udd8s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.killersolyom.projekt",
+            "certificate_hash": "00a8286f5b58ad973f134572b74ea9bed4ca7542"
+          }
+        },
+        {
+          "client_id": "1002621624887-5mondvdnc781q370ku5og97e6ln75j3p.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB3T4f9sD6CJjd8WNHnXx2rK7uQ8AsVZKE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1002621624887-5mondvdnc781q370ku5og97e6ln75j3p.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
