@@ -5,4 +5,5 @@
     <string name="fName">First Name</string>
     <string name="lName">Last Name</string>
     <string name="Phone">Phone Number</string>
+    <string name="haveaccount">Do you have an account? If not, Sign Up</string>
 </resources>
