@@ -56,15 +56,24 @@ public class LoginActivity extends AppCompatActivity {
         View dialoglayout = inflater.inflate(R.layout.custom_aleartdialog, null);
 
 
-
         builder.setView(dialoglayout);
         builder.create();
         builder.setPositiveButton("Check", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //Toast.makeText(LoginActivity.this,"Get Started!",Toast.LENGTH_LONG).show();
-                editCode = findViewById(R.id.codeEdit);
-                String code = editCode.getText().toString();
+
+                String code =  "";
+                code = editCode.getText().toString();
+
+                    if(!code.equals("")){
+                        code = editCode.getText().toString();
+                        Toast.makeText(LoginActivity.this,code,Toast.LENGTH_LONG ).show();
+                        Log.e("jo", code);
+                    }
+                    Toast.makeText(LoginActivity.this,"baj",Toast.LENGTH_LONG ).show();
+
+
 
                 if(code.isEmpty() || code.length() <6){
                     editCode.setError("Írja be a kódot!");
@@ -77,17 +86,12 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
-
-
-
-
         mAuth = FirebaseAuth.getInstance();
 
         have_account = findViewById(R.id.have_account);
         login = findViewById(R.id.btn_signIn);
         phone_PhoneNum = findViewById(R.id.phone_PhoneNum);
-
-
+        phone_PhoneNum.setText("+40");
 
         have_account.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,7 +117,6 @@ public class LoginActivity extends AppCompatActivity {
 
                 builder.show();
 
-
                 //verifyCode(code);
 
                 /*PhoneAuthProvider.getInstance().verifyPhoneNumber(
@@ -126,8 +129,6 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
-
-
 
 
     }
