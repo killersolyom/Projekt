@@ -1,18 +1,23 @@
 package com.example.killersolyom.projekt;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.gms.tasks.TaskExecutors;
 import com.google.firebase.FirebaseException;
 import com.google.firebase.FirebaseTooManyRequestsException;
 import com.google.firebase.auth.AuthResult;
@@ -31,8 +36,6 @@ public class LoginActivity extends AppCompatActivity {
     Button login;
     EditText phone_PhoneNum;
     String TAG = "TAG_LOGIN";
-    AlertDialog.Builder builder;
-    EditText editCode;
 
     private String verificationId;
     private FirebaseAuth mAuth;
@@ -42,9 +45,13 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        mAuth = FirebaseAuth.getInstance();
+
         have_account = findViewById(R.id.have_account);
         login = findViewById(R.id.btn_signIn);
         phone_PhoneNum = findViewById(R.id.phone_PhoneNum);
+        phone_PhoneNum.setText("+40");
 
         have_account.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +74,52 @@ public class LoginActivity extends AppCompatActivity {
                 }
 
                 sendVerificationCode(number);
+
+
+                LayoutInflater inflater = getLayoutInflater();
+                View dialoglayout = inflater.inflate(R.layout.custom_aleartdialog, null);
+
+                AlertDialog.Builder builder;
+
+                builder = new AlertDialog.Builder(LoginActivity.this);
+
+                builder.setTitle("Írja be a kódot");
+
+                builder.setView(dialoglayout);
+
+                final EditText editCode = dialoglayout.findViewById(R.id.codeEdit);
+
+
+                builder.setPositiveButton("Check", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Toast.makeText(LoginActivity.this,"Get Started!",Toast.LENGTH_LONG).show();
+
+                        String code="";
+                        try{
+                            if(editCode!=null){
+                                code = editCode.getText().toString();
+                            }
+                        }
+                        catch (Exception e){
+                            Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+
+
+                        if(code.isEmpty() || code.length() <6){
+                            editCode.setError("Írja be a kódot!");
+                            editCode.requestFocus();
+                            return;
+                        }
+
+                        verifyCode(code);
+
+                        //dialog.dismiss();
+                    }
+                });
+
+
+                builder.create();
 
                 builder.show();
 
