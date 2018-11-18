@@ -23,6 +23,14 @@
           }
         },
         {
+          "client_id": "1002621624887-biuf0icme42ttf5tgn1e2bp4g3c01o9i.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.killersolyom.projekt",
+            "certificate_hash": "aea3e76a47e2af0667f14fcda81b0da41254b70c"
+          }
+        },
+        {
           "client_id": "1002621624887-5mondvdnc781q370ku5og97e6ln75j3p.apps.googleusercontent.com",
           "client_type": 3
         }
