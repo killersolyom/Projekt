@@ -20,7 +20,8 @@
         <activity
             android:name=".SignUpActivity"
             android:label="@string/title_activity_login" />
-        <activity android:name=".MainScreenActivity"></activity>
+        <activity android:name=".MainScreenActivity" />
+        <activity android:name=".AddAdvertismentActivity"></activity>
     </application>
 
 </manifest>
