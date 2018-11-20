@@ -36,8 +36,6 @@ public class LoginActivity extends AppCompatActivity {
     Button login;
     EditText phone_PhoneNum;
     String TAG = "TAG_LOGIN";
-    AlertDialog.Builder builder;
-    EditText editCode;
 
     private String verificationId;
     private FirebaseAuth mAuth;
@@ -47,44 +45,6 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
-        builder = new AlertDialog.Builder(LoginActivity.this);
-
-        builder.setTitle("Írja be a kódot");
-
-        LayoutInflater inflater = getLayoutInflater();
-        View dialoglayout = inflater.inflate(R.layout.custom_aleartdialog, null);
-
-
-        builder.setView(dialoglayout);
-        builder.create();
-        builder.setPositiveButton("Check", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                //Toast.makeText(LoginActivity.this,"Get Started!",Toast.LENGTH_LONG).show();
-
-                String code =  "";
-                code = editCode.getText().toString();
-
-                    if(!code.equals("")){
-                        code = editCode.getText().toString();
-                        Toast.makeText(LoginActivity.this,code,Toast.LENGTH_LONG ).show();
-                        Log.e("jo", code);
-                    }
-                    Toast.makeText(LoginActivity.this,"baj",Toast.LENGTH_LONG ).show();
-
-
-
-                if(code.isEmpty() || code.length() <6){
-                    editCode.setError("Írja be a kódot!");
-                    editCode.requestFocus();
-                    return;
-                }
-                verifyCode(code);
-                //dialog.dismiss();
-            }
-        });
-
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -113,19 +73,56 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
 
+
                 sendVerificationCode(number);
 
+
+                LayoutInflater inflater = getLayoutInflater();
+                View dialoglayout = inflater.inflate(R.layout.custom_aleartdialog, null);
+
+                AlertDialog.Builder builder;
+
+                builder = new AlertDialog.Builder(LoginActivity.this);
+
+                builder.setTitle("Írja be a kódot");
+
+                builder.setView(dialoglayout);
+
+                final EditText editCode = dialoglayout.findViewById(R.id.codeEdit);
+
+
+                builder.setPositiveButton("Check", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //Toast.makeText(LoginActivity.this,"Get Started!",Toast.LENGTH_LONG).show();
+
+                        String code="";
+                        try{
+                            if(editCode!=null){
+                                code = editCode.getText().toString();
+                            }
+                        }
+                        catch (Exception e){
+                            Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+
+
+                        if(code.isEmpty() || code.length() <6){
+                            editCode.setError("Írja be a kódot!");
+                            editCode.requestFocus();
+                            return;
+                        }
+
+                        verifyCode(code);
+
+                        //dialog.dismiss();
+                    }
+                });
+
+
+                builder.create();
+
                 builder.show();
-
-                //verifyCode(code);
-
-                /*PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                        phone_PhoneNum,        // Phone number to verify
-                        60,                 // Timeout duration
-                        TimeUnit.SECONDS,   // Unit of timeout
-                        this,               // Activity (for callback binding)
-                        mCallbacks);        // OnVerificationStateChangedCallbacks*/
-
 
             }
         });

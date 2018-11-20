@@ -8,6 +8,7 @@
     android:background="@color/white"
     tools:context=".LoginActivity">
 
+
     <TextView
         android:id="@+id/logo_Text"
         android:layout_width="149dp"
