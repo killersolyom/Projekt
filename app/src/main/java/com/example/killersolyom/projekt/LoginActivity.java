@@ -73,6 +73,7 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
 
+                
                 sendVerificationCode(number);
 
 
