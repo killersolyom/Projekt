@@ -124,6 +124,16 @@ public class LoginActivity extends AppCompatActivity {
 
                 builder.show();
 
+                //verifyCode(code);
+
+                /*PhoneAuthProvider.getInstance().verifyPhoneNumber(
+                        phone_PhoneNum,        // Phone number to verify
+                        60,                 // Timeout duration
+                        TimeUnit.SECONDS,   // Unit of timeout
+                        this,               // Activity (for callback binding)
+                        mCallbacks);        // OnVerificationStateChangedCallbacks*/
+
+
             }
         });
 
