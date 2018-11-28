@@ -11,12 +11,6 @@ public class User {
 
     }
 
-    public User(String phoneNumb){
-        this.firstName = "";
-        this.lastName = "";
-        this.phoneNumb = phoneNumb;
-    }
-
     public User(String firstName, String lastName, String phoneNumb){
         this.firstName = firstName;
         this.lastName = lastName;

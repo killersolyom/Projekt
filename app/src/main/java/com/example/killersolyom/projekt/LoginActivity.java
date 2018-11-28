@@ -1,5 +1,6 @@
 package com.example.killersolyom.projekt;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -42,12 +43,9 @@ public class LoginActivity extends AppCompatActivity {
     Button login;
     EditText phone_PhoneNum;
     String TAG = "TAG_LOGIN";
-    boolean status = false;
     String number;
     private String verificationId;
     private FirebaseAuth mAuth;
-    FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference users = database.getReference("users");
 
 
     @Override
@@ -73,6 +71,8 @@ public class LoginActivity extends AppCompatActivity {
 
 
         login.setOnClickListener(new View.OnClickListener() {
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference users = database.getReference();
             @Override
             public void onClick(View v) {
                 number = phone_PhoneNum.getText().toString().trim();
@@ -87,60 +87,97 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
 
-                if (!checkUserExists()){ //ha nem letezik a telefonszam az adatbazisban
-                    Intent intent = new Intent(LoginActivity.this,SignUpActivity.class);
-                    intent.putExtra("phoneNumber",number);
-                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
-                }
-                else{//ha benne van az adatbazisban
-                    LayoutInflater inflater = getLayoutInflater();
-                    View dialoglayout = inflater.inflate(R.layout.custom_aleartdialog, null);
+                users.child("users").addValueEventListener(new ValueEventListener() {
 
-                    AlertDialog.Builder builder;
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        // This method is called once with the initial value and again
+                        // whenever data at this location is updated.
+                        boolean status = false;
+                        if (dataSnapshot.exists()){
 
-                    builder = new AlertDialog.Builder(LoginActivity.this);
-
-                    builder.setTitle("Írja be a kódot");
-
-                    builder.setView(dialoglayout);
-
-                    final EditText editCode = dialoglayout.findViewById(R.id.codeEdit);
-
-
-                    builder.setPositiveButton("Check", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            //Toast.makeText(LoginActivity.this,"Get Started!",Toast.LENGTH_LONG).show();
-
-                            String code="";
-                            try{
-                                if(editCode!=null){
-                                    code = editCode.getText().toString();
+                            for(DataSnapshot value : dataSnapshot.getChildren()){
+                                User user = value.getValue(User.class);
+                                if(user.getPhoneNumb().equals(phone_PhoneNum.getText().toString())){
+                                    status = true;
+                                    break;
+                                    //Log.d(TAG, "checkUser if status: " + status);
                                 }
                             }
-                            catch (Exception e){
-                                Log.d(TAG,"Editcode is null");
-                                Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                            }
+
+                            if (status){
+                                //Log.d(TAG, "letezik status: " + status);
+                                LayoutInflater inflater = getLayoutInflater();
+                                View dialoglayout = inflater.inflate(R.layout.custom_aleartdialog, null);
+
+                                AlertDialog.Builder builderLogin;
+
+                                builderLogin = new AlertDialog.Builder(LoginActivity.this);
+
+                                builderLogin.setTitle("Írja be a kódot");
+
+                                builderLogin.setView(dialoglayout);
+
+                                final EditText editCode = dialoglayout.findViewById(R.id.codeEdit);
 
 
-                            if(code.isEmpty() || code.length() <6){
-                                editCode.setError("Írja be a kódot!");
-                                editCode.requestFocus();
-                                return;
+                                builderLogin.setPositiveButton("Check", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        //Toast.makeText(LoginActivity.this,"Get Started!",Toast.LENGTH_LONG).show();
+
+                                        String code="";
+                                        try{
+                                            if(editCode!=null){
+                                                code = editCode.getText().toString();
+                                            }
+                                        }
+                                        catch (Exception e){
+                                            Log.d(TAG,"Editcode is null");
+                                            Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                                        }
+
+                                        if(code.isEmpty() || code.length() <6){
+                                            editCode.setError("Írja be a kódot!");
+                                            editCode.requestFocus();
+                                            return;
+                                        }
+                                        Log.d(TAG,"Code: " + code);
+                                        verifyCode(code);
+                                        //dialog.dismiss();
+                                    }
+                                });
+                                builderLogin.create();
+                                sendVerificationCode(number);
+                                if(!((Activity) LoginActivity.this).isFinishing())
+                                {
+                                    builderLogin.show();
+                                }
+
                             }
-                            Log.d(TAG,"Code: " + code);
-                            verifyCode(code);
-                            //dialog.dismiss();
+                            else{
+                                //Log.d(TAG, "nem letezik status: " + status);
+                                Intent intent = new Intent(LoginActivity.this,SignUpActivity.class);
+                                intent.putExtra("phoneNumber",number);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(intent);
+                                finish();
+                            }
+
+                            //Log.d(TAG, "checkUser ifen kivul status: " + status);
+
+                        } else {
+                            Log.d(TAG, "dataSnapshot is not extist.");
+                            status = false;
                         }
-                    });
+                    }
 
-
-                    builder.create();
-                    sendVerificationCode(number);
-                    builder.show();
-                }
+                    @Override
+                    public void onCancelled(DatabaseError error) {
+                        // Failed to read value
+                        Log.w(TAG, "Failed to read value.", error.toException());
+                    }
+                });
             }
         });
 
@@ -152,41 +189,6 @@ public class LoginActivity extends AppCompatActivity {
         signInWithCredential(credential);
     }
 
-    private boolean checkUserExists(){
-
-
-        users.addValueEventListener(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-
-                if (dataSnapshot.exists()) {
-                    User value = dataSnapshot.child("users").getValue(User.class);
-                    if(value.getPhoneNumb()!=null){
-                        /*Random r = new Random(); //ide mainscreen
-                        int i1 = r.nextInt(1000);
-                        writeNewUser(Integer.toString(i1), "", "", number);*/
-                        status = true;
-                    }
-                    Log.d(TAG, "Value is: " + value.toString());
-                } else {
-                    Log.d(TAG, "dataSnapshot is not extist.");
-                    status = false;
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-
-        });
-
-        return status;
-    }
 
     private void signInWithCredential(PhoneAuthCredential credential) {
         mAuth.signInWithCredential(credential)
@@ -231,4 +233,10 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(LoginActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
         }
     };
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        finish();
+    }
 }
