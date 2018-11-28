@@ -22,8 +22,11 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
@@ -38,8 +41,9 @@ public class SignUpActivity extends AppCompatActivity {
     private String verificationId;
     private FirebaseAuth mAuth;
     String number;
+    Integer numberOfUsers = 0;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
-    DatabaseReference users = database.getReference("users");
+    DatabaseReference users = database.getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,10 +71,31 @@ public class SignUpActivity extends AppCompatActivity {
                     return;
                 }
 
-                Random r = new Random();
-                int i1 = r.nextInt(1000);
+                users.child("users").addValueEventListener(new ValueEventListener() {
 
-                writeNewUser(Integer.toString(i1),firstName.getText().toString(),lastName.getText().toString(),number);
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        // This method is called once with the initial value and again
+                        // whenever data at this location is updated.
+                        if (dataSnapshot.exists()){
+                            for(DataSnapshot value : dataSnapshot.getChildren()){
+                                numberOfUsers++;
+                            }
+                        }
+                            //Log.d(TAG, "checkUser ifen kivul status: " + status);
+                        else {
+                            Log.d(TAG, "dataSnapshot is not extist.");
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError error) {
+                        // Failed to read value
+                        Log.w(TAG, "Failed to read value.", error.toException());
+                    }
+                });
+
+                writeNewUser(Integer.toString(numberOfUsers+1),firstName.getText().toString(),lastName.getText().toString(),number);
 
                 LayoutInflater inflater = getLayoutInflater();
                 View dialoglayout = inflater.inflate(R.layout.custom_aleartdialog, null);
@@ -125,7 +150,8 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void writeNewUser(String userId, String firstName, String lastName, String phoneNumber){
-        User user = new User(firstName,lastName,phoneNumber);
+        User user = new User(firstName,lastName,phoneNumber,"","");
+        user.setID(Integer.parseInt(userId));
         users.child(userId).setValue(user);
     }
     private void verifyCode(String code){
@@ -177,4 +203,9 @@ public class SignUpActivity extends AppCompatActivity {
             Toast.makeText(SignUpActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     };
+    @Override
+    protected void onPause() {
+        super.onPause();
+        finish();
+    }
 }

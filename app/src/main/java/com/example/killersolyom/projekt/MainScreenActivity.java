@@ -3,6 +3,7 @@ package com.example.killersolyom.projekt;
 
 
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -15,7 +16,7 @@ import android.widget.TextView;
 public class MainScreenActivity extends AppCompatActivity implements AddAdvertismentFragment.OnFragmentInteractionListener,ProfileFragment.OnFragmentInteractionListener,HomeFragment.OnFragmentInteractionListener {
 
     private TextView mTextMessage;
-
+    Bundle bundle = new Bundle();
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
@@ -31,6 +32,7 @@ public class MainScreenActivity extends AppCompatActivity implements AddAdvertis
                 case R.id.navigation_account:
                     ProfileFragment accFragment = new ProfileFragment();
                     FragmentTransaction accTransaction = getSupportFragmentManager().beginTransaction();
+                    accFragment.setArguments(bundle);
                     accTransaction.replace(R.id.container, accFragment);
                     accTransaction.commit();
                     return true;
@@ -49,6 +51,11 @@ public class MainScreenActivity extends AppCompatActivity implements AddAdvertis
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_screen_activity);
+
+        Intent i = getIntent();
+        String phoneNumberNumber = i.getStringExtra("phoneNumber");
+        bundle.putString("phone",phoneNumberNumber);
+
         mTextMessage = (TextView) findViewById(R.id.message);
         BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
@@ -64,4 +71,10 @@ public class MainScreenActivity extends AppCompatActivity implements AddAdvertis
     public void onFragmentInteraction(Uri uri) {
 
     }
+/*
+    @Override
+    protected void onPause() {
+        super.onPause();
+        finish();
+    }*/
 }
