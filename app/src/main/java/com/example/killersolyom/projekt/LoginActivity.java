@@ -98,7 +98,7 @@ public class LoginActivity extends AppCompatActivity {
 
                             for(DataSnapshot value : dataSnapshot.getChildren()){
                                 User user = value.getValue(User.class);
-                                if(user.getPhoneNumb().equals(phone_PhoneNum.getText().toString())){
+                                if(user.getPhoneNumb().equals(phone_PhoneNum.getText().toString()) && value.getKey().equals(user.getID().toString())){
                                     status = true;
                                     break;
                                     //Log.d(TAG, "checkUser if status: " + status);
@@ -197,6 +197,7 @@ public class LoginActivity extends AppCompatActivity {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
                             Intent intent = new Intent(LoginActivity.this,MainScreenActivity.class);
+                            intent.putExtra("phoneNumber",number);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
                         }
