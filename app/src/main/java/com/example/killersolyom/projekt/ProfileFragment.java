@@ -20,6 +20,7 @@ public class ProfileFragment extends Fragment {
     private String mParam2;
     ImageView profilePicture;
     ImageView logOut;
+    ImageView myAdvertisments;
 
     private OnFragmentInteractionListener mListener;
 
@@ -53,13 +54,21 @@ public class ProfileFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_profile, container, false);
-        profilePicture = view.findViewById(R.id.ProfilePicture);
+        profilePicture = view.findViewById(R.id.profilePicture);
         profilePicture.setBackgroundResource(R.drawable.shrek);
         logOut = view.findViewById(R.id.logoutView);
+        myAdvertisments = view.findViewById(R.id.myAdvertisments);
         logOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), MainActivity.class);
+                startActivity(intent);
+            }
+        });
+        myAdvertisments.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), MyAdvertisments.class);
                 startActivity(intent);
             }
         });

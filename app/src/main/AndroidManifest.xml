@@ -22,7 +22,8 @@
             android:label="@string/title_activity_login" />
         <activity
             android:name=".MainScreenActivity"
-            android:label="@string/title_activity_main2"></activity>
+            android:label="@string/title_activity_main2" />
+        <activity android:name=".MyAdvertisments"></activity>
     </application>
 
 </manifest>
