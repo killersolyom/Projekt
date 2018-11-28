@@ -27,7 +27,13 @@ import com.google.firebase.auth.FirebaseAuthSettings;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 public class LoginActivity extends AppCompatActivity {
@@ -36,9 +42,12 @@ public class LoginActivity extends AppCompatActivity {
     Button login;
     EditText phone_PhoneNum;
     String TAG = "TAG_LOGIN";
-
+    boolean status = false;
+    String number;
     private String verificationId;
     private FirebaseAuth mAuth;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference users = database.getReference("users");
 
 
     @Override
@@ -66,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
         login.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String number = phone_PhoneNum.getText().toString().trim();
+                number = phone_PhoneNum.getText().toString().trim();
                 if(number.isEmpty() || number.length()<10){
                     phone_PhoneNum.setError("Nem érvényes telefonszám");
                     phone_PhoneNum.requestFocus();
@@ -78,58 +87,60 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
 
+                if (!checkUserExists()){ //ha nem letezik a telefonszam az adatbazisban
+                    Intent intent = new Intent(LoginActivity.this,SignUpActivity.class);
+                    intent.putExtra("phoneNumber",number);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                }
+                else{//ha benne van az adatbazisban
+                    LayoutInflater inflater = getLayoutInflater();
+                    View dialoglayout = inflater.inflate(R.layout.custom_aleartdialog, null);
 
-                sendVerificationCode(number);
+                    AlertDialog.Builder builder;
+
+                    builder = new AlertDialog.Builder(LoginActivity.this);
+
+                    builder.setTitle("Írja be a kódot");
+
+                    builder.setView(dialoglayout);
+
+                    final EditText editCode = dialoglayout.findViewById(R.id.codeEdit);
 
 
-                LayoutInflater inflater = getLayoutInflater();
-                View dialoglayout = inflater.inflate(R.layout.custom_aleartdialog, null);
+                    builder.setPositiveButton("Check", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            //Toast.makeText(LoginActivity.this,"Get Started!",Toast.LENGTH_LONG).show();
 
-                AlertDialog.Builder builder;
-
-                builder = new AlertDialog.Builder(LoginActivity.this);
-
-                builder.setTitle("Írja be a kódot");
-
-                builder.setView(dialoglayout);
-
-                final EditText editCode = dialoglayout.findViewById(R.id.codeEdit);
-
-
-                builder.setPositiveButton("Check", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //Toast.makeText(LoginActivity.this,"Get Started!",Toast.LENGTH_LONG).show();
-
-                        String code="";
-                        try{
-                            if(editCode!=null){
-                                code = editCode.getText().toString();
+                            String code="";
+                            try{
+                                if(editCode!=null){
+                                    code = editCode.getText().toString();
+                                }
                             }
+                            catch (Exception e){
+                                Log.d(TAG,"Editcode is null");
+                                Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+                            }
+
+
+                            if(code.isEmpty() || code.length() <6){
+                                editCode.setError("Írja be a kódot!");
+                                editCode.requestFocus();
+                                return;
+                            }
+                            Log.d(TAG,"Code: " + code);
+                            verifyCode(code);
+                            //dialog.dismiss();
                         }
-                        catch (Exception e){
-                            Toast.makeText(LoginActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
+                    });
 
 
-                        if(code.isEmpty() || code.length() <6){
-                            editCode.setError("Írja be a kódot!");
-                            editCode.requestFocus();
-                            return;
-                        }
-
-                        verifyCode(code);
-
-                        //dialog.dismiss();
-                    }
-                });
-
-
-                builder.create();
-
-                builder.show();
-
-
+                    builder.create();
+                    sendVerificationCode(number);
+                    builder.show();
+                }
             }
         });
 
@@ -139,6 +150,42 @@ public class LoginActivity extends AppCompatActivity {
     private void verifyCode(String code){
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId,code);
         signInWithCredential(credential);
+    }
+
+    private boolean checkUserExists(){
+
+
+        users.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                // This method is called once with the initial value and again
+                // whenever data at this location is updated.
+
+                if (dataSnapshot.exists()) {
+                    User value = dataSnapshot.child("users").getValue(User.class);
+                    if(value.getPhoneNumb()!=null){
+                        /*Random r = new Random(); //ide mainscreen
+                        int i1 = r.nextInt(1000);
+                        writeNewUser(Integer.toString(i1), "", "", number);*/
+                        status = true;
+                    }
+                    Log.d(TAG, "Value is: " + value.toString());
+                } else {
+                    Log.d(TAG, "dataSnapshot is not extist.");
+                    status = false;
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w(TAG, "Failed to read value.", error.toException());
+            }
+
+        });
+
+        return status;
     }
 
     private void signInWithCredential(PhoneAuthCredential credential) {
