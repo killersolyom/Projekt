@@ -5,91 +5,93 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".AddAdvertismentActivity">
+    tools:context=".AddAdvertismentFragment">
 
-    <TextView
-        android:id="@+id/phonenumber"
-        android:layout_width="354dp"
-        android:layout_height="58dp"
+
+    <EditText
+        android:id="@+id/TitleView"
+        android:layout_width="340dp"
+        android:layout_height="40dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:background="@color/light_gray"
-        android:hint="@string/Phone"
-        android:textColor="@color/black"
-        android:textColorHint="@color/hint_gray"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.428"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/longdescription" />
-
-    <TextView
-        android:id="@+id/locationtext"
-        android:layout_width="354dp"
-        android:layout_height="58dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="24dp"
-        android:layout_marginEnd="8dp"
-        android:background="@color/light_gray"
-        android:hint="@string/advcationText"
-        android:textColor="@color/black"
-        android:textColorHint="@color/hint_gray"
-        android:textSize="18sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.571"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/phonenumber" />
-
-    <TextView
-        android:id="@+id/titleTv"
-        android:layout_width="354dp"
-        android:layout_height="58dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="28dp"
-        android:layout_marginEnd="8dp"
-        android:background="@color/light_gray"
+        android:ems="10"
         android:hint="@string/advertismentTitle"
-        android:textAlignment="viewStart"
+        android:inputType="textPersonName"
         android:textColor="@color/black"
         android:textColorHint="@color/hint_gray"
-        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintHorizontal_bias="0.503"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/shortdescription"
-        android:layout_width="354dp"
-        android:layout_height="58dp"
+    <EditText
+        android:id="@+id/PhoneNumber"
+        android:layout_width="340dp"
+        android:layout_height="40dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:background="@color/light_gray"
-        android:hint="@string/advshortDesc"
+        android:ems="10"
+        android:hint="@string/hint_phone"
+        android:inputType="phone"
         android:textColor="@color/black"
         android:textColorHint="@color/hint_gray"
-        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.571"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/titleTv" />
+        app:layout_constraintTop_toBottomOf="@+id/LongView" />
 
-    <TextView
-        android:id="@+id/longdescription"
-        android:layout_width="354dp"
-        android:layout_height="58dp"
+    <EditText
+        android:id="@+id/LocationView"
+        android:layout_width="340dp"
+        android:layout_height="40dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="12dp"
         android:layout_marginEnd="8dp"
         android:background="@color/light_gray"
-        android:hint="@string/advlongDesc"
+        android:ems="10"
+        android:hint="@string/advcationText"
+        android:inputType="textPersonName"
         android:textColor="@color/black"
         android:textColorHint="@color/hint_gray"
-        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.571"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/shortdescription" />
+        app:layout_constraintTop_toBottomOf="@+id/PhoneNumber" />
+
+    <EditText
+        android:id="@+id/ShortView"
+        android:layout_width="340dp"
+        android:layout_height="40dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/light_gray"
+        android:ems="10"
+        android:hint="@string/advshortDesc"
+        android:inputType="textPersonName"
+        android:textColor="@color/black"
+        android:textColorHint="@color/hint_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.503"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/TitleView" />
+
+    <EditText
+        android:id="@+id/LongView"
+        android:layout_width="340dp"
+        android:layout_height="140dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/light_gray"
+        android:ems="10"
+        android:hint="@string/advlongDesc"
+        android:inputType="textPersonName"
+        android:textColor="@color/black"
+        android:textColorHint="@color/hint_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/ShortView" />
 </android.support.constraint.ConstraintLayout>

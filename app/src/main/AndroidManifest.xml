@@ -20,8 +20,9 @@
         <activity
             android:name=".SignUpActivity"
             android:label="@string/title_activity_login" />
-        <activity android:name=".MainScreenActivity" />
-        <activity android:name=".AddAdvertismentActivity"></activity>
+        <activity
+            android:name=".MainScreenActivity"
+            android:label="@string/title_activity_main2"></activity>
     </application>
 
 </manifest>

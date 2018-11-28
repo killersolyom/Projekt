@@ -70,6 +70,11 @@ public class LoginActivity extends AppCompatActivity {
                 if(number.isEmpty() || number.length()<10){
                     phone_PhoneNum.setError("Nem érvényes telefonszám");
                     phone_PhoneNum.requestFocus();
+
+                    Intent intent = new Intent(LoginActivity.this,MainScreenActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+
                     return;
                 }
 
@@ -123,15 +128,6 @@ public class LoginActivity extends AppCompatActivity {
                 builder.create();
 
                 builder.show();
-
-                //verifyCode(code);
-
-                /*PhoneAuthProvider.getInstance().verifyPhoneNumber(
-                        phone_PhoneNum,        // Phone number to verify
-                        60,                 // Timeout duration
-                        TimeUnit.SECONDS,   // Unit of timeout
-                        this,               // Activity (for callback binding)
-                        mCallbacks);        // OnVerificationStateChangedCallbacks*/
 
 
             }

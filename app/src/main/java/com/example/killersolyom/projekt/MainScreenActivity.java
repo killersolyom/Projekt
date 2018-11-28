@@ -1,34 +1,67 @@
 package com.example.killersolyom.projekt;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 
-public class MainScreenActivity extends AppCompatActivity {
-    private RecyclerView mRecyclerView;
-    private RecyclerView.Adapter mAdapter;
-    private RecyclerView.LayoutManager mLayoutManager;
+
+
+import android.net.Uri;
+import android.os.Bundle;
+import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
+import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
+import android.view.MenuItem;
+import android.widget.TextView;
+
+public class MainScreenActivity extends AppCompatActivity implements AddAdvertismentFragment.OnFragmentInteractionListener,ProfileFragment.OnFragmentInteractionListener,HomeFragment.OnFragmentInteractionListener {
+
+    private TextView mTextMessage;
+
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
+            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+
+        @Override
+        public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+            switch (item.getItemId()) {
+                case R.id.navigation_home:
+                    HomeFragment advFragment = new HomeFragment();
+                    FragmentTransaction advTransaction = getSupportFragmentManager().beginTransaction();
+                    advTransaction.replace(R.id.container, advFragment);
+                    advTransaction.commit();
+                    return true;
+                case R.id.navigation_account:
+                    ProfileFragment accFragment = new ProfileFragment();
+                    FragmentTransaction accTransaction = getSupportFragmentManager().beginTransaction();
+                    accTransaction.replace(R.id.container, accFragment);
+                    accTransaction.commit();
+                    return true;
+                case R.id.navigation_add:
+                    AddAdvertismentFragment addFragment = new AddAdvertismentFragment();
+                    FragmentTransaction addTransaction = getSupportFragmentManager().beginTransaction();
+                    addTransaction.replace(R.id.container, addFragment);
+                    addTransaction.commit();
+                    return true;
+            }
+            return false;
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main_screen);
-        mRecyclerView = (RecyclerView) findViewById(R.id.my_recycler_view);
+        setContentView(R.layout.main_screen_activity);
+        mTextMessage = (TextView) findViewById(R.id.message);
+        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
+        navigation.getMenu().getItem(1).setChecked(true);
+        HomeFragment advFragment = new HomeFragment();
+        FragmentTransaction advTransaction = getSupportFragmentManager().beginTransaction();
+        advTransaction.replace(R.id.container, advFragment);
+        advTransaction.commit();
 
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
-        mRecyclerView.setHasFixedSize(true);
+    }
 
-        // use a linear layout manager
-        mLayoutManager = new LinearLayoutManager(this);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+    @Override
+    public void onFragmentInteraction(Uri uri) {
 
-        // specify an adapter (see also next example)
-        String[] tmp = new String[2];
-        tmp[0] = "1";
-        tmp[1] = "2";
-        mAdapter = new MyAdapter(tmp);
-        //mRecyclerView.setAdapter(mAdapter);
     }
 }
