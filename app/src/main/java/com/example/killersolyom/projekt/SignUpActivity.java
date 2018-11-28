@@ -1,5 +1,6 @@
 package com.example.killersolyom.projekt;
 
+import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -66,7 +67,7 @@ public class SignUpActivity extends AppCompatActivity {
                     return;
                 }
 
-                Random r = new Random(); //ide mainscreen
+                Random r = new Random();
                 int i1 = r.nextInt(1000);
 
                 writeNewUser(Integer.toString(i1),firstName.getText().toString(),lastName.getText().toString(),number);
@@ -116,7 +117,9 @@ public class SignUpActivity extends AppCompatActivity {
 
                 builder.create();
                 sendVerificationCode(number);
-                builder.show();
+                if(!((Activity) SignUpActivity.this).isFinishing()){
+                    builder.show();
+                }
             }
         });
     }
