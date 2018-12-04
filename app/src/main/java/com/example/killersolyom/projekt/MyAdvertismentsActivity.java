@@ -3,7 +3,7 @@ package com.example.killersolyom.projekt;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class MyAdvertisments extends AppCompatActivity {
+public class MyAdvertismentsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

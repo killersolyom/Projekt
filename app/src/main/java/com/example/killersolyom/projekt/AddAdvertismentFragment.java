@@ -40,7 +40,7 @@ public class AddAdvertismentFragment extends Fragment {
     private ImageView back;
     private ImageView addButton;
     private static final int PICK_IMAGE = 1;
-    private uriContainer uri = new uriContainer();
+    private UriContainer uri = new UriContainer();
 
     private OnFragmentInteractionListener mListener;
 

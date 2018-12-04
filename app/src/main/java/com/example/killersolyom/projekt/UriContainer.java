@@ -4,12 +4,12 @@ import android.graphics.Bitmap;
 
 import java.util.ArrayList;
 
-public class uriContainer {
+public class UriContainer {
 
     private ArrayList<Bitmap> uri = new ArrayList<>();
     private int currentIndex = 0;
 
-    public uriContainer() {
+    public UriContainer() {
     }
 
     public void addUri(Bitmap bitmap){

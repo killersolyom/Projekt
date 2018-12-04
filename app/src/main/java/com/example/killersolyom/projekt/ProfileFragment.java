@@ -1,16 +1,16 @@
 package com.example.killersolyom.projekt;
 
+import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,11 +54,12 @@ public class ProfileFragment extends Fragment {
     public static final int PICK_IMAGE = 1;
     private String key="";
     private Uri uri;
-    ImageView myAdvertisments;
+    private ImageView myAdvertisments;
+    private AlertDialog builderProgress=null;
 
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference datebaseRef = database.getReference();
-    private StorageReference storageRef = FirebaseStorage.getInstance().getReference("uploads");
+    private StorageReference storageRef = FirebaseStorage.getInstance().getReference("uploads/profilepics");
 
     private User user = new User();
     private OnFragmentInteractionListener mListener;
@@ -117,10 +118,30 @@ public class ProfileFragment extends Fragment {
         myAdvertisments.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MyAdvertisments.class);
+                Intent intent = new Intent(getActivity(), MyAdvertismentsActivity.class);
                 startActivity(intent);
             }
         });
+
+        //storageRef.getDownloadUrl();
+        storageRef.child("profilepicture.jpg").getBytes(Long.MAX_VALUE)
+                .addOnSuccessListener(new OnSuccessListener<byte[]>() {
+            @Override
+            public void onSuccess(byte[] bytes) {
+                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                profilePicture.setImageBitmap(Bitmap.createBitmap(bmp));
+                //profilePicture.setImageBitmap(Bitmap.createScaledBitmap(bmp,profilePicture.getWidth(),profilePicture.getHeight(),false));
+            }
+
+        })
+        .addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getContext(),"Profile picture download failed",Toast.LENGTH_SHORT).show();
+            }
+        });
+        //Glide.with(getActivity()).load(uri1.getResult()).into(profilePicture);
+
 
         profilePicture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -170,7 +191,7 @@ public class ProfileFragment extends Fragment {
 
     private void uploadFile(){
         if (uri!=null){
-            final StorageReference fileReference = storageRef.child(System.currentTimeMillis() + "." + getFileExtension(uri));
+            final StorageReference fileReference = storageRef.child("profilepicture" + "." + "jpg"); //getFileExtension(uri)
             fileReference.putFile(uri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -178,7 +199,8 @@ public class ProfileFragment extends Fragment {
                     Toast.makeText(getContext(),"Upload successful!",Toast.LENGTH_SHORT).show();
                     Upload upload = new Upload ("profilePicture",fileReference.getDownloadUrl().toString());
                     String uploadId = datebaseRef.child("pictures").push().getKey();
-                    datebaseRef.child("pictures").child(uploadId).setValue(upload);
+                    datebaseRef.child("pictures/profilepics").child(uploadId).setValue(upload);
+                    builderProgress.dismiss();
                 }
             })
                     .addOnFailureListener(new OnFailureListener() {
@@ -188,26 +210,19 @@ public class ProfileFragment extends Fragment {
                         }
                     })
                     .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
-
-
                         @Override
                         public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
                             double progress = (100.0 * taskSnapshot.getBytesTransferred() / taskSnapshot.getTotalByteCount());
                             LayoutInflater inflater = getLayoutInflater();
                             View dialoglayout = inflater.inflate(R.layout.custom_progressbar, null);
-                            final ProgressBar progressBar = dialoglayout.findViewById(R.id.progressBar);
-                            AlertDialog.Builder builderProgress=new AlertDialog.Builder(getContext());
-
-                            builderProgress.setTitle("Kép feltöltése...");
-
+                            ProgressBar progressBar = dialoglayout.findViewById(R.id.progressBar);
+                            AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
+                            builder.setTitle("Kép feltöltése...");
                             //if(progressBar.getParent()!=null)
                             //    ((ViewGroup)progressBar.getParent()).removeView(progressBar); // <- fix
                            // dialoglayout.addView(progressBar);
-
-                            builderProgress.setView(dialoglayout);
-
+                            builder.setView(dialoglayout);
                             progressBar.setProgress((int)progress);
-
                             /*builderProgress.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
@@ -216,9 +231,20 @@ public class ProfileFragment extends Fragment {
                                     dialog.dismiss();
                                 }
                             });*/
-                            builderProgress.create();
-                            builderProgress.show();
-
+                            //Log.d(TAG,"Ifen kivul progress: " + progress);
+                            if(builderProgress != null && builderProgress.isShowing()){
+                                builderProgress.dismiss();
+                                Log.d(TAG,"Ifen belul progress: " + progress);
+                                progressBar.setProgress((int)progress);
+                                builderProgress = builder.create();
+                                builderProgress.setCancelable(false);
+                                builderProgress.show();
+                            }
+                            else {
+                                builderProgress = builder.create();
+                                builderProgress.setCancelable(false);
+                                builderProgress.show();
+                            }
                         }
                     });
         }

@@ -80,9 +80,9 @@ public class LoginActivity extends AppCompatActivity {
                     phone_PhoneNum.setError("Nem érvényes telefonszám");
                     phone_PhoneNum.requestFocus();
 
-                    Intent intent = new Intent(LoginActivity.this,MainScreenActivity.class);
+                    /*Intent intent = new Intent(LoginActivity.this,MainScreenActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    startActivity(intent);
+                    startActivity(intent);*/
 
                     return;
                 }
