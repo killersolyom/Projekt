@@ -31,6 +31,14 @@
           }
         },
         {
+          "client_id": "1002621624887-47kuoid6hkbidnocds5c6po233s2u4mp.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.killersolyom.projekt",
+            "certificate_hash": "db2496e9c155b5d5ea30556631a945f30b9d1f4b"
+          }
+        },
+        {
           "client_id": "1002621624887-5mondvdnc781q370ku5og97e6ln75j3p.apps.googleusercontent.com",
           "client_type": 3
         }

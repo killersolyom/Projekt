@@ -40,7 +40,7 @@ public class AddAdvertismentFragment extends Fragment {
     private ImageView back;
     private ImageView addButton;
     private static final int PICK_IMAGE = 1;
-    private uriContainer uri = new uriContainer();
+    private UriContainer uri = new UriContainer();
 
     private OnFragmentInteractionListener mListener;
 
@@ -80,19 +80,21 @@ public class AddAdvertismentFragment extends Fragment {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                firstPicture.setImageBitmap(uri.getCurrentImage());
-                secondPicture.setImageBitmap(uri.getNextImage());
-
+                if(!uri.isEmpty()){
+                    firstPicture.setImageBitmap(uri.getNextImage());
+                    secondPicture.setImageBitmap(uri.getNextImage());
+                }
             }
         });
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                firstPicture.setImageBitmap(uri.getPreviousImage());
-                secondPicture.setImageBitmap(uri.getPreviousImage());
+                if(!uri.isEmpty()){
+                    firstPicture.setImageBitmap(uri.getPreviousImage());
+                    secondPicture.setImageBitmap(uri.getPreviousImage());
+                }
             }
         });
-
         addButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
