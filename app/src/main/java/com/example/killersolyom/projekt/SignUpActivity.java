@@ -37,11 +37,10 @@ public class SignUpActivity extends AppCompatActivity {
     EditText firstName;
     EditText lastName;
     Button signUp;
-    String TAG = "TAG_LOGIN";
+    String TAG = "TAG_SIGNUP";
     private String verificationId;
     private FirebaseAuth mAuth;
     String number;
-    Integer numberOfUsers = 0;
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     DatabaseReference users = database.getReference();
 
@@ -71,31 +70,6 @@ public class SignUpActivity extends AppCompatActivity {
                     return;
                 }
 
-                users.child("users").addValueEventListener(new ValueEventListener() {
-
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        // This method is called once with the initial value and again
-                        // whenever data at this location is updated.
-                        if (dataSnapshot.exists()){
-                            for(DataSnapshot value : dataSnapshot.getChildren()){
-                                numberOfUsers++;
-                            }
-                        }
-                            //Log.d(TAG, "checkUser ifen kivul status: " + status);
-                        else {
-                            Log.d(TAG, "dataSnapshot is not extist.");
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError error) {
-                        // Failed to read value
-                        Log.w(TAG, "Failed to read value.", error.toException());
-                    }
-                });
-
-                writeNewUser(Integer.toString(numberOfUsers+1),firstName.getText().toString(),lastName.getText().toString(),number);
 
                 LayoutInflater inflater = getLayoutInflater();
                 View dialoglayout = inflater.inflate(R.layout.custom_aleartdialog, null);
@@ -139,33 +113,40 @@ public class SignUpActivity extends AppCompatActivity {
                     }
                 });
 
-
                 builder.create();
                 sendVerificationCode(number);
+
                 if(!((Activity) SignUpActivity.this).isFinishing()){
+
                     builder.show();
                 }
             }
         });
     }
 
-    private void writeNewUser(String userId, String firstName, String lastName, String phoneNumber){
-        User user = new User(firstName,lastName,phoneNumber,"","");
-        user.setID(Integer.parseInt(userId));
-        users.child(userId).setValue(user);
+    private void writeNewUser(String firstName, String lastName){
+        User.getInstance().setID(number);
+        User.getInstance().setEmailAddress("");
+        User.getInstance().setAddress("");
+        User.getInstance().setLastName(lastName);
+        User.getInstance().setFirstName(firstName);
+        User.getInstance().setPhoneNumb(number);
+
+        users.child("users").child(number).setValue(User.getInstance());
     }
     private void verifyCode(String code){
         PhoneAuthCredential credential = PhoneAuthProvider.getCredential(verificationId,code);
-
         signInWithCredential(credential);
     }
 
     private void signInWithCredential(PhoneAuthCredential credential) {
+        Log.d(TAG,"Sign in credintials. ");
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if(task.isSuccessful()){
+                            writeNewUser(firstName.getText().toString(),lastName.getText().toString());
                             Intent intent = new Intent(SignUpActivity.this,MainScreenActivity.class); //ide mainscreen
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
@@ -178,6 +159,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private void sendVerificationCode(String number){
+        Log.d(TAG, "Send verification code to: " + number);
         PhoneAuthProvider.getInstance().verifyPhoneNumber(number,60,TimeUnit.SECONDS,TaskExecutors.MAIN_THREAD,mCallBack);
     }
 
@@ -187,6 +169,7 @@ public class SignUpActivity extends AppCompatActivity {
         @Override
         public void onCodeSent(String s, PhoneAuthProvider.ForceResendingToken forceResendingToken) {
             super.onCodeSent(s, forceResendingToken);
+            Log.d(TAG,"Code sent.");
             verificationId = s;
         }
 

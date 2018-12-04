@@ -29,7 +29,7 @@ public class HomeFragment extends Fragment {
     private String mParam1;
     private String mParam2;
     private OnFragmentInteractionListener mListener;
-
+    private User user = User.getInstance();
     public HomeFragment() {
         // Required empty public constructor
     }
