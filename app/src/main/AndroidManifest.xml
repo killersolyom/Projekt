@@ -32,7 +32,7 @@
             android:configChanges="orientation"
             android:screenOrientation="portrait"></activity>
             android:label="@string/title_activity_main2" />
-        <activity android:name=".MyAdvertisments"></activity>
+        <activity android:name=".MyAdvertismentsActivity"></activity>
     </application>
 
 </manifest>
