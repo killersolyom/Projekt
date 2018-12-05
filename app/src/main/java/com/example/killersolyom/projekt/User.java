@@ -1,5 +1,7 @@
 package com.example.killersolyom.projekt;
 
+import android.net.Uri;
+
 public class User {
 
     private static User single_instance = null;

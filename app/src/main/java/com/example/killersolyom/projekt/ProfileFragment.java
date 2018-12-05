@@ -21,8 +21,10 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -35,6 +37,7 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Objects;
 
 
 public class ProfileFragment extends Fragment {
@@ -121,7 +124,7 @@ public class ProfileFragment extends Fragment {
         });
 
         //storageRef.getDownloadUrl();
-        storageRef.child("profilepicture.jpg").getBytes(Long.MAX_VALUE)
+        /*storageRef.child(number).child("profilepicture.jpg").getBytes(Long.MAX_VALUE)
                 .addOnSuccessListener(new OnSuccessListener<byte[]>() {
             @Override
             public void onSuccess(byte[] bytes) {
@@ -129,7 +132,6 @@ public class ProfileFragment extends Fragment {
                 profilePicture.setImageBitmap(Bitmap.createBitmap(bmp));
                 //profilePicture.setImageBitmap(Bitmap.createScaledBitmap(bmp,profilePicture.getWidth(),profilePicture.getHeight(),false));
             }
-
         })
         .addOnFailureListener(new OnFailureListener() {
             @Override
@@ -137,7 +139,10 @@ public class ProfileFragment extends Fragment {
                 Toast.makeText(getContext(),"Profile picture download failed",Toast.LENGTH_SHORT).show();
             }
         });
-        //Glide.with(getActivity()).load(uri1.getResult()).into(profilePicture);
+        */
+        Log.d(TAG,"Kep URL: " + User.getInstance().getImageUrl());
+
+        Glide.with(getActivity()).load(User.getInstance().getImageUrl()).into(profilePicture);
 
         getInformation();
 
@@ -164,13 +169,12 @@ public class ProfileFragment extends Fragment {
         if (requestCode == PICK_IMAGE && data != null && data.getData() != null) {
             //TODO: action
             uri = data.getData();
-            Log.d(TAG,"onActivityResult");
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), uri);
                 //InputStream inputStream = getContext().getContentResolver().openInputStream(data.getData());
                 //bitmap  = BitmapFactory.decodeStream(inputStream);
-                profilePicture.setImageBitmap(bitmap);
                 uploadFile();
+                profilePicture.setImageBitmap(bitmap);
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
@@ -187,6 +191,7 @@ public class ProfileFragment extends Fragment {
     }
 
 
+
     private void uploadFile(){
         if (uri!=null){
             final StorageReference fileReference = storageRef.child(number).child("profilepicture" + "." + "jpg"); //getFileExtension(uri)
@@ -195,9 +200,26 @@ public class ProfileFragment extends Fragment {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     Toast.makeText(getContext(),"Upload successful!",Toast.LENGTH_SHORT).show();
-                    Upload upload = new Upload ("profilePicture",fileReference.getDownloadUrl().toString());
-                    String uploadId = datebaseRef.child("pictures").push().getKey();
-                    datebaseRef.child("users").child(number).child(uploadId).setValue(upload);
+                    //Upload upload = new Upload ("profilePicture",fileReference.getDownloadUrl().toString());
+                    //String uploadId = datebaseRef.child("pictures").push().getKey();
+
+                    //datebaseRef.child("users").child(number).child("imageUrl").setValue(upload);
+                    /*fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                        @Override
+                        public void onSuccess(Uri uri) {
+                            try {
+                                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), uri);
+                                Log.d(TAG,"ProfpilPic setting..." + uri.toString());
+                                User.getInstance().setImageUrl(uri.toString());
+                                profilePicture.setImageBitmap(bitmap);
+                            } catch (IOException e) {
+                                e.printStackTrace();
+                                Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
+
+                            }
+                        }
+                    });*/
+                    addPictureToUser();
                     builderProgress.dismiss();
                 }
             })
@@ -249,6 +271,26 @@ public class ProfileFragment extends Fragment {
         else{
             Toast.makeText(getContext(),"No file selected",Toast.LENGTH_SHORT).show();
         }
+    }
+
+    public void addPictureToUser(){
+        final StorageReference fileReference = storageRef.child(number).child("profilepicture" + "." + "jpg");
+        fileReference.getDownloadUrl()
+                .addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        datebaseRef.child("users").child(number).child("imageUrl").setValue(uri.toString());
+                        User.getInstance().setImageUrl(uri.toString());
+                        Log.d(TAG,"Userben kep URL " + User.getInstance().getImageUrl());
+                        Glide.with(getActivity()).load(User.getInstance().getImageUrl()).into(profilePicture);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getContext(),e.getMessage(), Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     public void getInformation(){
@@ -326,9 +368,9 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        Log.d(TAG, "elmentem innen, key: " + key);
-        writeUser(firstNameInput.getText().toString(),lastNameInput.getText().toString(),phoneNumber.getText().toString(),emailInput.getText().toString(),addressInput.getText().toString());
-        Log.d(TAG,"useremail: " + user.getEmailAddress());
+        //Log.d(TAG, "elmentem innen, key: " + key);
+        //writeUser(firstNameInput.getText().toString(),lastNameInput.getText().toString(),phoneNumber.getText().toString(),emailInput.getText().toString(),addressInput.getText().toString());
+        //Log.d(TAG,"useremail: " + user.getEmailAddress());
         mListener = null;
     }
 
@@ -340,6 +382,7 @@ public class ProfileFragment extends Fragment {
         user.setPhoneNumb(phoneNumber);
         user.setEmailAddress(emailAddress);
         user.setAddress(address);
+
         datebaseRef.child("users").child(phoneNumber).setValue(user);
     }
 

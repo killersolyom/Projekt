@@ -70,7 +70,6 @@ public class SignUpActivity extends AppCompatActivity {
                     return;
                 }
 
-
                 LayoutInflater inflater = getLayoutInflater();
                 View dialoglayout = inflater.inflate(R.layout.custom_aleartdialog, null);
 
@@ -84,12 +83,10 @@ public class SignUpActivity extends AppCompatActivity {
 
                 final EditText editCode = dialoglayout.findViewById(R.id.codeEdit);
 
-
                 builder.setPositiveButton("Check", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //Toast.makeText(LoginActivity.this,"Get Started!",Toast.LENGTH_LONG).show();
-
                         String code="";
                         try{
                             if(editCode!=null){
@@ -100,7 +97,6 @@ public class SignUpActivity extends AppCompatActivity {
                             Log.d(TAG,"Editcode is null");
                             Toast.makeText(SignUpActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                         }
-
 
                         if(code.isEmpty() || code.length() <6){
                             editCode.setError("Írja be a kódot!");
@@ -117,7 +113,6 @@ public class SignUpActivity extends AppCompatActivity {
                 sendVerificationCode(number);
 
                 if(!((Activity) SignUpActivity.this).isFinishing()){
-
                     builder.show();
                 }
             }
@@ -148,6 +143,7 @@ public class SignUpActivity extends AppCompatActivity {
                         if(task.isSuccessful()){
                             writeNewUser(firstName.getText().toString(),lastName.getText().toString());
                             Intent intent = new Intent(SignUpActivity.this,MainScreenActivity.class); //ide mainscreen
+                            intent.putExtra("phoneNumber",number);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                             startActivity(intent);
                         }
