@@ -3,6 +3,7 @@ package com.example.killersolyom.projekt;
 import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -118,6 +119,10 @@ public class LoginActivity extends AppCompatActivity {
                                 }
                                 else if(Objects.equals(value.getKey(), "address")){
                                     User.getInstance().setAddress(Objects.requireNonNull(value.getValue()).toString());
+                                }
+                                else if(Objects.equals(value.getKey(), "imageUrl")){
+                                    User.getInstance().setImageUrl(Objects.requireNonNull(value.getValue()).toString());
+                                    Log.d(TAG,"Kapott string URL: " + value.getValue().toString());
                                 }
                                 //User user = value.getValue(User.class);
 
