@@ -26,20 +26,20 @@ public class MainScreenActivity extends AppCompatActivity implements AddAdvertis
                 case R.id.navigation_home:
                     HomeFragment advFragment = new HomeFragment();
                     FragmentTransaction advTransaction = getSupportFragmentManager().beginTransaction();
-                    advTransaction.replace(R.id.container, advFragment);
+                    advTransaction.replace(R.id.fragment_container, advFragment);
                     advTransaction.commit();
                     return true;
                 case R.id.navigation_account:
                     ProfileFragment accFragment = new ProfileFragment();
                     FragmentTransaction accTransaction = getSupportFragmentManager().beginTransaction();
                     accFragment.setArguments(bundle);
-                    accTransaction.replace(R.id.container, accFragment);
+                    accTransaction.replace(R.id.fragment_container, accFragment);
                     accTransaction.commit();
                     return true;
                 case R.id.navigation_add:
                     AddAdvertismentFragment addFragment = new AddAdvertismentFragment();
                     FragmentTransaction addTransaction = getSupportFragmentManager().beginTransaction();
-                    addTransaction.replace(R.id.container, addFragment);
+                    addTransaction.replace(R.id.fragment_container, addFragment);
                     addTransaction.commit();
                     return true;
             }
@@ -62,7 +62,7 @@ public class MainScreenActivity extends AppCompatActivity implements AddAdvertis
         navigation.getMenu().getItem(1).setChecked(true);
         HomeFragment advFragment = new HomeFragment();
         FragmentTransaction advTransaction = getSupportFragmentManager().beginTransaction();
-        advTransaction.replace(R.id.container, advFragment);
+        advTransaction.replace(R.id.fragment_container, advFragment);
         advTransaction.commit();
 
     }
@@ -71,6 +71,9 @@ public class MainScreenActivity extends AppCompatActivity implements AddAdvertis
     public void onFragmentInteraction(Uri uri) {
 
     }
+
+
+
 /*
     @Override
     protected void onPause() {

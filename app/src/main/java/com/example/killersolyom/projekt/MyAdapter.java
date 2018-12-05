@@ -1,24 +1,17 @@
 package com.example.killersolyom.projekt;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
-
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.RecyclerViewHolder> {
     ImageView advertismentImage;
@@ -46,22 +39,18 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.RecyclerViewHolder
     public void onBindViewHolder( final RecyclerViewHolder holder, int position) {
 
         try {
-            Advertisment advertisment  = advertisments.get(position);
+            final Advertisment advertisment  = advertisments.get(position);
             holder.title.setText(advertisment.getAdvertismentTitle());
             holder.details.setText(advertisment.getAdvertismentDetails());
             holder.counter.setText(advertisment.getViewedCounter()+"");
-
-            Glide.with(context).load("https://thumbs-prod.si-cdn.com/drt63Nyhy9WUiHzpRSm2ABjnMcA=/800x600/filters:no_upscale()/https://public-media.smithsonianmag.com/filer/Three-toed-sloth-Panama-631.jpg").diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.advertismentPicture);
-
-
-            //Bitmap advImage = MediaStore.Images.Media.getBitmap(context.getContentResolver(), advertisment.getAdvertismentImage());
-            //Glide.with(context).load(advImage).into(holder.advertismentPicture);
-           /* Bitmap profileImage = MediaStore.Images.Media.getBitmap(context.getContentResolver(), advertisment.getAdvertismentProfilePicture());
-            holder.advertismentPicture.setImageBitmap(advImage);
-            holder.profilePicture.setImageBitmap(profileImage);*/
-
-            //Toast.makeText(context,"Adapter Size: "+advertisments.size()+"",Toast.LENGTH_SHORT).show();
-            //holder.itemView.setClickListener(...);
+            Glide.with(context).load(advertisment.getAdvertismentImage()).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.advertismentPicture);
+            Glide.with(context).load(advertisment.getAdvertismentProfilePicture()).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.profilePicture);
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(context,"Clicked "+ advertisment.getAdvertismentTitle(),Toast.LENGTH_SHORT).show();
+                }
+            });
         } catch (Exception e) {
             e.printStackTrace();
             Toast.makeText(context,"Adapter Baj!",Toast.LENGTH_LONG).show();
