@@ -127,6 +127,7 @@ public class LoginActivity extends AppCompatActivity {
                                 //User user = value.getValue(User.class);
 
                             }
+                            
                             //User.getInstance().setPhoneNumb(tmp);
                             User user = User.getInstance();
                             //Log.d(TAG,"tartalma: " + value.toString());
