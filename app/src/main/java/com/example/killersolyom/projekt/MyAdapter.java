@@ -1,6 +1,7 @@
 package com.example.killersolyom.projekt;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,6 +14,8 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import java.util.ArrayList;
 
+import static android.support.v4.content.ContextCompat.startActivity;
+
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.RecyclerViewHolder> {
     ImageView advertismentImage;
     ImageView profilePicture;
@@ -22,10 +25,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.RecyclerViewHolder
 
     private ArrayList<Advertisment> advertisments = new ArrayList<>();
     private Context context;
+    private String name = "";
 
-    public MyAdapter(Context context, ArrayList<Advertisment> advertisment) {
+    public MyAdapter(Context context, ArrayList<Advertisment> advertisment,String name) {
         this.context = context;
         advertisments = advertisment;
+        this.name = name;
     }
 
     @NonNull
@@ -45,10 +50,24 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.RecyclerViewHolder
             holder.counter.setText(advertisment.getViewedCounter()+"");
             Glide.with(context).load(advertisment.getAdvertismentImage()).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.advertismentPicture);
             Glide.with(context).load(advertisment.getAdvertismentProfilePicture()).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.profilePicture);
+
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context,"Clicked "+ advertisment.getAdvertismentTitle(),Toast.LENGTH_SHORT).show();
+                    if(name.equals("GlobalAdvertisment")){
+                        //Toast.makeText(context,"Clicked "+ advertisment.getAdvertismentTitle(),Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(context, AdvertismentDetailActivity.class);
+                        intent.putExtra("Title",advertisment.getAdvertismentTitle());
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(context,intent,null);
+                    }else if(name.equals("MyAdvertisment")){
+                        //Toast.makeText(context,"Clicked "+ advertisment.getAdvertismentTitle(),Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(context, MyAdvertismentDetailActivity.class);
+                        intent.putExtra("Title",advertisment.getAdvertismentTitle());
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                        startActivity(context,intent,null);
+                    }
+
                 }
             });
         } catch (Exception e) {

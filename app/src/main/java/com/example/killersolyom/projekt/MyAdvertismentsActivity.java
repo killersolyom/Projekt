@@ -12,21 +12,27 @@ import java.util.ArrayList;
 
 public class MyAdvertismentsActivity extends AppCompatActivity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);/*
-        setContentView(R.layout.activity_my_advertisments);
-        View view =  inflater(R.layout.fragment_home, container, false);
-        RecyclerView recycle = view.findViewById(R.id.recycler_view);
-        ArrayList<Advertisment> advertisments = new ArrayList<>();
-        for(int i = 0; i < 20; i++){
-            advertisments.add(generateAdvertisment());
-        }
-        MyAdapter temp = new MyAdapter(this.getBaseContext(),advertisments);
-        recycle.setLayoutManager(new LinearLayoutManager(this.getBaseContext()));
-        recycle.setAdapter(temp);*/
+    private ArrayList<Advertisment> advertisments = new ArrayList<>();
+    private RecyclerView recyclerView;
+
+    public MyAdvertismentsActivity() {
     }
 
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_my_advertisments);
+        recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
+        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
+        recyclerView.setLayoutManager(mLayoutManager);
+        for(int i = 0; i < 20; i++){
+            advertisments.add(generateAdvertisment());
+            advertisments.get(i).setAdvertismentTitle( advertisments.get(i).getAdvertismentTitle()+" " + i );
+        }
+        MyAdapter adapter = new MyAdapter(this.getApplicationContext(),advertisments,"MyAdvertisment");
+        recyclerView.setAdapter(adapter);
+
+    }
 
     public Advertisment generateAdvertisment(){
         Advertisment advertisments = new Advertisment();

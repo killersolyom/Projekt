@@ -18,19 +18,14 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link HomeFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link HomeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+
 public class HomeFragment extends Fragment {
 
     private Context context = null;
     private OnFragmentInteractionListener mListener;
     private User user = User.getInstance();
+    private ArrayList<Advertisment> advertisments = new ArrayList<>();
+
     public HomeFragment() {
         // Required empty public constructor
     }
@@ -55,16 +50,15 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_home, container, false);
         RecyclerView recycle = view.findViewById(R.id.recycler_view);
-        ArrayList<Advertisment> advertisments = new ArrayList<>();
         for(int i = 0; i < 20; i++){
             advertisments.add(generateAdvertisment());
             advertisments.get(i).setAdvertismentTitle( advertisments.get(i).getAdvertismentTitle()+" " + i );
         }
         context = this.getContext();
         //Toast.makeText(this.getContext(),"Home Size: "+advertisments.size()+"",Toast.LENGTH_SHORT).show();
-        MyAdapter temp = new MyAdapter(this.getContext(),advertisments);
+        MyAdapter adapter = new MyAdapter(this.getContext(),advertisments,"GlobalAdvertisment");
         recycle.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        recycle.setAdapter(temp);
+        recycle.setAdapter(adapter);
 /*
         final GestureDetector gesture = new GestureDetector(getActivity(), new GestureDetector.SimpleOnGestureListener() {
                     @Override

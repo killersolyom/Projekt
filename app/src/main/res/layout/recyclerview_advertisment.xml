@@ -61,7 +61,7 @@
         android:textColor="@color/common_google_signin_btn_text_light_focused"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/ProfilePicture"
+        app:layout_constraintStart_toEndOf="@+id/profilePicture"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -75,7 +75,7 @@
         android:textColor="@color/hint_gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/ProfilePicture"
+        app:layout_constraintStart_toEndOf="@+id/profilePicture"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView
