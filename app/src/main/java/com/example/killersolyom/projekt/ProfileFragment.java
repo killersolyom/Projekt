@@ -56,12 +56,12 @@ public class ProfileFragment extends Fragment {
     private Uri uri;
     private ImageView myAdvertisments;
     private AlertDialog builderProgress=null;
-
+    private String number;
     private FirebaseDatabase database = FirebaseDatabase.getInstance();
     private DatabaseReference datebaseRef = database.getReference();
     private StorageReference storageRef = FirebaseStorage.getInstance().getReference("uploads/profilepics");
 
-    private User user = new User();
+    private User user = User.getInstance();
     private OnFragmentInteractionListener mListener;
 
     public ProfileFragment() {
@@ -92,7 +92,6 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        // Inflate the layout for this fragment
         View view =  inflater.inflate(R.layout.fragment_profile, container, false);
         profilePicture = view.findViewById(R.id.profilePicture);
         profilePicture.setBackgroundResource(R.drawable.shrek);
@@ -102,9 +101,7 @@ public class ProfileFragment extends Fragment {
         emailInput = view.findViewById(R.id.emailInput);
         addressInput = view.findViewById(R.id.adressInput);
 
-        String number = getArguments().getString("phone");
-
-        getInformation(number);
+        number = getArguments().getString("phone");
 
         logOut = view.findViewById(R.id.logoutView);
         myAdvertisments = view.findViewById(R.id.myAdvertisments);
@@ -142,6 +139,7 @@ public class ProfileFragment extends Fragment {
         });
         //Glide.with(getActivity()).load(uri1.getResult()).into(profilePicture);
 
+        getInformation();
 
         profilePicture.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -191,7 +189,7 @@ public class ProfileFragment extends Fragment {
 
     private void uploadFile(){
         if (uri!=null){
-            final StorageReference fileReference = storageRef.child("profilepicture" + "." + "jpg"); //getFileExtension(uri)
+            final StorageReference fileReference = storageRef.child(number).child("profilepicture" + "." + "jpg"); //getFileExtension(uri)
             fileReference.putFile(uri)
                     .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                 @Override
@@ -199,7 +197,7 @@ public class ProfileFragment extends Fragment {
                     Toast.makeText(getContext(),"Upload successful!",Toast.LENGTH_SHORT).show();
                     Upload upload = new Upload ("profilePicture",fileReference.getDownloadUrl().toString());
                     String uploadId = datebaseRef.child("pictures").push().getKey();
-                    datebaseRef.child("pictures/profilepics").child(uploadId).setValue(upload);
+                    datebaseRef.child("users").child(number).child(uploadId).setValue(upload);
                     builderProgress.dismiss();
                 }
             })
@@ -253,10 +251,17 @@ public class ProfileFragment extends Fragment {
         }
     }
 
-    public void getInformation(final String  number){
+    public void getInformation(){
         //FirebaseDatabase database = FirebaseDatabase.getInstance();
         //DatabaseReference datebaseRef = database.getReference();
-        datebaseRef.child("users").addValueEventListener(new ValueEventListener() {
+
+        firstNameInput.setText(user.getFirstName());
+        lastNameInput.setText(user.getLastName());
+        phoneNumber.setText(user.getPhoneNumb());
+        emailInput.setText(user.getEmailAddress());
+        addressInput.setText(user.getAddress());
+        /*
+        datebaseRef.child("users").child(number).addValueEventListener(new ValueEventListener() {
 
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
@@ -265,10 +270,11 @@ public class ProfileFragment extends Fragment {
                 if (dataSnapshot.exists()){
                     for(DataSnapshot value : dataSnapshot.getChildren()){
                         Log.d(TAG,value.getKey());
-                        user = value.getValue(User.class);
+                        //user = value.getValue(User.class);
                         //Log.d(TAG, "getInformation : " + user.toString());
-                        if(user.getPhoneNumb().equals(number) && value.getKey().equals(user.getID().toString())){
-                            key = user.getID().toString();
+                        Log.d(TAG, "getInformation : " + value.getKey());
+                        if(user.getPhoneNumb().equals(number)){
+                            key = user.getID();
                             Log.d(TAG,"key: " + key);
                             firstNameInput.setText(user.getFirstName());
                             lastNameInput.setText(user.getLastName());
@@ -293,6 +299,9 @@ public class ProfileFragment extends Fragment {
                 Log.w(TAG, "Failed to read value.", error.toException());
             }
         });
+
+        */
+
     }
 
 
@@ -318,20 +327,20 @@ public class ProfileFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         Log.d(TAG, "elmentem innen, key: " + key);
-        writeUser(key,firstNameInput.getText().toString(),lastNameInput.getText().toString(),phoneNumber.getText().toString(),emailInput.getText().toString(),addressInput.getText().toString());
+        writeUser(firstNameInput.getText().toString(),lastNameInput.getText().toString(),phoneNumber.getText().toString(),emailInput.getText().toString(),addressInput.getText().toString());
         Log.d(TAG,"useremail: " + user.getEmailAddress());
         mListener = null;
     }
 
-    private void writeUser(String userId, String firstName, String lastName, String phoneNumber, String emailAddress, String address){
+    private void writeUser(String firstName, String lastName, String phoneNumber, String emailAddress, String address){
         //User user = new User(firstName,lastName,phoneNumber,emailAddress, address);
-        user.setID(Integer.parseInt(userId));
+        user.setID(phoneNumber);
         user.setFirstName(firstName);
         user.setLastName(lastName);
         user.setPhoneNumb(phoneNumber);
         user.setEmailAddress(emailAddress);
-        user.setAddress(address );
-        datebaseRef.child("users").child(userId).setValue(user);
+        user.setAddress(address);
+        datebaseRef.child("users").child(phoneNumber).setValue(user);
     }
 
     public interface OnFragmentInteractionListener {

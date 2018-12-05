@@ -18,13 +18,19 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 
-
+/**
+ * A simple {@link Fragment} subclass.
+ * Activities that contain this fragment must implement the
+ * {@link HomeFragment.OnFragmentInteractionListener} interface
+ * to handle interaction events.
+ * Use the {@link HomeFragment#newInstance} factory method to
+ * create an instance of this fragment.
+ */
 public class HomeFragment extends Fragment {
 
     private Context context = null;
     private OnFragmentInteractionListener mListener;
-    private static View.OnClickListener clickListener;
-
+    private User user = User.getInstance();
     public HomeFragment() {
         // Required empty public constructor
     }

@@ -32,8 +32,11 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.GenericTypeIndicator;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
+import java.util.Objects;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
@@ -46,7 +49,6 @@ public class LoginActivity extends AppCompatActivity {
     String number;
     private String verificationId;
     private FirebaseAuth mAuth;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -79,33 +81,56 @@ public class LoginActivity extends AppCompatActivity {
                 if(number.isEmpty() || number.length()<10){
                     phone_PhoneNum.setError("Nem érvényes telefonszám");
                     phone_PhoneNum.requestFocus();
-
                     /*Intent intent = new Intent(LoginActivity.this,MainScreenActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);*/
-
                     return;
                 }
-
-                users.child("users").addValueEventListener(new ValueEventListener() {
-
+                users.child("users").child(number).addValueEventListener(new ValueEventListener() {
+                    boolean status = false;
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         // This method is called once with the initial value and again
                         // whenever data at this location is updated.
-                        boolean status = false;
-                        if (dataSnapshot.exists()){
 
+                        if (dataSnapshot.exists()){
                             for(DataSnapshot value : dataSnapshot.getChildren()){
-                                User user = value.getValue(User.class);
-                                if(user.getPhoneNumb().equals(phone_PhoneNum.getText().toString()) && value.getKey().equals(user.getID().toString())){
+                                //ArrayList<GenericTypeIndicator > tmp = value.getValue(ArrayList.class);
+                                Log.d(TAG,"tartalma: " + value.getKey());
+                                if(Objects.equals(value.getKey(), "phoneNumb")){
+                                    Log.d(TAG,"tartalma: " + value.getValue());
+                                    User.getInstance().setPhoneNumb(Objects.requireNonNull(value.getValue()).toString());
+                                }
+                                else if(Objects.equals(value.getKey(), "firstName")){
+                                    Log.d(TAG,"tartalma: " + value.getValue());
+                                    User.getInstance().setFirstName(Objects.requireNonNull(value.getValue()).toString());
+                                }
+                                else if(Objects.equals(value.getKey(), "lastName")){
+                                    Log.d(TAG,"tartalma: " + value.getValue());
+                                    User.getInstance().setLastName(Objects.requireNonNull(value.getValue()).toString());
+                                }
+                                else if(Objects.equals(value.getKey(), "ID")){
+                                    Log.d(TAG,"tartalma: " + value.getValue());
+                                    User.getInstance().setID(Objects.requireNonNull(value.getValue()).toString());
+                                }
+                                else if(Objects.equals(value.getKey(), "emailAddress")){
+                                    User.getInstance().setEmailAddress(Objects.requireNonNull(value.getValue()).toString());
+                                }
+                                else if(Objects.equals(value.getKey(), "address")){
+                                    User.getInstance().setAddress(Objects.requireNonNull(value.getValue()).toString());
+                                }
+                                //User user = value.getValue(User.class);
+
+                            }
+                            //User.getInstance().setPhoneNumb(tmp);
+                            User user = User.getInstance();
+                            //Log.d(TAG,"tartalma: " + value.toString());
+                            Log.d(TAG,"User phoneNumber: " + user.getPhoneNumb());
+                                if(user.getPhoneNumb().equals(phone_PhoneNum.getText().toString())){
                                     status = true;
-                                    break;
                                     //Log.d(TAG, "checkUser if status: " + status);
                                 }
-                            }
 
-                            if (status){
                                 //Log.d(TAG, "letezik status: " + status);
                                 LayoutInflater inflater = getLayoutInflater();
                                 View dialoglayout = inflater.inflate(R.layout.custom_aleartdialog, null);
@@ -153,22 +178,16 @@ public class LoginActivity extends AppCompatActivity {
                                 {
                                     builderLogin.show();
                                 }
-
-                            }
-                            else{
-                                //Log.d(TAG, "nem letezik status: " + status);
-                                Intent intent = new Intent(LoginActivity.this,SignUpActivity.class);
-                                intent.putExtra("phoneNumber",number);
-                                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                startActivity(intent);
-                                finish();
-                            }
-
                             //Log.d(TAG, "checkUser ifen kivul status: " + status);
 
                         } else {
                             Log.d(TAG, "dataSnapshot is not extist.");
                             status = false;
+                            Intent intent = new Intent(LoginActivity.this,SignUpActivity.class);
+                            intent.putExtra("phoneNumber",number);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(intent);
+                            finish();
                         }
                     }
 

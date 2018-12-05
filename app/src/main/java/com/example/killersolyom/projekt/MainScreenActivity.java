@@ -16,6 +16,7 @@ import android.widget.TextView;
 public class MainScreenActivity extends AppCompatActivity implements AddAdvertismentFragment.OnFragmentInteractionListener,ProfileFragment.OnFragmentInteractionListener,HomeFragment.OnFragmentInteractionListener {
 
     private TextView mTextMessage;
+    private User user = User.getInstance();
     Bundle bundle = new Bundle();
     private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
             = new BottomNavigationView.OnNavigationItemSelectedListener() {
