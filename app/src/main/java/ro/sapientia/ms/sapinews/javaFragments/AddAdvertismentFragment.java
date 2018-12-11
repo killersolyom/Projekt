@@ -1,4 +1,4 @@
-package ro.sapientia.ms.sapinews;
+package ro.sapientia.ms.sapinews.javaFragments;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import ro.sapientia.ms.sapinews.R;
+import ro.sapientia.ms.sapinews.javaClasses.BitmapContainer;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

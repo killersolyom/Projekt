@@ -1,4 +1,4 @@
-package ro.sapientia.ms.sapinews;
+package ro.sapientia.ms.sapinews.javaClasses;
 
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +13,9 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
+import ro.sapientia.ms.sapinews.javaActivities.AdvertismentDetailActivity;
+import ro.sapientia.ms.sapinews.javaActivities.MyAdvertismentDetailActivity;
 import ro.sapientia.ms.sapinews.R;
 
 import java.util.ArrayList;
@@ -53,21 +56,19 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.RecyclerViewHolder
             holder.counter.setText(advertisment.getViewedCounter()+"");
             Glide.with(context).load(advertisment.getAdvertismentImage()).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.advertismentPicture);
             Glide.with(context).load(advertisment.getAdvertismentProfilePicture()).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.profilePicture);
-
             holder.advertismentPicture.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(name.equals("GlobalAdvertisment")){
-                        Intent intent = new Intent(context, AdvertismentDetailActivity.class);
-                        intent.putExtra("Title",advertisment.getAdvertismentTitle());
-                        startActivity(context,intent,null);
+                        if(name.equals("GlobalAdvertisment")){
+                            Intent intent = new Intent(context, AdvertismentDetailActivity.class);
+                            intent.putExtra("Title",advertisment.getAdvertismentTitle());
+                            startActivity(context,intent,null);
 
-                    }else if(name.equals("MyAdvertisment")){
-                        Intent intent = new Intent(context, MyAdvertismentDetailActivity.class);
-                        intent.putExtra("Title",advertisment.getAdvertismentTitle());
-                        startActivity(context,intent,null);
-                    }
-
+                        }else if(name.equals("MyAdvertisment")){
+                            Intent intent = new Intent(context, MyAdvertismentDetailActivity.class);
+                            intent.putExtra("Title",advertisment.getAdvertismentTitle());
+                            startActivity(context,intent,null);
+                        }
                 }
             });
         } catch (Exception e) {
@@ -76,6 +77,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.RecyclerViewHolder
         }
 
     }
+
 
     public void erase(){
         advertisments.clear();

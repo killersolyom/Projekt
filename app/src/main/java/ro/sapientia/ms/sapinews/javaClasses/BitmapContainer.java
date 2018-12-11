@@ -1,4 +1,4 @@
-package ro.sapientia.ms.sapinews;
+package ro.sapientia.ms.sapinews.javaClasses;
 
 import android.graphics.Bitmap;
 

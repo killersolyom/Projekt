@@ -1,4 +1,4 @@
-package ro.sapientia.ms.sapinews;
+package ro.sapientia.ms.sapinews.javaFragments;
 
 import android.app.AlertDialog;
 import android.content.ContentResolver;
@@ -21,7 +21,12 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+
 import ro.sapientia.ms.sapinews.R;
+import ro.sapientia.ms.sapinews.javaActivities.MainActivity;
+import ro.sapientia.ms.sapinews.javaActivities.MyAdvertismentsActivity;
+import ro.sapientia.ms.sapinews.javaClasses.User;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;

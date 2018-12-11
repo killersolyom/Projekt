@@ -1,4 +1,4 @@
-package ro.sapientia.ms.sapinews;
+package ro.sapientia.ms.sapinews.javaFragments;
 
 import android.content.Context;
 import android.net.Uri;
@@ -11,6 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import ro.sapientia.ms.sapinews.R;
+import ro.sapientia.ms.sapinews.javaClasses.Advertisment;
+import ro.sapientia.ms.sapinews.javaClasses.MyAdapter;
+import ro.sapientia.ms.sapinews.javaClasses.User;
 
 import java.util.ArrayList;
 

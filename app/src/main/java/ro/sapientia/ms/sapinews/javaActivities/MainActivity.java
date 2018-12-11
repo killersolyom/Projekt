@@ -1,4 +1,4 @@
-package ro.sapientia.ms.sapinews;
+package ro.sapientia.ms.sapinews.javaActivities;
 
 import android.content.Intent;
 import android.os.Bundle;

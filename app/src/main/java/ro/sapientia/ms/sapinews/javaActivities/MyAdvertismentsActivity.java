@@ -1,4 +1,4 @@
-package ro.sapientia.ms.sapinews;
+package ro.sapientia.ms.sapinews.javaActivities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -6,6 +6,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
 import ro.sapientia.ms.sapinews.R;
+import ro.sapientia.ms.sapinews.javaClasses.Advertisment;
+import ro.sapientia.ms.sapinews.javaClasses.MyAdapter;
 
 import java.util.ArrayList;
 

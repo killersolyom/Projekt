@@ -1,4 +1,4 @@
-package ro.sapientia.ms.sapinews;
+package ro.sapientia.ms.sapinews.javaActivities;
 
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -16,6 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import ro.sapientia.ms.sapinews.R;
+import ro.sapientia.ms.sapinews.javaClasses.User;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskExecutors;

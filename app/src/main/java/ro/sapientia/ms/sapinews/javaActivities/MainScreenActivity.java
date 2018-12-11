@@ -1,4 +1,4 @@
-package ro.sapientia.ms.sapinews;
+package ro.sapientia.ms.sapinews.javaActivities;
 
 
 
@@ -13,7 +13,11 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import ro.sapientia.ms.sapinews.javaFragments.AddAdvertismentFragment;
+import ro.sapientia.ms.sapinews.javaFragments.HomeFragment;
+import ro.sapientia.ms.sapinews.javaFragments.ProfileFragment;
 import ro.sapientia.ms.sapinews.R;
+import ro.sapientia.ms.sapinews.javaClasses.User;
 
 public class MainScreenActivity extends AppCompatActivity implements AddAdvertismentFragment.OnFragmentInteractionListener,ProfileFragment.OnFragmentInteractionListener,HomeFragment.OnFragmentInteractionListener {
 
