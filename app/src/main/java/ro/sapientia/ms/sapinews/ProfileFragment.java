@@ -1,11 +1,10 @@
-package com.example.killersolyom.projekt;
+package ro.sapientia.ms.sapinews;
 
 import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -22,14 +21,11 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import ro.sapientia.ms.sapinews.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -37,7 +33,6 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Objects;
 
 
 public class ProfileFragment extends Fragment {
@@ -165,9 +160,7 @@ public class ProfileFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
-        //Bitmap bitmap = null;
         if (requestCode == PICK_IMAGE && data != null && data.getData() != null) {
-            //TODO: action
             uri = data.getData();
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), uri);
@@ -302,47 +295,6 @@ public class ProfileFragment extends Fragment {
         phoneNumber.setText(user.getPhoneNumb());
         emailInput.setText(user.getEmailAddress());
         addressInput.setText(user.getAddress());
-        /*
-        datebaseRef.child("users").child(number).addValueEventListener(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                if (dataSnapshot.exists()){
-                    for(DataSnapshot value : dataSnapshot.getChildren()){
-                        Log.d(TAG,value.getKey());
-                        //user = value.getValue(User.class);
-                        //Log.d(TAG, "getInformation : " + user.toString());
-                        Log.d(TAG, "getInformation : " + value.getKey());
-                        if(user.getPhoneNumb().equals(number)){
-                            key = user.getID();
-                            Log.d(TAG,"key: " + key);
-                            firstNameInput.setText(user.getFirstName());
-                            lastNameInput.setText(user.getLastName());
-                            phoneNumber.setText(user.getPhoneNumb());
-                            emailInput.setText(user.getEmailAddress());
-                            addressInput.setText(user.getAddress());
-                            break;
-                            //Log.d(TAG, "checkUser if status: " + status);
-                        }
-                    }
-
-                    //Log.d(TAG, "checkUser ifen kivul status: " + status);
-
-                } else {
-                    Log.d(TAG, "dataSnapshot is not extist.");
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
-
-        */
 
     }
 
@@ -386,7 +338,6 @@ public class ProfileFragment extends Fragment {
     }
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }

@@ -1,8 +1,6 @@
-package com.example.killersolyom.projekt;
+package ro.sapientia.ms.sapinews;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -16,9 +14,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import ro.sapientia.ms.sapinews.R;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
 
 
 public class AddAdvertismentFragment extends Fragment {
@@ -54,6 +53,7 @@ public class AddAdvertismentFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
+
         }
     }
 
@@ -156,42 +156,10 @@ public class AddAdvertismentFragment extends Fragment {
         super.onAttach(context);
     }
 
-    public boolean alert(){
-        final boolean[] temp = new boolean[1];
-        AlertDialog.Builder builder = new AlertDialog.Builder(this.getContext());
-        builder.setMessage("Fel szeretné tölteni a hírdetést?");
-        builder.setCancelable(false);
-
-        builder.setPositiveButton("Igen", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                Toast.makeText(getContext(),"igen",Toast.LENGTH_SHORT).show();
-                temp[0] = true;
-                dialog.cancel();
-            }
-        });
-        builder.setNegativeButton("Nem", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                Toast.makeText(getContext(),"nem",Toast.LENGTH_SHORT).show();
-                temp[0] = false;
-                dialog.cancel();
-            }
-        });
-        builder.setNeutralButton("Mégsem", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int id) {
-                Toast.makeText(getContext(),"mégsem",Toast.LENGTH_SHORT).show();
-                temp[0] = true;
-                dialog.cancel();
-            }
-        });
-        super.onDetach();
-        AlertDialog alert11 = builder.create();
-        alert11.show();
-        return temp[0];
-    }
 
     @Override
     public void onDetach() {
-            super.onDetach();
+        super.onDetach();
     }
 
     public void refreshView(){
@@ -203,15 +171,6 @@ public class AddAdvertismentFragment extends Fragment {
 
 
 
-    @Override
-    public void onStop() {
-        super.onStop();
-    }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-    }
 
     public interface OnFragmentInteractionListener {
     }

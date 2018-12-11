@@ -1,4 +1,4 @@
-package com.example.killersolyom.projekt;
+package ro.sapientia.ms.sapinews;
 
 import android.graphics.Bitmap;
 

@@ -1,6 +1,4 @@
-package com.example.killersolyom.projekt;
-
-import android.net.Uri;
+package ro.sapientia.ms.sapinews;
 
 public class Advertisment {
 

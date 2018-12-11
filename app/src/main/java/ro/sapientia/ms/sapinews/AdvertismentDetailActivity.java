@@ -1,7 +1,9 @@
-package com.example.killersolyom.projekt;
+package ro.sapientia.ms.sapinews;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+
+import ro.sapientia.ms.sapinews.R;
 
 public class AdvertismentDetailActivity extends AppCompatActivity {
 

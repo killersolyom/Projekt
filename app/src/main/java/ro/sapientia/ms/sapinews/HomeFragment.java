@@ -1,22 +1,18 @@
-package com.example.killersolyom.projekt;
+package ro.sapientia.ms.sapinews;
 
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.SyncStateContract;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+
+import ro.sapientia.ms.sapinews.R;
 
 import java.util.ArrayList;
-
 
 
 public class HomeFragment extends Fragment {
@@ -25,6 +21,8 @@ public class HomeFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
     private User user = User.getInstance();
     private ArrayList<Advertisment> advertisments = new ArrayList<>();
+    private RecyclerView recycle;
+    private MyAdapter adapter;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -49,51 +47,15 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_home, container, false);
-        RecyclerView recycle = view.findViewById(R.id.recycler_view);
+        recycle = view.findViewById(R.id.recycler_view);
         for(int i = 0; i < 20; i++){
             advertisments.add(generateAdvertisment());
             advertisments.get(i).setAdvertismentTitle( advertisments.get(i).getAdvertismentTitle()+" " + i );
         }
         context = this.getContext();
-        //Toast.makeText(this.getContext(),"Home Size: "+advertisments.size()+"",Toast.LENGTH_SHORT).show();
-        MyAdapter adapter = new MyAdapter(this.getContext(),advertisments,"GlobalAdvertisment");
+        adapter = new MyAdapter(this.getContext(),advertisments,"GlobalAdvertisment");
         recycle.setLayoutManager(new LinearLayoutManager(this.getContext()));
         recycle.setAdapter(adapter);
-/*
-        final GestureDetector gesture = new GestureDetector(getActivity(), new GestureDetector.SimpleOnGestureListener() {
-                    @Override
-                    public boolean onDown(MotionEvent e) {
-                        return true;
-                    }
-                    @Override
-                    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
-                                           float velocityY) {
-                        final int SWIPE_MIN_DISTANCE = 120;
-                        final int SWIPE_MAX_OFF_PATH = 250;
-                        final int SWIPE_THRESHOLD_VELOCITY = 200;
-                        try {
-                            if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
-                                return false;
-                            if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                                //Log.i(this.APP_TAG, "Right to Left");
-                                Toast.makeText(context,"bal",Toast.LENGTH_SHORT).show();
-                            } else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                                Toast.makeText(context,"jobb",Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (Exception e) {
-                            // nothing
-                        }
-                        return super.onFling(e1, e2, velocityX, velocityY);
-                    }
-                });
-
-        view.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return gesture.onTouchEvent(event);
-            }
-        });*/
-
         return view;
     }
 
@@ -127,7 +89,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
     }
 
     public interface OnFragmentInteractionListener {

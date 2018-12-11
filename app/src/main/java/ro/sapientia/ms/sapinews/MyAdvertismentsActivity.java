@@ -1,12 +1,11 @@
-package com.example.killersolyom.projekt;
+package ro.sapientia.ms.sapinews;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
+
+import ro.sapientia.ms.sapinews.R;
 
 import java.util.ArrayList;
 

@@ -1,4 +1,4 @@
-package com.example.killersolyom.projekt;
+package ro.sapientia.ms.sapinews;
 
 public class Upload {
     private String mName;

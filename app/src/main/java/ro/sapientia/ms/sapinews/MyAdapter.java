@@ -1,4 +1,4 @@
-package com.example.killersolyom.projekt;
+package ro.sapientia.ms.sapinews;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,8 +10,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import ro.sapientia.ms.sapinews.R;
+
 import java.util.ArrayList;
 
 import static android.support.v4.content.ContextCompat.startActivity;
@@ -27,7 +30,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.RecyclerViewHolder
     private Context context;
     private String name = "";
 
-    public MyAdapter(Context context, ArrayList<Advertisment> advertisment,String name) {
+    public MyAdapter(Context context, ArrayList<Advertisment> advertisment, String name) {
         this.context = context;
         advertisments = advertisment;
         this.name = name;
@@ -51,20 +54,17 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.RecyclerViewHolder
             Glide.with(context).load(advertisment.getAdvertismentImage()).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.advertismentPicture);
             Glide.with(context).load(advertisment.getAdvertismentProfilePicture()).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.profilePicture);
 
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
+            holder.advertismentPicture.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     if(name.equals("GlobalAdvertisment")){
-                        //Toast.makeText(context,"Clicked "+ advertisment.getAdvertismentTitle(),Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(context, AdvertismentDetailActivity.class);
                         intent.putExtra("Title",advertisment.getAdvertismentTitle());
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(context,intent,null);
+
                     }else if(name.equals("MyAdvertisment")){
-                        //Toast.makeText(context,"Clicked "+ advertisment.getAdvertismentTitle(),Toast.LENGTH_SHORT).show();
                         Intent intent = new Intent(context, MyAdvertismentDetailActivity.class);
                         intent.putExtra("Title",advertisment.getAdvertismentTitle());
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(context,intent,null);
                     }
 
@@ -76,6 +76,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.RecyclerViewHolder
         }
 
     }
+
+    public void erase(){
+        advertisments.clear();
+    }
+
 
     @Override
     public int getItemCount() {

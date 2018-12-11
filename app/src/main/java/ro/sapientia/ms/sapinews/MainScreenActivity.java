@@ -1,4 +1,4 @@
-package com.example.killersolyom.projekt;
+package ro.sapientia.ms.sapinews;
 
 
 
@@ -13,13 +13,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import ro.sapientia.ms.sapinews.R;
+
 public class MainScreenActivity extends AppCompatActivity implements AddAdvertismentFragment.OnFragmentInteractionListener,ProfileFragment.OnFragmentInteractionListener,HomeFragment.OnFragmentInteractionListener {
 
     private TextView mTextMessage;
     private User user = User.getInstance();
     Bundle bundle = new Bundle();
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -57,8 +58,8 @@ public class MainScreenActivity extends AppCompatActivity implements AddAdvertis
         String phoneNumberNumber = i.getStringExtra("phoneNumber");
         bundle.putString("phone",phoneNumberNumber);
 
-        mTextMessage = (TextView) findViewById(R.id.message);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        mTextMessage =  findViewById(R.id.message);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.getMenu().getItem(1).setChecked(true);
         HomeFragment advFragment = new HomeFragment();
@@ -74,11 +75,4 @@ public class MainScreenActivity extends AppCompatActivity implements AddAdvertis
     }
 
 
-
-/*
-    @Override
-    protected void onPause() {
-        super.onPause();
-        finish();
-    }*/
 }
