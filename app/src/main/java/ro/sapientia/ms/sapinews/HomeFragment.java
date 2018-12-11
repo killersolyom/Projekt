@@ -1,19 +1,16 @@
-package com.example.killersolyom.projekt;
+package ro.sapientia.ms.sapinews;
 
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.SyncStateContract;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
+
+import ro.sapientia.ms.sapinews.R;
 
 import java.util.ArrayList;
 
@@ -34,7 +31,6 @@ public class HomeFragment extends Fragment {
     public HomeFragment() {
         // Required empty public constructor
     }
-
 
     public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
@@ -118,6 +114,7 @@ public class HomeFragment extends Fragment {
         advertisments.setAdvertismentProfilePicture("https://coubsecure-s.akamaihd.net/get/b153/p/coub/simple/cw_timeline_pic/dc084aa3631/dffafd7f8fc57eeaf2c71/ios_large_1482287026_image.jpg");
         return advertisments;
     }
+
 
     @Override
     public void onAttach(Context context) {

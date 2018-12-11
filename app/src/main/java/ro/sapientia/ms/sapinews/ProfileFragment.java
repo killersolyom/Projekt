@@ -1,11 +1,10 @@
-package com.example.killersolyom.projekt;
+package ro.sapientia.ms.sapinews;
 
 import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -22,14 +21,11 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import ro.sapientia.ms.sapinews.R;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -37,7 +33,6 @@ import com.google.firebase.storage.UploadTask;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Objects;
 
 
 public class ProfileFragment extends Fragment {
@@ -369,7 +364,7 @@ public class ProfileFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         //Log.d(TAG, "elmentem innen, key: " + key);
-        //writeUser(firstNameInput.getText().toString(),lastNameInput.getText().toString(),phoneNumber.getText().toString(),emailInput.getText().toString(),addressInput.getText().toString());
+        writeUser(firstNameInput.getText().toString(),lastNameInput.getText().toString(),phoneNumber.getText().toString(),emailInput.getText().toString(),addressInput.getText().toString());
         //Log.d(TAG,"useremail: " + user.getEmailAddress());
         mListener = null;
     }
@@ -382,7 +377,7 @@ public class ProfileFragment extends Fragment {
         user.setPhoneNumb(phoneNumber);
         user.setEmailAddress(emailAddress);
         user.setAddress(address);
-
+        user.setImageUrl(User.getInstance().getImageUrl());
         datebaseRef.child("users").child(phoneNumber).setValue(user);
     }
 

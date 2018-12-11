@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:1002621624887:android:7222cd317482ea8a",
         "android_client_info": {
-          "package_name": "com.example.killersolyom.projekt"
+          "package_name": "ro.sapientia.ms.sapinews"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "1002621624887-pvv9p7gaspuvjfkv527vgcrsbp5udd8s.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.killersolyom.projekt",
+            "package_name": "ro.sapientia.ms.sapinews",
             "certificate_hash": "00a8286f5b58ad973f134572b74ea9bed4ca7542"
           }
         },
@@ -26,7 +26,7 @@
           "client_id": "1002621624887-biuf0icme42ttf5tgn1e2bp4g3c01o9i.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.killersolyom.projekt",
+            "package_name": "ro.sapientia.ms.sapinews",
             "certificate_hash": "aea3e76a47e2af0667f14fcda81b0da41254b70c"
           }
         },
@@ -34,7 +34,7 @@
           "client_id": "1002621624887-47kuoid6hkbidnocds5c6po233s2u4mp.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.killersolyom.projekt",
+            "package_name": "ro.sapientia.ms.sapinews",
             "certificate_hash": "db2496e9c155b5d5ea30556631a945f30b9d1f4b"
           }
         },

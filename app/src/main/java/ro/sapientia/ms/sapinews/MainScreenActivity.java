@@ -1,4 +1,4 @@
-package com.example.killersolyom.projekt;
+package ro.sapientia.ms.sapinews;
 
 
 
@@ -12,6 +12,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
+
+import ro.sapientia.ms.sapinews.R;
 
 public class MainScreenActivity extends AppCompatActivity implements AddAdvertismentFragment.OnFragmentInteractionListener,ProfileFragment.OnFragmentInteractionListener,HomeFragment.OnFragmentInteractionListener {
 

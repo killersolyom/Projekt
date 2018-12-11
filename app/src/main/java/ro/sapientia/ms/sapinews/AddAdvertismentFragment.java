@@ -1,4 +1,4 @@
-package com.example.killersolyom.projekt;
+package ro.sapientia.ms.sapinews;
 
 import android.content.Context;
 import android.content.Intent;
@@ -11,9 +11,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+
+import ro.sapientia.ms.sapinews.R;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
 
 
 /**

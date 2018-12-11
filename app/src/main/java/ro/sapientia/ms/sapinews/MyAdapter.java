@@ -1,4 +1,4 @@
-package com.example.killersolyom.projekt;
+package ro.sapientia.ms.sapinews;
 
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -9,8 +9,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import ro.sapientia.ms.sapinews.R;
+
 import java.util.ArrayList;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.RecyclerViewHolder> {
@@ -45,7 +48,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.RecyclerViewHolder
             holder.counter.setText(advertisment.getViewedCounter()+"");
             Glide.with(context).load(advertisment.getAdvertismentImage()).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.advertismentPicture);
             Glide.with(context).load(advertisment.getAdvertismentProfilePicture()).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.profilePicture);
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
+            holder.advertismentPicture.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     Toast.makeText(context,"Clicked "+ advertisment.getAdvertismentTitle(),Toast.LENGTH_SHORT).show();
@@ -57,6 +60,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.RecyclerViewHolder
         }
 
     }
+
 
     @Override
     public int getItemCount() {
