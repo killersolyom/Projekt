@@ -1,4 +1,4 @@
-package ro.sapientia.ms.sapinews;
+package ro.sapientia.ms.sapinews.javaFragments;
 
 import android.app.AlertDialog;
 import android.content.ContentResolver;
@@ -21,7 +21,12 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+
 import ro.sapientia.ms.sapinews.R;
+import ro.sapientia.ms.sapinews.javaActivities.MainActivity;
+import ro.sapientia.ms.sapinews.javaActivities.MyAdvertismentsActivity;
+import ro.sapientia.ms.sapinews.javaClasses.User;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DatabaseReference;
@@ -160,9 +165,7 @@ public class ProfileFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
-        //Bitmap bitmap = null;
         if (requestCode == PICK_IMAGE && data != null && data.getData() != null) {
-            //TODO: action
             uri = data.getData();
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), uri);
@@ -297,52 +300,10 @@ public class ProfileFragment extends Fragment {
         phoneNumber.setText(user.getPhoneNumb());
         emailInput.setText(user.getEmailAddress());
         addressInput.setText(user.getAddress());
-        /*
-        datebaseRef.child("users").child(number).addValueEventListener(new ValueEventListener() {
-
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                // This method is called once with the initial value and again
-                // whenever data at this location is updated.
-                if (dataSnapshot.exists()){
-                    for(DataSnapshot value : dataSnapshot.getChildren()){
-                        Log.d(TAG,value.getKey());
-                        //user = value.getValue(User.class);
-                        //Log.d(TAG, "getInformation : " + user.toString());
-                        Log.d(TAG, "getInformation : " + value.getKey());
-                        if(user.getPhoneNumb().equals(number)){
-                            key = user.getID();
-                            Log.d(TAG,"key: " + key);
-                            firstNameInput.setText(user.getFirstName());
-                            lastNameInput.setText(user.getLastName());
-                            phoneNumber.setText(user.getPhoneNumb());
-                            emailInput.setText(user.getEmailAddress());
-                            addressInput.setText(user.getAddress());
-                            break;
-                            //Log.d(TAG, "checkUser if status: " + status);
-                        }
-                    }
-
-                    //Log.d(TAG, "checkUser ifen kivul status: " + status);
-
-                } else {
-                    Log.d(TAG, "dataSnapshot is not extist.");
-                }
-            }
-
-            @Override
-            public void onCancelled(DatabaseError error) {
-                // Failed to read value
-                Log.w(TAG, "Failed to read value.", error.toException());
-            }
-        });
-
-        */
 
     }
 
 
-    // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
@@ -364,7 +325,7 @@ public class ProfileFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         //Log.d(TAG, "elmentem innen, key: " + key);
-        writeUser(firstNameInput.getText().toString(),lastNameInput.getText().toString(),phoneNumber.getText().toString(),emailInput.getText().toString(),addressInput.getText().toString());
+        //writeUser(firstNameInput.getText().toString(),lastNameInput.getText().toString(),phoneNumber.getText().toString(),emailInput.getText().toString(),addressInput.getText().toString());
         //Log.d(TAG,"useremail: " + user.getEmailAddress());
         mListener = null;
     }
@@ -377,12 +338,11 @@ public class ProfileFragment extends Fragment {
         user.setPhoneNumb(phoneNumber);
         user.setEmailAddress(emailAddress);
         user.setAddress(address);
-        user.setImageUrl(User.getInstance().getImageUrl());
+
         datebaseRef.child("users").child(phoneNumber).setValue(user);
     }
 
     public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
     }
 }

@@ -1,4 +1,4 @@
-package ro.sapientia.ms.sapinews;
+package ro.sapientia.ms.sapinews.javaFragments;
 
 import android.content.Context;
 import android.net.Uri;
@@ -11,26 +11,26 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import ro.sapientia.ms.sapinews.R;
+import ro.sapientia.ms.sapinews.javaClasses.Advertisment;
+import ro.sapientia.ms.sapinews.javaClasses.MyAdapter;
+import ro.sapientia.ms.sapinews.javaClasses.User;
 
 import java.util.ArrayList;
 
 
-/**
- * A simple {@link Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link HomeFragment.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link HomeFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
 public class HomeFragment extends Fragment {
 
     private Context context = null;
     private OnFragmentInteractionListener mListener;
     private User user = User.getInstance();
+    private ArrayList<Advertisment> advertisments = new ArrayList<>();
+    private RecyclerView recycle;
+    private MyAdapter adapter;
+
     public HomeFragment() {
         // Required empty public constructor
     }
+
 
     public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
@@ -50,52 +50,15 @@ public class HomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view =  inflater.inflate(R.layout.fragment_home, container, false);
-        RecyclerView recycle = view.findViewById(R.id.recycler_view);
-        ArrayList<Advertisment> advertisments = new ArrayList<>();
+        recycle = view.findViewById(R.id.recycler_view);
         for(int i = 0; i < 20; i++){
             advertisments.add(generateAdvertisment());
             advertisments.get(i).setAdvertismentTitle( advertisments.get(i).getAdvertismentTitle()+" " + i );
         }
         context = this.getContext();
-        //Toast.makeText(this.getContext(),"Home Size: "+advertisments.size()+"",Toast.LENGTH_SHORT).show();
-        MyAdapter temp = new MyAdapter(this.getContext(),advertisments);
+        adapter = new MyAdapter(this.getContext(),advertisments,"GlobalAdvertisment");
         recycle.setLayoutManager(new LinearLayoutManager(this.getContext()));
-        recycle.setAdapter(temp);
-/*
-        final GestureDetector gesture = new GestureDetector(getActivity(), new GestureDetector.SimpleOnGestureListener() {
-                    @Override
-                    public boolean onDown(MotionEvent e) {
-                        return true;
-                    }
-                    @Override
-                    public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX,
-                                           float velocityY) {
-                        final int SWIPE_MIN_DISTANCE = 120;
-                        final int SWIPE_MAX_OFF_PATH = 250;
-                        final int SWIPE_THRESHOLD_VELOCITY = 200;
-                        try {
-                            if (Math.abs(e1.getY() - e2.getY()) > SWIPE_MAX_OFF_PATH)
-                                return false;
-                            if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                                //Log.i(this.APP_TAG, "Right to Left");
-                                Toast.makeText(context,"bal",Toast.LENGTH_SHORT).show();
-                            } else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-                                Toast.makeText(context,"jobb",Toast.LENGTH_SHORT).show();
-                            }
-                        } catch (Exception e) {
-                            // nothing
-                        }
-                        return super.onFling(e1, e2, velocityX, velocityY);
-                    }
-                });
-
-        view.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return gesture.onTouchEvent(event);
-            }
-        });*/
-
+        recycle.setAdapter(adapter);
         return view;
     }
 
@@ -115,7 +78,6 @@ public class HomeFragment extends Fragment {
         return advertisments;
     }
 
-
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -130,7 +92,6 @@ public class HomeFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
-        mListener = null;
     }
 
     public interface OnFragmentInteractionListener {

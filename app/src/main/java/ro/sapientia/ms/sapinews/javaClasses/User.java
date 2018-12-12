@@ -1,4 +1,4 @@
-package ro.sapientia.ms.sapinews;
+package ro.sapientia.ms.sapinews.javaClasses;
 
 public class User {
 
@@ -16,16 +16,7 @@ public class User {
     private User(){
 
     }
-/*
-    public User(String firstName, String lastName, String phoneNumb, String emailAddress, String address){
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.phoneNumb = phoneNumb;
-        this.emailAddress = emailAddress;
-        this.address = address;
-        this.ID=0;
-    }
-*/
+
 
     public static User getInstance(){
         if(single_instance == null){

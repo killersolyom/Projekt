@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/recycler_view_advertisment"
     android:layout_width="match_parent"
     android:layout_height="230dp"
-    android:background="@color/white"
-    android:orientation="vertical"
-
-    tools:context=".MyAdapter">
+    android:background="@color/white">
 
     <ImageView
         android:id="@+id/AdvertismentImage"
+        android:clickable="true"
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:layout_marginStart="0dp"
@@ -61,7 +58,7 @@
         android:textColor="@color/common_google_signin_btn_text_light_focused"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/ProfilePicture"
+        app:layout_constraintStart_toEndOf="@+id/profilePicture"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -75,7 +72,7 @@
         android:textColor="@color/hint_gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/ProfilePicture"
+        app:layout_constraintStart_toEndOf="@+id/profilePicture"
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageView

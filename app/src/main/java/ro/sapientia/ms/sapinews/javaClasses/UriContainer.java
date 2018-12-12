@@ -1,22 +1,26 @@
-package ro.sapientia.ms.sapinews;
+package ro.sapientia.ms.sapinews.javaClasses;
 
 import android.graphics.Bitmap;
+import android.net.Uri;
 
 import java.util.ArrayList;
 
 public class UriContainer {
 
-    private ArrayList<Bitmap> uri = new ArrayList<>();
+    private ArrayList<Uri> uri = new ArrayList<>();
     private int currentIndex = 0;
+    private int maxPicture = 4;
 
     public UriContainer() {
     }
 
-    public void addUri(Bitmap bitmap){
-        uri.add(bitmap);
+    public void addUri(Uri image){
+        if(uri.size() < maxPicture){
+            uri.add(image);
+        }
     }
 
-    public Bitmap getNextImage(){
+    public Uri getNextImage(){
         if(uri.size() == 1){
             return uri.get(0);
         }
@@ -29,7 +33,7 @@ public class UriContainer {
         }
     }
 
-    public Bitmap getPreviousImage(){
+    public Uri getPreviousImage(){
         if(uri.size() == 1){
             return uri.get(0);
         }
@@ -49,7 +53,19 @@ public class UriContainer {
         return false;
     }
 
-    public Bitmap getCurrentImage(){
+    public ArrayList<Uri> getUri() {
+        return uri;
+    }
+
+    public int getMaxPicture() {
+        return maxPicture;
+    }
+
+    public void setMaxPicture(int maxPicture) {
+        this.maxPicture = maxPicture;
+    }
+
+    public Uri getCurrentImage(){
         if(uri.size() == 1){
             return uri.get(0);
         }

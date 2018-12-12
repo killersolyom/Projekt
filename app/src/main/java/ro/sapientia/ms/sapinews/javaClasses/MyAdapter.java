@@ -1,6 +1,7 @@
-package ro.sapientia.ms.sapinews;
+package ro.sapientia.ms.sapinews.javaClasses;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,9 +13,14 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
+import ro.sapientia.ms.sapinews.javaActivities.AdvertismentDetailActivity;
+import ro.sapientia.ms.sapinews.javaActivities.MyAdvertismentDetailActivity;
 import ro.sapientia.ms.sapinews.R;
 
 import java.util.ArrayList;
+
+import static android.support.v4.content.ContextCompat.startActivity;
 
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.RecyclerViewHolder> {
     ImageView advertismentImage;
@@ -25,10 +31,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.RecyclerViewHolder
 
     private ArrayList<Advertisment> advertisments = new ArrayList<>();
     private Context context;
+    private String name = "";
 
-    public MyAdapter(Context context, ArrayList<Advertisment> advertisment) {
+    public MyAdapter(Context context, ArrayList<Advertisment> advertisment, String name) {
         this.context = context;
         advertisments = advertisment;
+        this.name = name;
     }
 
     @NonNull
@@ -51,7 +59,16 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.RecyclerViewHolder
             holder.advertismentPicture.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(context,"Clicked "+ advertisment.getAdvertismentTitle(),Toast.LENGTH_SHORT).show();
+                        if(name.equals("GlobalAdvertisment")){
+                            Intent intent = new Intent(context, AdvertismentDetailActivity.class);
+                            intent.putExtra("Title",advertisment.getAdvertismentTitle());
+                            startActivity(context,intent,null);
+
+                        }else if(name.equals("MyAdvertisment")){
+                            Intent intent = new Intent(context, MyAdvertismentDetailActivity.class);
+                            intent.putExtra("Title",advertisment.getAdvertismentTitle());
+                            startActivity(context,intent,null);
+                        }
                 }
             });
         } catch (Exception e) {
@@ -59,6 +76,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.RecyclerViewHolder
             Toast.makeText(context,"Adapter Baj!",Toast.LENGTH_LONG).show();
         }
 
+    }
+
+
+    public void erase(){
+        advertisments.clear();
     }
 
 

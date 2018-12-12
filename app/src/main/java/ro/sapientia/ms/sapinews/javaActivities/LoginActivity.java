@@ -1,4 +1,4 @@
-package ro.sapientia.ms.sapinews;
+package ro.sapientia.ms.sapinews.javaActivities;
 
 import android.app.Activity;
 import android.content.DialogInterface;
@@ -16,6 +16,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import ro.sapientia.ms.sapinews.R;
+import ro.sapientia.ms.sapinews.javaClasses.User;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.gms.tasks.TaskExecutors;
@@ -54,6 +56,7 @@ public class LoginActivity extends AppCompatActivity {
         login = findViewById(R.id.btn_signIn);
         phone_PhoneNum = findViewById(R.id.phone_PhoneNum);
         phone_PhoneNum.setText("+40");
+        phone_PhoneNum.setText("+40758945982");
 
         have_account.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,6 +122,7 @@ public class LoginActivity extends AppCompatActivity {
                                 //User user = value.getValue(User.class);
 
                             }
+
                             //User.getInstance().setPhoneNumb(tmp);
                             User user = User.getInstance();
                             //Log.d(TAG,"tartalma: " + value.toString());
@@ -192,7 +196,6 @@ public class LoginActivity extends AppCompatActivity {
                     public void onCancelled(DatabaseError error) {
                         // Failed to read value
                         Log.w(TAG, "Failed to read value.", error.toException());
-                        Toast.makeText(getApplicationContext(),error.getMessage(),Toast.LENGTH_SHORT).show();
                     }
                 });
             }

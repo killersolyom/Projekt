@@ -1,4 +1,4 @@
-package ro.sapientia.ms.sapinews;
+package ro.sapientia.ms.sapinews.javaActivities;
 
 
 
@@ -13,15 +13,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import ro.sapientia.ms.sapinews.javaFragments.AddAdvertismentFragment;
+import ro.sapientia.ms.sapinews.javaFragments.HomeFragment;
+import ro.sapientia.ms.sapinews.javaFragments.ProfileFragment;
 import ro.sapientia.ms.sapinews.R;
+import ro.sapientia.ms.sapinews.javaClasses.User;
 
 public class MainScreenActivity extends AppCompatActivity implements AddAdvertismentFragment.OnFragmentInteractionListener,ProfileFragment.OnFragmentInteractionListener,HomeFragment.OnFragmentInteractionListener {
 
     private TextView mTextMessage;
     private User user = User.getInstance();
     Bundle bundle = new Bundle();
-    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener
-            = new BottomNavigationView.OnNavigationItemSelectedListener() {
+    private BottomNavigationView.OnNavigationItemSelectedListener mOnNavigationItemSelectedListener = new BottomNavigationView.OnNavigationItemSelectedListener() {
 
         @Override
         public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -58,9 +61,7 @@ public class MainScreenActivity extends AppCompatActivity implements AddAdvertis
         Intent i = getIntent();
         String phoneNumberNumber = i.getStringExtra("phoneNumber");
         bundle.putString("phone",phoneNumberNumber);
-
-        mTextMessage = (TextView) findViewById(R.id.message);
-        BottomNavigationView navigation = (BottomNavigationView) findViewById(R.id.navigation);
+        BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.getMenu().getItem(1).setChecked(true);
         HomeFragment advFragment = new HomeFragment();
@@ -76,11 +77,4 @@ public class MainScreenActivity extends AppCompatActivity implements AddAdvertis
     }
 
 
-
-/*
-    @Override
-    protected void onPause() {
-        super.onPause();
-        finish();
-    }*/
 }
