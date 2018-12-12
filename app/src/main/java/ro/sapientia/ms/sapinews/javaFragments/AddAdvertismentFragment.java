@@ -15,7 +15,7 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import ro.sapientia.ms.sapinews.R;
-import ro.sapientia.ms.sapinews.javaClasses.BitmapContainer;
+import ro.sapientia.ms.sapinews.javaClasses.UriContainer;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -33,7 +33,7 @@ public class AddAdvertismentFragment extends Fragment {
     private EditText phoneNumber;
     private EditText location;
     private static final int PICK_IMAGE = 1;
-    private BitmapContainer images = new BitmapContainer();
+    private UriContainer images = new UriContainer();
 
    // private OnFragmentInteractionListener mListener;
 
@@ -75,8 +75,15 @@ public class AddAdvertismentFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(!images.isEmpty()){
-                    firstPicture.setImageBitmap(images.getNextImage());
-                    secondPicture.setImageBitmap(images.getNextImage());
+                    try {
+                        Bitmap bitmapFirst = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), images.getNextImage());
+                        Bitmap bitmapSecond = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), images.getNextImage());
+                        firstPicture.setImageBitmap(bitmapFirst);
+                        secondPicture.setImageBitmap(bitmapSecond);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+
                 }
             }
         });
@@ -84,8 +91,14 @@ public class AddAdvertismentFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 if(!images.isEmpty()){
-                    firstPicture.setImageBitmap(images.getPreviousImage());
-                    secondPicture.setImageBitmap(images.getPreviousImage());
+                    try {
+                        Bitmap bitmapFirst = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), images.getPreviousImage());
+                        Bitmap bitmapSecond = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), images.getPreviousImage());
+                        firstPicture.setImageBitmap(bitmapFirst);
+                        secondPicture.setImageBitmap(bitmapSecond);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
@@ -112,8 +125,7 @@ public class AddAdvertismentFragment extends Fragment {
             }
         });
         if(!images.isEmpty()){
-            firstPicture.setImageBitmap(images.getCurrentImage());
-            secondPicture.setImageBitmap(images.getNextImage());
+            refreshView();
         }
 
         return view;
@@ -139,16 +151,8 @@ public class AddAdvertismentFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE && data != null && data.getData() != null) {
             Uri uri = data.getData();
-            try {
-                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), uri);
-                images.addUri(bitmap);
+                images.addUri(uri);
                 refreshView();
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
         }
     }
 
@@ -165,8 +169,14 @@ public class AddAdvertismentFragment extends Fragment {
 
     public void refreshView(){
         if(images.isEmpty()==false){
-            firstPicture.setImageBitmap(images.getCurrentImage());
-            secondPicture.setImageBitmap(images.getNextImage());
+            try {
+                Bitmap bitmapFirst = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), images.getCurrentImage());
+                Bitmap bitmapSecond = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), images.getNextImage());
+                firstPicture.setImageBitmap(bitmapFirst);
+                secondPicture.setImageBitmap(bitmapSecond);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 

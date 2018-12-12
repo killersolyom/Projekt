@@ -61,8 +61,6 @@ public class MainScreenActivity extends AppCompatActivity implements AddAdvertis
         Intent i = getIntent();
         String phoneNumberNumber = i.getStringExtra("phoneNumber");
         bundle.putString("phone",phoneNumberNumber);
-
-        mTextMessage =  findViewById(R.id.message);
         BottomNavigationView navigation = findViewById(R.id.navigation);
         navigation.setOnNavigationItemSelectedListener(mOnNavigationItemSelectedListener);
         navigation.getMenu().getItem(1).setChecked(true);

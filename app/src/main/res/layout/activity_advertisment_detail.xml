@@ -91,13 +91,16 @@
         android:layout_marginStart="3dp"
         android:layout_marginTop="484dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:contentDescription=""
         android:scaleType="centerCrop"
         android:src="@drawable/shrek"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.706"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/Creator"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.759" />
 
     <ImageView
         android:id="@+id/ProfilePictureMask"
@@ -106,12 +109,15 @@
         android:layout_marginStart="3dp"
         android:layout_marginTop="484dp"
         android:layout_marginEnd="8dp"
+        android:layout_marginBottom="8dp"
         android:contentDescription=""
         android:src="@drawable/mask"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.706"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/Creator"
+        app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.759" />
 
     <ImageView
         android:id="@+id/ShareButton"
@@ -136,12 +142,12 @@
         app:layout_constraintStart_toEndOf="@+id/ShareButton"
         app:srcCompat="@drawable/report" />
 
-    <EditText
+    <TextView
         android:id="@+id/Creator"
         android:layout_width="93dp"
         android:layout_height="41dp"
         android:layout_marginStart="8dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="44dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Name"
