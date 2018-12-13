@@ -1,5 +1,7 @@
 package ro.sapientia.ms.sapinews.javaClasses;
 
+import java.util.ArrayList;
+
 public class User {
 
     private static User single_instance = null;
@@ -11,12 +13,16 @@ public class User {
     private String emailAddress;
     private String address;
     private String imageUrl;
-
+    private ArrayList<String> adKeys = new ArrayList<>();
 
     private User(){
 
     }
 
+
+    public void setAdKeys(ArrayList<String> adKeys) {
+        this.adKeys = adKeys;
+    }
 
     public static User getInstance(){
         if(single_instance == null){
@@ -81,6 +87,14 @@ public class User {
         this.imageUrl = imageUrl;
     }
 
+    public void setAdvKeysToArrayList (String key){
+        adKeys.add(key);
+    }
+
+    public ArrayList<String> getAdKeys() {
+        return adKeys;
+    }
+
     @Override
     public String toString() {
         return "User{" +
@@ -91,6 +105,7 @@ public class User {
                 ", emailAddress='" + emailAddress + '\'' +
                 ", address='" + address + '\'' +
                 ", imageUrl='" + imageUrl + '\'' +
+                ", adKeys=" + adKeys +
                 '}';
     }
 }

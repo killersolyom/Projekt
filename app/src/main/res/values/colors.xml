@@ -9,4 +9,5 @@
     <color name="signupgreen">#009100</color>
     <color name="light_gray">#eff1f2</color>
     <color name="hint_gray">#7a8185</color>
+    <color name="transparent">#80FFFFFF</color>
 </resources>

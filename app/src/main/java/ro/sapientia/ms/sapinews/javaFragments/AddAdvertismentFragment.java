@@ -6,19 +6,40 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import ro.sapientia.ms.sapinews.R;
-import ro.sapientia.ms.sapinews.javaClasses.UriContainer;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.OnProgressListener;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 
-import java.io.FileNotFoundException;
+import ro.sapientia.ms.sapinews.R;
+import ro.sapientia.ms.sapinews.javaActivities.LoginActivity;
+import ro.sapientia.ms.sapinews.javaClasses.Advertisment;
+import ro.sapientia.ms.sapinews.javaClasses.UriContainer;
+import ro.sapientia.ms.sapinews.javaClasses.User;
+
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Objects;
+
+import static android.support.constraint.Constraints.TAG;
 
 
 public class AddAdvertismentFragment extends Fragment {
@@ -32,9 +53,12 @@ public class AddAdvertismentFragment extends Fragment {
     private EditText longDescription;
     private EditText phoneNumber;
     private EditText location;
+    private ProgressBar uploadPictureInProgress;
     private static final int PICK_IMAGE = 1;
-    private UriContainer images = new UriContainer();
-
+    private UriContainer imagesUri = new UriContainer();
+    private ArrayList<String> imagesString = new ArrayList<>();
+    private ArrayList<String> advKeys = new ArrayList<>();
+    private String TAG = "TAG_ADDADVERTISMENT";
    // private OnFragmentInteractionListener mListener;
 
     public AddAdvertismentFragment() {
@@ -71,13 +95,17 @@ public class AddAdvertismentFragment extends Fragment {
         longDescription = view.findViewById(R.id.longDescription);
         phoneNumber = view.findViewById(R.id.phoneNumber);
         location = view.findViewById(R.id.locationText);
+        uploadPictureInProgress = view.findViewById(R.id.updatingPicture);
+        uploadPictureInProgress.setVisibility(View.INVISIBLE);
+        phoneNumber.setText(User.getInstance().getPhoneNumb());
+
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!images.isEmpty()){
+                if(!imagesUri.isEmpty()){
                     try {
-                        Bitmap bitmapFirst = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), images.getNextImage());
-                        Bitmap bitmapSecond = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), images.getNextImage());
+                        Bitmap bitmapFirst = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), imagesUri.getNextImage());
+                        Bitmap bitmapSecond = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), imagesUri.getNextImage());
                         firstPicture.setImageBitmap(bitmapFirst);
                         secondPicture.setImageBitmap(bitmapSecond);
                     } catch (IOException e) {
@@ -90,10 +118,10 @@ public class AddAdvertismentFragment extends Fragment {
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!images.isEmpty()){
+                if(!imagesUri.isEmpty()){
                     try {
-                        Bitmap bitmapFirst = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), images.getPreviousImage());
-                        Bitmap bitmapSecond = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), images.getPreviousImage());
+                        Bitmap bitmapFirst = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), imagesUri.getPreviousImage());
+                        Bitmap bitmapSecond = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), imagesUri.getPreviousImage());
                         firstPicture.setImageBitmap(bitmapFirst);
                         secondPicture.setImageBitmap(bitmapSecond);
                     } catch (IOException e) {
@@ -114,25 +142,81 @@ public class AddAdvertismentFragment extends Fragment {
         addButton.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
+                int i;
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                final DatabaseReference databaseReference = database.getReference();
+                final StorageReference storageRef = FirebaseStorage.getInstance().getReference("uploads/advertismentPics");
+                final String key = databaseReference.push().getKey();
+
                 if (isValidContent()) {
+                    for(i = 0; i< imagesUri.getUri().size(); i++) {
+                        //final int i_1 = i;
+                        uploadPics(databaseReference, storageRef,key,i);
+                    }
+                    assert key != null;
                     Toast.makeText(getContext(), "Feltöltés: helyes", Toast.LENGTH_SHORT).show();
                     return true;
                 } else {
                     Toast.makeText(getContext(), "Feltöltés: helytelen", Toast.LENGTH_SHORT).show();
                     return true;
                 }
-
             }
         });
-        if(!images.isEmpty()){
+        if(!imagesUri.isEmpty()){
             refreshView();
         }
 
         return view;
     }
 
+    public void uploadPics(final DatabaseReference databaseReference, final StorageReference storageRef,final String key,final int i){
+        storageRef.child(Objects.requireNonNull(key)).child("adv" + i + ".jpg").putFile(imagesUri.getUri().get(i))
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                //imagesString.add(imagesUri.getUri().get(i_1).toString());
+                //Log.d(TAG,"UriSTRING: " + imagesUri.getUri().get(i_1).toString());
+                uploadPictureInProgress.setVisibility(View.INVISIBLE);
+
+                Toast.makeText(getContext(), "Image upload sucessfull.", Toast.LENGTH_SHORT).show();
+
+                storageRef.child(Objects.requireNonNull(key)).child("adv"+i+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        //Log.d(TAG,"UriSTRING: " + imagesUri.getUri().get(0).toString());
+                        imagesString.add(uri.toString());
+                        //Log.d(TAG,imagesString.get(0));
+                        //advKeys.add(key);
+                        User.getInstance().setAdvKeysToArrayList(key);
+                        databaseReference.child("advertisments").child(key).setValue(new Advertisment(imagesString,title.getText().toString(),shortDescription.getText().toString(),longDescription.getText().toString(), User.getInstance().getImageUrl(),0, User.getInstance().getPhoneNumb()));
+                        //User.getInstance().setAdKeys(advKeys);
+                        databaseReference.child("users").child(phoneNumber.getText().toString()).child("advertisments").setValue(User.getInstance().getAdKeys());
+                    }
+                })
+                        .addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                Toast.makeText(getContext(),"Image download failed from storage.",Toast.LENGTH_SHORT).show();
+                            }
+                        });
+            }
+        })
+        .addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                Toast.makeText(getContext(), "Image upload failed.", Toast.LENGTH_SHORT).show();
+            }
+        })
+        .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
+                uploadPictureInProgress.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
     public boolean isValidContent(){
-        if(!images.isEmpty() &&
+        if(!imagesUri.isEmpty() &&
                 !title.getText().toString().isEmpty() &&
                 !shortDescription.getText().toString().isEmpty() &&
                 !longDescription.getText().toString().isEmpty() &&
@@ -151,7 +235,7 @@ public class AddAdvertismentFragment extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE && data != null && data.getData() != null) {
             Uri uri = data.getData();
-                images.addUri(uri);
+                imagesUri.addUri(uri);
                 refreshView();
         }
     }
@@ -168,10 +252,10 @@ public class AddAdvertismentFragment extends Fragment {
     }
 
     public void refreshView(){
-        if(images.isEmpty()==false){
+        if(imagesUri.isEmpty()==false){
             try {
-                Bitmap bitmapFirst = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), images.getCurrentImage());
-                Bitmap bitmapSecond = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), images.getNextImage());
+                Bitmap bitmapFirst = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), imagesUri.getCurrentImage());
+                Bitmap bitmapSecond = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), imagesUri.getNextImage());
                 firstPicture.setImageBitmap(bitmapFirst);
                 secondPicture.setImageBitmap(bitmapSecond);
             } catch (IOException e) {

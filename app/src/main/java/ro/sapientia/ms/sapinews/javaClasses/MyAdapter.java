@@ -52,13 +52,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.RecyclerViewHolder
         try {
             final Advertisment advertisment  = advertisments.get(position);
             holder.title.setText(advertisment.getAdvertismentTitle());
-            holder.details.setText(advertisment.getAdvertismentDetails());
+            holder.details.setText(advertisment.getAdvertismentShortDescription());
             holder.counter.setText(advertisment.getViewedCounter()+"");
-            Glide.with(context).load(advertisment.getAdvertismentImage()).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.advertismentPicture);
+            Glide.with(context).load(advertisment.getAdvertismentImage().get(0)).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.advertismentPicture);
             Glide.with(context).load(advertisment.getAdvertismentProfilePicture()).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.profilePicture);
             holder.advertismentPicture.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+
                         if(name.equals("GlobalAdvertisment")){
                             Intent intent = new Intent(context, AdvertismentDetailActivity.class);
                             intent.putExtra("Title",advertisment.getAdvertismentTitle());

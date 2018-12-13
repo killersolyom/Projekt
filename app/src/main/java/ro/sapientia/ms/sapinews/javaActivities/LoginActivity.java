@@ -32,6 +32,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -44,7 +45,7 @@ public class LoginActivity extends AppCompatActivity {
     String number;
     private String verificationId;
     private FirebaseAuth mAuth;
-
+    private ArrayList<String> advKeys = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -83,7 +84,6 @@ public class LoginActivity extends AppCompatActivity {
                     return;
                 }
                 users.child("users").child(number).addValueEventListener(new ValueEventListener() {
-                    boolean status = false;
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
                         // This method is called once with the initial value and again
@@ -94,7 +94,7 @@ public class LoginActivity extends AppCompatActivity {
                                 //ArrayList<GenericTypeIndicator > tmp = value.getValue(ArrayList.class);
                                 Log.d(TAG,"tartalma: " + value.getKey());
                                 if(Objects.equals(value.getKey(), "phoneNumb")){
-                                    Log.d(TAG,"tartalma: " + value.getValue());
+                                    //Log.d(TAG,"tartalma: " + value.getValue());
                                     User.getInstance().setPhoneNumb(Objects.requireNonNull(value.getValue()).toString());
                                 }
                                 else if(Objects.equals(value.getKey(), "firstName")){
@@ -102,11 +102,11 @@ public class LoginActivity extends AppCompatActivity {
                                     User.getInstance().setFirstName(Objects.requireNonNull(value.getValue()).toString());
                                 }
                                 else if(Objects.equals(value.getKey(), "lastName")){
-                                    Log.d(TAG,"tartalma: " + value.getValue());
+                                    //Log.d(TAG,"tartalma: " + value.getValue());
                                     User.getInstance().setLastName(Objects.requireNonNull(value.getValue()).toString());
                                 }
                                 else if(Objects.equals(value.getKey(), "ID")){
-                                    Log.d(TAG,"tartalma: " + value.getValue());
+                                    //Log.d(TAG,"tartalma: " + value.getValue());
                                     User.getInstance().setID(Objects.requireNonNull(value.getValue()).toString());
                                 }
                                 else if(Objects.equals(value.getKey(), "emailAddress")){
@@ -117,21 +117,26 @@ public class LoginActivity extends AppCompatActivity {
                                 }
                                 else if(Objects.equals(value.getKey(), "imageUrl")){
                                     User.getInstance().setImageUrl(Objects.requireNonNull(value.getValue()).toString());
-                                    Log.d(TAG,"Kapott string URL: " + value.getValue().toString());
+                                    //Log.d(TAG,"Kapott string URL: " + value.getValue().toString());
+                                }
+                                else if(Objects.equals(value.getKey(), "advertisments")){
+                                    //Log.d(TAG,"Advertisments: " + value.getValue());
+                                    //User.getInstance().setAdKeys(value.getValue(ArrayList.class));
+                                    //Log.d(TAG,"Advertisments: " +value.getValue(ArrayList.class));
+                                    advKeys =(ArrayList<String>) value.getValue();
+                                    Log.d(TAG,"Advertisments: " +advKeys.toString());
+                                    User.getInstance().setAdKeys(advKeys);
+                                    //advKeys.add(value.getValue().toString());
+                                    //User.getInstance().setAdvKeysToArrayList(value.getValue().toString());
+                                    //User.getInstance().setAdKeys(adv);
                                 }
                                 //User user = value.getValue(User.class);
-
                             }
-
+                            //User.getInstance().setAdKeys(advKeys);
                             //User.getInstance().setPhoneNumb(tmp);
-                            User user = User.getInstance();
+                            //User user = User.getInstance();
                             //Log.d(TAG,"tartalma: " + value.toString());
-                            Log.d(TAG,"User phoneNumber: " + user.getPhoneNumb());
-                                if(user.getPhoneNumb().equals(phone_PhoneNum.getText().toString())){
-                                    status = true;
-                                    //Log.d(TAG, "checkUser if status: " + status);
-                                }
-
+                            //Log.d(TAG,"User phoneNumber: " + user.getPhoneNumb());
                                 //Log.d(TAG, "letezik status: " + status);
                                 LayoutInflater inflater = getLayoutInflater();
                                 View dialoglayout = inflater.inflate(R.layout.custom_aleartdialog, null);
@@ -183,7 +188,6 @@ public class LoginActivity extends AppCompatActivity {
 
                         } else {
                             Log.d(TAG, "dataSnapshot is not extist.");
-                            status = false;
                             Intent intent = new Intent(LoginActivity.this,SignUpActivity.class);
                             intent.putExtra("phoneNumber",number);
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
