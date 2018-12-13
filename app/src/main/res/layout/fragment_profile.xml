@@ -16,7 +16,6 @@
         android:layout_marginTop="68dp"
         android:layout_marginEnd="8dp"
         android:src="@drawable/power"
-        app:layout_constraintEnd_toStartOf="@+id/imageMask"
         app:layout_constraintHorizontal_bias="0.479"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -30,37 +29,23 @@
         android:layout_marginEnd="8dp"
         android:src="@drawable/assignment"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/imageMask"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profilePicture"
         android:layout_width="161dp"
         android:layout_height="163dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
-        android:adjustViewBounds="true"
         android:scaleType="centerCrop"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/imageMask"
-        android:layout_width="165dp"
-        android:layout_height="165dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="8dp"
-        android:src="@drawable/mask"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
+    <TextView
         android:id="@+id/phoneNumberInput"
         android:layout_width="304dp"
         android:layout_height="45dp"
@@ -99,7 +84,7 @@
         android:layout_width="304dp"
         android:layout_height="45dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="8dp"
         android:background="@color/light_gray"
         android:ems="10"
@@ -109,8 +94,9 @@
         android:textColor="@color/black"
         android:textColorHint="@color/hint_gray"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.472"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageMask" />
+        app:layout_constraintTop_toBottomOf="@+id/profilePicture" />
 
     <EditText
         android:id="@+id/emailInput"

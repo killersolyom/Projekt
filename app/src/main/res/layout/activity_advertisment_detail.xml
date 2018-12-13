@@ -7,8 +7,25 @@
     android:background="@color/white"
     tools:context=".javaActivities.AdvertismentDetailActivity">
 
+    <TextView
+        android:id="@+id/shortDescription"
+        android:layout_width="338dp"
+        android:layout_height="54dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:background="@color/light_gray"
+        android:ems="10"
+        android:hint="@string/advshortDesc"
+        android:inputType="phone"
+        android:textColor="@color/black"
+        android:textColorHint="@color/hint_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.43"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/longDescription" />
+
     <ImageView
-        android:id="@+id/PostPicture"
+        android:id="@+id/postPicture"
         android:layout_width="384dp"
         android:layout_height="173dp"
         android:layout_marginStart="0dp"
@@ -19,7 +36,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/sloth" />
 
-    <EditText
+    <TextView
         android:id="@+id/phoneNumber"
         android:layout_width="340dp"
         android:layout_height="40dp"
@@ -33,15 +50,16 @@
         android:textColor="@color/black"
         android:textColorHint="@color/hint_gray"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/longDescription" />
+        app:layout_constraintTop_toBottomOf="@+id/shortDescription" />
 
-    <EditText
+    <TextView
         android:id="@+id/locationText"
         android:layout_width="340dp"
         android:layout_height="40dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:background="@color/light_gray"
         android:ems="10"
@@ -50,10 +68,11 @@
         android:textColor="@color/black"
         android:textColorHint="@color/hint_gray"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/phoneNumber" />
 
-    <EditText
+    <TextView
         android:id="@+id/longDescription"
         android:layout_width="340dp"
         android:layout_height="133dp"
@@ -68,10 +87,10 @@
         android:textColorHint="@color/hint_gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PostPicture" />
+        app:layout_constraintTop_toBottomOf="@+id/postPicture" />
 
     <TextView
-        android:id="@+id/PostTitle"
+        android:id="@+id/postTitle"
         android:layout_width="153dp"
         android:layout_height="28dp"
         android:layout_marginStart="5dp"
@@ -82,10 +101,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.037"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/PostPicture" />
+        app:layout_constraintTop_toTopOf="@+id/postPicture" />
 
-    <ImageView
-        android:id="@+id/ProfilePicture"
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profilePicture"
         android:layout_width="63dp"
         android:layout_height="63dp"
         android:layout_marginStart="3dp"
@@ -93,6 +112,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         android:contentDescription=""
+
         android:scaleType="centerCrop"
         android:src="@drawable/shrek"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -100,81 +120,42 @@
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.759" />
+        app:layout_constraintVertical_bias="0.971" />
+
 
     <ImageView
-        android:id="@+id/ProfilePictureMask"
-        android:layout_width="63dp"
-        android:layout_height="63dp"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="484dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginBottom="8dp"
-        android:contentDescription=""
-        android:src="@drawable/mask"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/Creator"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.759" />
-
-    <ImageView
-        android:id="@+id/ShareButton"
+        android:id="@+id/shareButton"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/share" />
 
     <ImageView
-        android:id="@+id/ReportButton"
+        android:id="@+id/reportButton"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="24dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginBottom="32dp"
+        android:layout_marginBottom="16dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/ShareButton"
+        app:layout_constraintStart_toEndOf="@+id/shareButton"
         app:srcCompat="@drawable/report" />
 
     <TextView
         android:id="@+id/Creator"
         android:layout_width="93dp"
         android:layout_height="41dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="44dp"
+        android:layout_marginBottom="16dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Name"
         android:textColor="@color/hint_gray"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <ImageView
-        android:id="@+id/BackButton"
-        android:layout_width="20dp"
-        android:layout_height="42dp"
-        android:layout_marginStart="35dp"
-        android:layout_marginTop="68dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/back" />
-
-    <ImageView
-        android:id="@+id/NextButton"
-        android:layout_width="20dp"
-        android:layout_height="42dp"
-        android:layout_marginTop="68dp"
-        android:layout_marginEnd="35dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/next" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
 </android.support.constraint.ConstraintLayout>

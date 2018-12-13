@@ -7,8 +7,26 @@
     android:background="@color/white"
     tools:context=".javaActivities.MyAdvertismentDetailActivity">
 
+    <EditText
+        android:id="@+id/shortDescription"
+        android:layout_width="340dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="8dp"
+        android:background="@color/light_gray"
+        android:ems="10"
+        android:hint="@string/advshortDesc"
+        android:inputType="textCapSentences|textPersonName"
+        android:textColor="@color/black"
+        android:textColorHint="@color/hint_gray"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.49"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/longDescription" />
+
     <ImageView
-        android:id="@+id/EditButton"
+        android:id="@+id/editButton"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="12dp"
@@ -17,11 +35,11 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.015"
-        app:layout_constraintStart_toEndOf="@+id/DeleteButton"
+        app:layout_constraintStart_toEndOf="@+id/deleteButton"
         app:srcCompat="@drawable/edit" />
 
     <ImageView
-        android:id="@+id/PostPicture"
+        android:id="@+id/postPicture"
         android:layout_width="384dp"
         android:layout_height="173dp"
         android:layout_marginStart="0dp"
@@ -32,7 +50,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:srcCompat="@drawable/sloth" />
 
-    <EditText
+    <TextView
         android:id="@+id/phoneNumber"
         android:layout_width="340dp"
         android:layout_height="40dp"
@@ -46,15 +64,16 @@
         android:textColor="@color/black"
         android:textColorHint="@color/hint_gray"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/longDescription" />
+        app:layout_constraintTop_toBottomOf="@+id/shortDescription" />
 
     <EditText
         android:id="@+id/locationText"
         android:layout_width="340dp"
         android:layout_height="40dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="16dp"
         android:layout_marginEnd="8dp"
         android:background="@color/light_gray"
         android:ems="10"
@@ -63,6 +82,7 @@
         android:textColor="@color/black"
         android:textColorHint="@color/hint_gray"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.509"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/phoneNumber" />
 
@@ -81,7 +101,7 @@
         android:textColorHint="@color/hint_gray"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/PostPicture" />
+        app:layout_constraintTop_toBottomOf="@+id/postPicture" />
 
     <TextView
         android:id="@+id/PostTitle"
@@ -95,10 +115,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.037"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/PostPicture" />
+        app:layout_constraintTop_toTopOf="@+id/postPicture" />
 
     <ImageView
-        android:id="@+id/ShareButton"
+        android:id="@+id/shareButton"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="20dp"
@@ -108,7 +128,7 @@
         app:srcCompat="@drawable/share" />
 
     <ImageView
-        android:id="@+id/DeleteButton"
+        android:id="@+id/deleteButton"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_marginStart="12dp"
@@ -117,27 +137,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/ShareButton"
+        app:layout_constraintStart_toEndOf="@+id/shareButton"
         app:srcCompat="@drawable/delete" />
-
-    <ImageView
-        android:id="@+id/BackButton"
-        android:layout_width="20dp"
-        android:layout_height="42dp"
-        android:layout_marginStart="35dp"
-        android:layout_marginTop="68dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/back" />
-
-    <ImageView
-        android:id="@+id/NextButton"
-        android:layout_width="20dp"
-        android:layout_height="42dp"
-        android:layout_marginTop="68dp"
-        android:layout_marginEnd="35dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:srcCompat="@drawable/next" />
 
 </android.support.constraint.ConstraintLayout>
