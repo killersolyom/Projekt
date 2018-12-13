@@ -2,6 +2,7 @@ package ro.sapientia.ms.sapinews.javaClasses;
 
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -14,10 +15,12 @@ public class UriContainer {
     public UriContainer() {
     }
 
-    public void addUri(Uri image){
+    public boolean addUri(Uri image){
         if(uri.size() < maxPicture){
             uri.add(image);
+            return true;
         }
+        return false;
     }
 
     public Uri getNextImage(){

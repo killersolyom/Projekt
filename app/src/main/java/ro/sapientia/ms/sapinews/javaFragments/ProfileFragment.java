@@ -18,6 +18,7 @@ import android.webkit.MimeTypeMap;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -44,13 +45,11 @@ public class ProfileFragment extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
-    private String mParam1;
-    private String mParam2;
     private ImageView profilePicture;
     private ImageView logOut;
     private EditText firstNameInput;
     private EditText lastNameInput;
-    private EditText phoneNumber;
+    private TextView phoneNumber;
     private EditText emailInput;
     private EditText addressInput;
     private String TAG = "TAG_PROFILEFRAGMENT";
@@ -85,8 +84,6 @@ public class ProfileFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
         }
 
     }
@@ -97,7 +94,6 @@ public class ProfileFragment extends Fragment {
 
         View view =  inflater.inflate(R.layout.fragment_profile, container, false);
         profilePicture = view.findViewById(R.id.profilePicture);
-        profilePicture.setBackgroundResource(R.drawable.shrek);
         firstNameInput = view.findViewById(R.id.firstNameInput);
         lastNameInput = view.findViewById(R.id.lastNameInput);
         phoneNumber = view.findViewById(R.id.phoneNumberInput);

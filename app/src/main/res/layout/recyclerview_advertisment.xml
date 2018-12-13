@@ -18,34 +18,21 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ProfilePicture"
         android:layout_width="63dp"
         android:layout_height="62dp"
         android:layout_marginStart="3dp"
-        android:layout_marginTop="156dp"
+        android:layout_marginTop="152dp"
         android:layout_marginEnd="8dp"
-        android:scaleType="centerCrop"
         android:contentDescription=""
+        android:scaleType="centerCrop"
         android:src="@drawable/shrek"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.038"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/ProfilePictureMask"
-        android:layout_width="63dp"
-        android:layout_height="63dp"
-        android:layout_marginStart="3dp"
-        android:layout_marginTop="156dp"
-        android:layout_marginEnd="8dp"
-        android:contentDescription=""
-        android:src="@drawable/mask"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/AdvertismentTitle"

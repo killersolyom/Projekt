@@ -17,6 +17,8 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -102,31 +104,18 @@ public class AddAdvertismentFragment extends Fragment {
         next.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!imagesUri.isEmpty()){
-                    try {
-                        Bitmap bitmapFirst = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), imagesUri.getNextImage());
-                        Bitmap bitmapSecond = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), imagesUri.getNextImage());
-                        firstPicture.setImageBitmap(bitmapFirst);
-                        secondPicture.setImageBitmap(bitmapSecond);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
-
+                if(!images.isEmpty()){
+                        Glide.with(getContext()).load(images.getNextImage()).into( firstPicture);
+                        Glide.with(getContext()).load(images.getNextImage()).into( secondPicture);
                 }
             }
         });
         back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(!imagesUri.isEmpty()){
-                    try {
-                        Bitmap bitmapFirst = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), imagesUri.getPreviousImage());
-                        Bitmap bitmapSecond = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), imagesUri.getPreviousImage());
-                        firstPicture.setImageBitmap(bitmapFirst);
-                        secondPicture.setImageBitmap(bitmapSecond);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                if(!images.isEmpty()){
+                        Glide.with(getContext()).load(images.getPreviousImage()).into( firstPicture);
+                        Glide.with(getContext()).load(images.getPreviousImage()).into( secondPicture);
                 }
             }
         });
@@ -216,7 +205,23 @@ public class AddAdvertismentFragment extends Fragment {
     }
 
     public boolean isValidContent(){
-        if(!imagesUri.isEmpty() &&
+        if(isEmpty() && isValidDataInserted()){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isValidDataInserted(){
+        if(title.getText().toString().matches("[^*./\\}[{}?%^#@$!`'\"~])(=;>,<]*?") &&
+            location.getText().toString().matches("[^*./\\}[{}?%^#@$!`'\"~])(=;>,<]*?") &&
+                phoneNumber.getText().toString().matches("^[+][0-9]{10,13}$") ){
+            return true;
+        }
+        return false;
+    }
+
+    public boolean isEmpty(){
+        if(!images.isEmpty() &&
                 !title.getText().toString().isEmpty() &&
                 !shortDescription.getText().toString().isEmpty() &&
                 !longDescription.getText().toString().isEmpty() &&
@@ -227,16 +232,17 @@ public class AddAdvertismentFragment extends Fragment {
         return false;
     }
 
-
-
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data)
     {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_IMAGE && data != null && data.getData() != null) {
             Uri uri = data.getData();
-                imagesUri.addUri(uri);
+            if(!images.addUri(uri)){
+                Toast.makeText(this.getContext(), "Nem tölthet fel több képet!",Toast.LENGTH_SHORT).show();
+            }else{
                 refreshView();
+            }
         }
     }
 
@@ -252,15 +258,9 @@ public class AddAdvertismentFragment extends Fragment {
     }
 
     public void refreshView(){
-        if(imagesUri.isEmpty()==false){
-            try {
-                Bitmap bitmapFirst = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), imagesUri.getCurrentImage());
-                Bitmap bitmapSecond = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), imagesUri.getNextImage());
-                firstPicture.setImageBitmap(bitmapFirst);
-                secondPicture.setImageBitmap(bitmapSecond);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        if(images.isEmpty()==false){
+            Glide.with(getContext()).load(images.getCurrentImage()).into( firstPicture);
+            Glide.with(getContext()).load(images.getNextImage()).into( secondPicture);
         }
     }
 
