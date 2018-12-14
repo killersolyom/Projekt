@@ -30,7 +30,6 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".javaActivities.MainScreenActivity"
-            android:windowSoftInputMode="adjustPan"
             android:configChanges="orientation"
             android:label="@string/title_activity_main2"
             android:windowSoftInputMode="adjustPan"
