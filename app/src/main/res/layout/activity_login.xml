@@ -2,10 +2,12 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/loginActivity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    tools:context=".LoginActivity">
+    tools:context=".javaActivities.LoginActivity">
+
 
     <TextView
         android:id="@+id/logo_Text"
@@ -49,7 +51,7 @@
         android:layout_height="41dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="13dp"
         android:layout_marginBottom="8dp"
         android:allowUndo="false"
         android:background="@color/light_gray"
@@ -101,4 +103,5 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_signIn"
         app:layout_constraintVertical_bias="0.35" />
+
 </android.support.constraint.ConstraintLayout>

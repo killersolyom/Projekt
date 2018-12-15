@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.killersolyom.projekt">
+    package="ro.sapientia.ms.sapinews">
 
     <application
         android:allowBackup="true"
@@ -9,18 +9,34 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.NoActionBar">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".javaActivities.MainActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginActivity" />
         <activity
-            android:name=".SignUpActivity"
-            android:label="@string/title_activity_login" />
-        <activity android:name=".MainScreenActivity"></activity>
+            android:name=".javaActivities.LoginActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".javaActivities.SignUpActivity"
+            android:configChanges="orientation"
+            android:label="@string/title_activity_login"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".javaActivities.MainScreenActivity"
+            android:configChanges="orientation"
+            android:label="@string/title_activity_main2"
+            android:screenOrientation="portrait" />
+        android:label="@string/title_activity_main2" />
+        <activity android:name=".javaActivities.MyAdvertismentsActivity" />
+        <activity android:name=".javaActivities.AdvertismentDetailActivity" />
+        <activity android:name=".javaActivities.MyAdvertismentDetailActivity"></activity>
     </application>
 
 </manifest>

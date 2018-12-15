@@ -1,21 +1,21 @@
 {
   "project_info": {
-    "project_number": "1002621624887",
-    "firebase_url": "https://sapinews-b39ac.firebaseio.com",
-    "project_id": "sapinews-b39ac",
-    "storage_bucket": "sapinews-b39ac.appspot.com"
+    "project_number": "553556938807",
+    "firebase_url": "https://sapiadvertisement.firebaseio.com",
+    "project_id": "sapiadvertisement",
+    "storage_bucket": "sapiadvertisement.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1002621624887:android:7222cd317482ea8a",
+        "mobilesdk_app_id": "1:553556938807:android:bb72fdbf55701a96",
         "android_client_info": {
           "package_name": "ro.sapientia.ms.sapinews"
         }
       },
       "oauth_client": [
         {
-          "client_id": "1002621624887-pvv9p7gaspuvjfkv527vgcrsbp5udd8s.apps.googleusercontent.com",
+          "client_id": "553556938807-b3tvbtc0frn5fchj6303bbg2d66s7035.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "ro.sapientia.ms.sapinews",
@@ -23,29 +23,13 @@
           }
         },
         {
-          "client_id": "1002621624887-biuf0icme42ttf5tgn1e2bp4g3c01o9i.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "ro.sapientia.ms.sapinews",
-            "certificate_hash": "aea3e76a47e2af0667f14fcda81b0da41254b70c"
-          }
-        },
-        {
-          "client_id": "1002621624887-47kuoid6hkbidnocds5c6po233s2u4mp.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "ro.sapientia.ms.sapinews",
-            "certificate_hash": "db2496e9c155b5d5ea30556631a945f30b9d1f4b"
-          }
-        },
-        {
-          "client_id": "1002621624887-5mondvdnc781q370ku5og97e6ln75j3p.apps.googleusercontent.com",
+          "client_id": "553556938807-l59sumfg6vdlnap87dfg7sa0f70e2a9i.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyB3T4f9sD6CJjd8WNHnXx2rK7uQ8AsVZKE"
+          "current_key": "AIzaSyDe4ed2PcPQXaOXRyTG-MS1OTIvm1Strfk"
         }
       ],
       "services": {
@@ -56,7 +40,7 @@
           "status": 2,
           "other_platform_oauth_client": [
             {
-              "client_id": "1002621624887-5mondvdnc781q370ku5og97e6ln75j3p.apps.googleusercontent.com",
+              "client_id": "553556938807-l59sumfg6vdlnap87dfg7sa0f70e2a9i.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
