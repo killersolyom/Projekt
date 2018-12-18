@@ -10,9 +10,10 @@ public class Advertisment {
     private String advertismentLongDescription = "";
     private String advertismentProfilePicture;
     private String ownerPhoneNumber;
+    private String location;
     private int viewedCounter = 0;
 
-    public Advertisment(ArrayList<String> advertismentImage, String advertismentTitle, String advertismentShortDescription, String advertismentLongDescription, String advertismentProfilePicture, int viewedCounter, String ownerPhoneNumber) {
+    public Advertisment(ArrayList<String> advertismentImage, String advertismentTitle, String advertismentShortDescription, String advertismentLongDescription, String advertismentProfilePicture, int viewedCounter, String ownerPhoneNumber, String location) {
         this.advertismentImage = advertismentImage;
         this.advertismentTitle = advertismentTitle;
         this.advertismentShortDescription = advertismentShortDescription;
@@ -20,6 +21,7 @@ public class Advertisment {
         this.advertismentProfilePicture = advertismentProfilePicture;
         this.viewedCounter = viewedCounter;
         this.ownerPhoneNumber = ownerPhoneNumber;
+        this.location = location;
     }
 
     public Advertisment() {
@@ -27,6 +29,14 @@ public class Advertisment {
 
     public ArrayList<String> getAdvertismentImage() {
         return advertismentImage;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public void setAdvertismentImage(ArrayList<String> advertismentImage) {

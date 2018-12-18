@@ -63,6 +63,12 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.RecyclerViewHolder
                         if(name.equals("GlobalAdvertisment")){
                             Intent intent = new Intent(context, AdvertismentDetailActivity.class);
                             intent.putExtra("Title",advertisment.getAdvertismentTitle());
+                            intent.putExtra("advertismentShortDescription",advertisment.getAdvertismentShortDescription());
+                            intent.putExtra("advertismentLongDescription",advertisment.getAdvertismentLongDescription());
+                            intent.putExtra("advertismentProfilePicture",advertisment.getAdvertismentProfilePicture());
+                            intent.putExtra("ownerPhoneNumber",advertisment.getOwnerPhoneNumber());
+                            intent.putExtra("location",advertisment.getLocation());
+                            intent.putExtra("advertismentImage", advertisment.getAdvertismentImage());
                             startActivity(context,intent,null);
 
                         }else if(name.equals("MyAdvertisment")){
