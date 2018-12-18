@@ -138,6 +138,7 @@ public class HomeFragment extends Fragment {
         adapter.notifyDataSetChanged();
     }
 
+
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);
     }

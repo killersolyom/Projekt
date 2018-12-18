@@ -30,6 +30,8 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.concurrent.TimeUnit;
 
+import static android.support.v4.content.ContextCompat.startActivity;
+
 public class SignUpActivity extends AppCompatActivity {
 
     EditText phoneNumber;
@@ -186,4 +188,11 @@ public class SignUpActivity extends AppCompatActivity {
         super.onPause();
         finish();
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+        startActivity(intent);
+    }
+
 }

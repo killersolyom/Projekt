@@ -33,7 +33,6 @@ public class AdvertismentDetailActivity extends AppCompatActivity {
     private TextView location;
     private TextView phoneNumber;
     private ImageView profilePicture;
-    private ImageView getProfilePicture;
     private String TAG = "TAG_AdvertismentDetailActivity";
 
     @Override
@@ -123,19 +122,12 @@ public class AdvertismentDetailActivity extends AppCompatActivity {
         });
 
         postPicture.setOnTouchListener(new OnSwipeTouchListener(getApplicationContext()) {
-            public void onSwipeTop() {
-                Toast.makeText(getApplicationContext(), "top", Toast.LENGTH_SHORT).show();
-            }
             public void onSwipeRight() {
                 Toast.makeText(getApplicationContext(), "right", Toast.LENGTH_SHORT).show();
             }
             public void onSwipeLeft() {
                 Toast.makeText(getApplicationContext(), "left", Toast.LENGTH_SHORT).show();
             }
-            public void onSwipeBottom() {
-                Toast.makeText(getApplicationContext(), "bottom", Toast.LENGTH_SHORT).show();
-            }
-
         });
 
     }
