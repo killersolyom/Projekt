@@ -74,35 +74,31 @@ public class MyAdvertismentDetailActivity extends AppCompatActivity {
             longDescription.setText(advertismentLongDescription);
             shortDescription.setText(advertismentShortDescription);
             phoneNumber.setText(ownerPhoneNumber);
-            Glide.with(getApplicationContext()).load(advertismentImage.getImages().get(0)).diskCacheStrategy(DiskCacheStrategy.ALL).into(postPicture);
+            Glide.with(getApplicationContext()).load(advertismentImage.getCurrentImage()).diskCacheStrategy(DiskCacheStrategy.ALL).into(postPicture);
             location.setText(locationS);
         }
 
         postPicture.setOnTouchListener(new OnSwipeTouchListener(getApplicationContext()) {
-            public void onSwipeTop() {
-                Toast.makeText(getApplicationContext(), "top", Toast.LENGTH_SHORT).show();
-            }
             public void onSwipeRight() {
-                Toast.makeText(getApplicationContext(), "right", Toast.LENGTH_SHORT).show();
+
+                Glide.with(getApplicationContext()).load(advertismentImage.getNextImage()).diskCacheStrategy(DiskCacheStrategy.ALL).into(postPicture);
             }
             public void onSwipeLeft() {
-                Toast.makeText(getApplicationContext(), "left", Toast.LENGTH_SHORT).show();
-            }
-            public void onSwipeBottom() {
-                Toast.makeText(getApplicationContext(), "bottom", Toast.LENGTH_SHORT).show();
-            }
 
+                Glide.with(getApplicationContext()).load(advertismentImage.getPreviousImage()).diskCacheStrategy(DiskCacheStrategy.ALL).into(postPicture);
+            }
         });
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String title = "Eladó bucugli\n\n";
-                String details = "Jó állapotban van és nem loptt!!! Vedd meg!\n";
-                String owner = "Jancsi: ";
-                String phone = "0786141697\n\n";
+                String title = postTitle.getText().toString()+"\n\n";
+                String details = longDescription.getText().toString()+"\n";
+                String owner = User.getInstance().getLastName()+": ";
+                String phone = phoneNumber.getText().toString()+"\n";
+                String place = "Itt: "+location.getText().toString()+"\n\n";
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
-                String shareBody = title+details+owner+phone;
+                String shareBody = title+details+owner+phone+"\nLink: "+advertismentImage.getCurrentImage();
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
                 startActivity(Intent.createChooser(sharingIntent, "Megosztás"));
             }

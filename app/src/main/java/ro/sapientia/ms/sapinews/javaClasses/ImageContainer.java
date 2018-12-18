@@ -57,6 +57,10 @@ public class ImageContainer {
         return false;
     }
 
+    public ArrayList<String> getImages() {
+        return Images;
+    }
+
     public void addImage(String image){
         Images.add(image);
     }
