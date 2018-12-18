@@ -40,7 +40,9 @@ public class MyAdvertismentsActivity extends AppCompatActivity {
         advertisments.setAdvertismentTitle("Teszt");
         advertisments.setAdvertismentShortDescription("Ez egy teszt");
         advertisments.setViewedCounter(66);
-        //advertisments.setAdvertismentImage("https://coubsecure-s.akamaihd.net/get/b153/p/coub/simple/cw_timeline_pic/dc084aa3631/dffafd7f8fc57eeaf2c71/ios_large_1482287026_image.jpg");
+        ArrayList<String> temp = new ArrayList<>();
+        temp.add("https://46yuuj40q81w3ijifr45fvbe165m-wpengine.netdna-ssl.com/wp-content/uploads/2018/08/horseshoe-bend-600x370.jpg");
+        advertisments.setAdvertismentImage(temp);
         advertisments.setAdvertismentProfilePicture("https://46yuuj40q81w3ijifr45fvbe165m-wpengine.netdna-ssl.com/wp-content/uploads/2018/08/horseshoe-bend-600x370.jpg");
         return advertisments;
     }
