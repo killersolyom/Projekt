@@ -163,11 +163,12 @@ public class AddAdvertismentFragment extends Fragment {
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                //imagesString.add(imagesUri.getUri().get(i_1).toString());
-                //Log.d(TAG,"UriSTRING: " + imagesUri.getUri().get(i_1).toString());
                 uploadPictureInProgress.setVisibility(View.INVISIBLE);
 
-                Toast.makeText(getContext(), "Image upload sucessfull.", Toast.LENGTH_SHORT).show();
+                try {
+                    Toast.makeText(getContext(), "Image upload sucessfull.", Toast.LENGTH_SHORT).show();
+                }catch (Exception e){}
+
 
                 storageRef.child(Objects.requireNonNull(key)).child("adv"+i+".jpg").getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
@@ -213,7 +214,7 @@ public class AddAdvertismentFragment extends Fragment {
 
     public boolean isValidDataInserted(){
         if(title.getText().toString().matches("[^*./\\}[{}?%^#@$!`'\"~])(=;>,<]*?") &&
-            location.getText().toString().matches("[^*./\\}[{}?%^#@$!`'\"~])(=;>,<]*?") &&
+            location.getText().toString().matches("[^*/\\}[{}?%^#@$!`'\"~])(=;><]*?") &&
                 phoneNumber.getText().toString().matches("^[+][0-9]{10,13}$") ){
             return true;
         }

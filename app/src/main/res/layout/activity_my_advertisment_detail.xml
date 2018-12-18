@@ -9,6 +9,7 @@
 
     <EditText
         android:id="@+id/shortDescription"
+        android:editable="true"
         android:layout_width="340dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
@@ -71,6 +72,7 @@
     <EditText
         android:id="@+id/locationText"
         android:layout_width="340dp"
+        android:editable="true"
         android:layout_height="40dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
@@ -88,6 +90,7 @@
 
     <EditText
         android:id="@+id/longDescription"
+        android:editable="true"
         android:layout_width="340dp"
         android:layout_height="133dp"
         android:layout_marginStart="8dp"

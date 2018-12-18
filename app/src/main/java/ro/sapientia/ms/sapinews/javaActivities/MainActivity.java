@@ -14,8 +14,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView transparent_logo;
     Animation fadein;
     Animation fadeout;
-
-
+    
 
 
     @Override

@@ -1,8 +1,11 @@
 package ro.sapientia.ms.sapinews.javaActivities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.InputType;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
@@ -76,12 +79,45 @@ public class AdvertismentDetailActivity extends AppCompatActivity {
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                String title = "Eladó bucugli\n\n";
+                String details = "Jó állapotban van és nem loptt!!! Vedd meg!\n";
+                String owner = "Jancsi: ";
+                String phone = "0786141697\n\n";
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
-                String shareBody = "https://www.revell.de/out/pictures/master/product/1/07777_smpw_trabant_601_limousine.jpg";
-                sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Trabi");
+                String shareBody = title+details+owner+phone;
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
                 startActivity(Intent.createChooser(sharingIntent, "Megosztás"));
+            }
+        });
+
+        reportButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(AdvertismentDetailActivity.this);
+                builder.setTitle("Jelentés indoka: ");
+                final EditText input = new EditText(AdvertismentDetailActivity.this);
+                input.setInputType(InputType.TYPE_CLASS_TEXT);
+                builder.setView(input);
+                builder.setPositiveButton("Jelent", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                       String reportText = input.getText().toString();
+                       if(reportText.length() > 10){
+
+                       }else {
+                           Toast.makeText(AdvertismentDetailActivity.this,"Bővebben írja körül a problémát!",Toast.LENGTH_SHORT).show();
+                       }
+                    }
+                });
+                builder.setNegativeButton("Mégse", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.show();
             }
         });
 
