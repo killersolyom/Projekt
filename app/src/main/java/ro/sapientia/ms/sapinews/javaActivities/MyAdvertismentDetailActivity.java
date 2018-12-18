@@ -34,9 +34,10 @@ public class MyAdvertismentDetailActivity extends AppCompatActivity {
     private TextView phoneNumber;
     private EditText shortDescription;
     private EditText location;
-    private ImageContainer advertismentImage = new ImageContainer();
     private String key;
-
+    private ImageContainer advertismentImage = new ImageContainer();
+    //private ArrayList<String> advertismentImage;
+    private String title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +56,12 @@ public class MyAdvertismentDetailActivity extends AppCompatActivity {
         longDescription.setEnabled(false);
         shortDescription.setEnabled(false);
 
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference databaseReference = database.getReference();
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            String title = extras.getString("Title");
+            title = extras.getString("Title");
             String advertismentShortDescription = extras.getString("advertismentShortDescription");
             String advertismentLongDescription = extras.getString("advertismentLongDescription");
             String ownerPhoneNumber = extras.getString("ownerPhoneNumber");
@@ -75,14 +79,19 @@ public class MyAdvertismentDetailActivity extends AppCompatActivity {
         }
 
         postPicture.setOnTouchListener(new OnSwipeTouchListener(getApplicationContext()) {
+            public void onSwipeTop() {
+                Toast.makeText(getApplicationContext(), "top", Toast.LENGTH_SHORT).show();
+            }
             public void onSwipeRight() {
-
-                Glide.with(getApplicationContext()).load(advertismentImage.getNextImage()).diskCacheStrategy(DiskCacheStrategy.ALL).into(postPicture);
+                Toast.makeText(getApplicationContext(), "right", Toast.LENGTH_SHORT).show();
             }
             public void onSwipeLeft() {
-
-                Glide.with(getApplicationContext()).load(advertismentImage.getPreviousImage()).diskCacheStrategy(DiskCacheStrategy.ALL).into(postPicture);
+                Toast.makeText(getApplicationContext(), "left", Toast.LENGTH_SHORT).show();
             }
+            public void onSwipeBottom() {
+                Toast.makeText(getApplicationContext(), "bottom", Toast.LENGTH_SHORT).show();
+            }
+
         });
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -123,6 +132,7 @@ public class MyAdvertismentDetailActivity extends AppCompatActivity {
             public boolean onLongClick(View v) {
                 if(isValidContent()){
                     Toast.makeText(getApplicationContext(), "Szerkesztve", Toast.LENGTH_SHORT).show();
+                    databaseReference.child("advertisments").child(key).setValue(new Advertisment(advertismentImage.getImages(),title,shortDescription.getText().toString(),longDescription.getText().toString(), User.getInstance().getImageUrl(),0, User.getInstance().getPhoneNumb(),location.getText().toString(),"false", key));
                 }else {
                     Toast.makeText(getApplicationContext(), "Helytelenül kitöltött mezők!", Toast.LENGTH_SHORT).show();
                 }
@@ -132,8 +142,6 @@ public class MyAdvertismentDetailActivity extends AppCompatActivity {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference databaseReference = database.getReference();
                 databaseReference.child("advertisments").child(key).child("isDeleted").setValue("true");
                 Toast.makeText(getApplicationContext(), "delete", Toast.LENGTH_SHORT).show();
             }
