@@ -30,7 +30,6 @@ public class AdvertismentDetailActivity extends AppCompatActivity {
     private TextView location;
     private TextView phoneNumber;
     private ImageView profilePicture;
-    private ImageView getProfilePicture;
     private String TAG = "TAG_AdvertismentDetailActivity";
 
     @Override
