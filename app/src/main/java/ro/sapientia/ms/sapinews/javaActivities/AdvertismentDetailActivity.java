@@ -21,6 +21,7 @@ import java.util.ArrayList;
 
 import ro.sapientia.ms.sapinews.R;
 import ro.sapientia.ms.sapinews.javaClasses.OnSwipeTouchListener;
+import ro.sapientia.ms.sapinews.javaClasses.User;
 
 public class AdvertismentDetailActivity extends AppCompatActivity {
 
@@ -33,6 +34,7 @@ public class AdvertismentDetailActivity extends AppCompatActivity {
     private TextView location;
     private TextView phoneNumber;
     private ImageView profilePicture;
+    private TextView creator;
     private String TAG = "TAG_AdvertismentDetailActivity";
 
     @Override
@@ -48,6 +50,7 @@ public class AdvertismentDetailActivity extends AppCompatActivity {
         postTitle = findViewById(R.id.postTitle);
         phoneNumber = findViewById(R.id.phoneNumber);
         location = findViewById(R.id.locationText);
+        creator = findViewById(R.id.creator);
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -66,13 +69,7 @@ public class AdvertismentDetailActivity extends AppCompatActivity {
             phoneNumber.setText(ownerPhoneNumber);
             Glide.with(getApplicationContext()).load(advertismentImage.get(0)).diskCacheStrategy(DiskCacheStrategy.ALL).into(postPicture);
             location.setText(locationS);
-
-            Log.d(TAG,"Title: " + title);
-            Log.d(TAG,"advertismentShortDescription: " + advertismentShortDescription);
-            Log.d(TAG,"advertismentLongDescription: " + advertismentLongDescription);
-            Log.d(TAG,"advertismentProfilePicture: " + advertismentProfilePicture);
-            Log.d(TAG,"ownerPhoneNumber: " + ownerPhoneNumber);
-            Log.d(TAG,"advertismentImage: " + advertismentImage.toString());
+            creator.setText(User.getInstance().getLastName());
         }
 
 
@@ -123,9 +120,11 @@ public class AdvertismentDetailActivity extends AppCompatActivity {
 
         postPicture.setOnTouchListener(new OnSwipeTouchListener(getApplicationContext()) {
             public void onSwipeRight() {
+
                 Toast.makeText(getApplicationContext(), "right", Toast.LENGTH_SHORT).show();
             }
             public void onSwipeLeft() {
+
                 Toast.makeText(getApplicationContext(), "left", Toast.LENGTH_SHORT).show();
             }
         });
