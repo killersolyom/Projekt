@@ -70,6 +70,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.RecyclerViewHolder
                             intent.putExtra("location",advertisment.getLocation());
                             intent.putExtra("advertismentImage", advertisment.getAdvertismentImage());
                             intent.putExtra("isDeleted",advertisment.getIsDeleted());
+                            intent.putExtra("key",advertisment.getKey());
                             startActivity(context,intent,null);
 
                         }else if(name.equals("MyAdvertisment")){
@@ -82,6 +83,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.RecyclerViewHolder
                             intent.putExtra("location",advertisment.getLocation());
                             intent.putExtra("advertismentImage", advertisment.getAdvertismentImage());
                             intent.putExtra("isDeleted",advertisment.getIsDeleted());
+                            intent.putExtra("key",advertisment.getKey());
                             startActivity(context,intent,null);
                         }
                 }

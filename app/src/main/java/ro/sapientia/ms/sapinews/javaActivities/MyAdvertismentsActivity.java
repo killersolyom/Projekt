@@ -48,35 +48,34 @@ public class MyAdvertismentsActivity extends AppCompatActivity {
 
         for(int i = 0; i < User.getInstance().getAdKeys().size(); i++){
             String key = User.getInstance().getAdKeys().get(i);
+            Log.d(TAG,"key: " + key);
+            ads.child("advertisments").child(key).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()){
+                        //Log.d(TAG,"KULCS: "+dataSnapshot.getKey());
+                        //for(DataSnapshot value : dataSnapshot.getChildren()) {
+                            //if(Objects.equals(value.getKey(), "advertisments")){
+                            Log.d(TAG,"tartalma: " + dataSnapshot.getValue());
+                            Advertisment adv = dataSnapshot.getValue(Advertisment.class);
+                            // Log.d(TAG,"tartalma: " + adv.toString());
+                            advertisments.add(adv);
 
-        }
-
-        ads.child("advertisments").addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                if (dataSnapshot.exists()){
-                    Log.d(TAG,"KULCS: "+dataSnapshot.getKey());
-                    for(DataSnapshot value : dataSnapshot.getChildren()) {
-                        //if(Objects.equals(value.getKey(), "advertisments")){
-                        Advertisment adv = value.getValue(Advertisment.class);
-                        Log.d(TAG,"tartalma: " + adv.toString());
-
-                        advertisments.add(adv);
+                            // }
+                        //}
+                    }
+                    else {
                         adapter.notifyDataSetChanged();
-                        // }
+                        Log.d(TAG, "dataSnapshot is not extist.");
                     }
                 }
-                else {
-                    adapter.notifyDataSetChanged();
-                    Log.d(TAG, "dataSnapshot is not extist.");
-                }
-            }
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError databaseError) {
-                adapter.notifyDataSetChanged();
-            }
-        });
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    adapter.notifyDataSetChanged();
+                }
+            });
+        }
 
         /*for(int i = 0; i < 20; i++){
             advertisments.add(generateAdvertisment());
@@ -84,10 +83,9 @@ public class MyAdvertismentsActivity extends AppCompatActivity {
         }*/
 
 
-
         MyAdapter adapter = new MyAdapter(this.getApplicationContext(),advertisments,"MyAdvertisment");
         recyclerView.setAdapter(adapter);
-
+        adapter.notifyDataSetChanged();
     }
 
     public Advertisment generateAdvertisment(){
