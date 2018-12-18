@@ -62,7 +62,7 @@ public class MyAdvertismentDetailActivity extends AppCompatActivity {
     }
 
     public boolean isValidDataInserted(){
-        if(location.getText().toString().matches("[^*./\\}[{}?%^#@$!`'\"~])(=;>,<]*?")){
+        if(location.getText().toString().matches("[^*/\\}[{}?%^#@$!`'\"~])(=;><]*?")){
             return true;
         }
         return false;

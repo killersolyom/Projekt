@@ -119,23 +119,6 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        //storageRef.getDownloadUrl();
-        /*storageRef.child(number).child("profilepicture.jpg").getBytes(Long.MAX_VALUE)
-                .addOnSuccessListener(new OnSuccessListener<byte[]>() {
-            @Override
-            public void onSuccess(byte[] bytes) {
-                Bitmap bmp = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                profilePicture.setImageBitmap(Bitmap.createBitmap(bmp));
-                //profilePicture.setImageBitmap(Bitmap.createScaledBitmap(bmp,profilePicture.getWidth(),profilePicture.getHeight(),false));
-            }
-        })
-        .addOnFailureListener(new OnFailureListener() {
-            @Override
-            public void onFailure(@NonNull Exception e) {
-                Toast.makeText(getContext(),"Profile picture download failed",Toast.LENGTH_SHORT).show();
-            }
-        });
-        */
         Log.d(TAG,"Kep URL: " + User.getInstance().getImageUrl());
 
         Glide.with(getActivity()).load(User.getInstance().getImageUrl()).into(profilePicture);
@@ -194,25 +177,6 @@ public class ProfileFragment extends Fragment {
                 @Override
                 public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                     Toast.makeText(getContext(),"Upload successful!",Toast.LENGTH_SHORT).show();
-                    //Upload upload = new Upload ("profilePicture",fileReference.getDownloadUrl().toString());
-                    //String uploadId = datebaseRef.child("pictures").push().getKey();
-
-                    //datebaseRef.child("users").child(number).child("imageUrl").setValue(upload);
-                    /*fileReference.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
-                        @Override
-                        public void onSuccess(Uri uri) {
-                            try {
-                                Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContext().getContentResolver(), uri);
-                                Log.d(TAG,"ProfpilPic setting..." + uri.toString());
-                                User.getInstance().setImageUrl(uri.toString());
-                                profilePicture.setImageBitmap(bitmap);
-                            } catch (IOException e) {
-                                e.printStackTrace();
-                                Toast.makeText(getContext(), e.getMessage(), Toast.LENGTH_SHORT).show();
-
-                            }
-                        }
-                    });*/
                     addPictureToUser();
                     builderProgress.dismiss();
                 }
@@ -232,20 +196,8 @@ public class ProfileFragment extends Fragment {
                             ProgressBar progressBar = dialoglayout.findViewById(R.id.progressBar);
                             AlertDialog.Builder builder=new AlertDialog.Builder(getContext());
                             builder.setTitle("Kép feltöltése...");
-                            //if(progressBar.getParent()!=null)
-                            //    ((ViewGroup)progressBar.getParent()).removeView(progressBar); // <- fix
-                           // dialoglayout.addView(progressBar);
                             builder.setView(dialoglayout);
                             progressBar.setProgress((int)progress);
-                            /*builderProgress.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    //Toast.makeText(LoginActivity.this,"Get Started!",Toast.LENGTH_LONG).show();
-
-                                    dialog.dismiss();
-                                }
-                            });*/
-                            //Log.d(TAG,"Ifen kivul progress: " + progress);
                             if(builderProgress != null && builderProgress.isShowing()){
                                 builderProgress.dismiss();
                                 Log.d(TAG,"Ifen belul progress: " + progress);
@@ -288,8 +240,6 @@ public class ProfileFragment extends Fragment {
     }
 
     public void getInformation(){
-        //FirebaseDatabase database = FirebaseDatabase.getInstance();
-        //DatabaseReference datebaseRef = database.getReference();
 
         firstNameInput.setText(user.getFirstName());
         lastNameInput.setText(user.getLastName());

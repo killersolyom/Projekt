@@ -213,7 +213,7 @@ public class AddAdvertismentFragment extends Fragment {
 
     public boolean isValidDataInserted(){
         if(title.getText().toString().matches("[^*./\\}[{}?%^#@$!`'\"~])(=;>,<]*?") &&
-            location.getText().toString().matches("[^*./\\}[{}?%^#@$!`'\"~])(=;>,<]*?") &&
+            location.getText().toString().matches("[^*/\\}[{}?%^#@$!`'\"~])(=;><]*?") &&
                 phoneNumber.getText().toString().matches("^[+][0-9]{10,13}$") ){
             return true;
         }
