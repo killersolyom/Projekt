@@ -36,7 +36,6 @@ public class MyAdvertismentDetailActivity extends AppCompatActivity {
     private EditText location;
     private String key;
     private ImageContainer advertismentImage = new ImageContainer();
-    //private ArrayList<String> advertismentImage;
     private String title;
 
     @Override

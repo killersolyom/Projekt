@@ -10,10 +10,6 @@ public class ImageContainer {
     public ImageContainer() {
     }
 
-    public ArrayList<String> getImages() {
-        return Images;
-    }
-
     public void setImages(ArrayList<String> images) {
         Images = images;
     }
