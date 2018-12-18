@@ -142,6 +142,7 @@ public class AddAdvertismentFragment extends Fragment {
                         //final int i_1 = i;
                         uploadPics(databaseReference, storageRef,key,i);
                     }
+
                     assert key != null;
                     Toast.makeText(getContext(), "Feltöltés: helyes", Toast.LENGTH_SHORT).show();
                     return true;
@@ -177,10 +178,12 @@ public class AddAdvertismentFragment extends Fragment {
                         imagesString.add(uri.toString());
                         //Log.d(TAG,imagesString.get(0));
                         //advKeys.add(key);
-                        User.getInstance().setAdvKeysToArrayList(key);
                         databaseReference.child("advertisments").child(key).setValue(new Advertisment(imagesString,title.getText().toString(),shortDescription.getText().toString(),longDescription.getText().toString(), User.getInstance().getImageUrl(),0, User.getInstance().getPhoneNumb(),location.getText().toString(),"false", key));
                         //User.getInstance().setAdKeys(advKeys);
-                        databaseReference.child("users").child(phoneNumber.getText().toString()).child("adKeys").setValue(User.getInstance().getAdKeys());
+                        if(i == (images.getUri().size()-1)){
+                            User.getInstance().setAdvKeysToArrayList(key);
+                            databaseReference.child("users").child(phoneNumber.getText().toString()).child("adKeys").setValue(User.getInstance().getAdKeys());
+                        }
                     }
                 })
                         .addOnFailureListener(new OnFailureListener() {

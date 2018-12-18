@@ -59,7 +59,9 @@ public class MyAdvertismentsActivity extends AppCompatActivity {
                             Log.d(TAG,"tartalma: " + dataSnapshot.getValue());
                             Advertisment adv = dataSnapshot.getValue(Advertisment.class);
                             // Log.d(TAG,"tartalma: " + adv.toString());
-                            advertisments.add(adv);
+                            if(adv.getIsDeleted().equals("false")){
+                                advertisments.add(adv);
+                            }
 
                             // }
                         //}
