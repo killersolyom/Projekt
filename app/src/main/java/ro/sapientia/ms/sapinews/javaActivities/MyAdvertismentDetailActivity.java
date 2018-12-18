@@ -18,6 +18,7 @@ import java.util.ArrayList;
 
 import ro.sapientia.ms.sapinews.R;
 import ro.sapientia.ms.sapinews.javaClasses.Advertisment;
+import ro.sapientia.ms.sapinews.javaClasses.ImageContainer;
 import ro.sapientia.ms.sapinews.javaClasses.OnSwipeTouchListener;
 import ro.sapientia.ms.sapinews.javaClasses.User;
 
@@ -34,7 +35,9 @@ public class MyAdvertismentDetailActivity extends AppCompatActivity {
     private EditText shortDescription;
     private EditText location;
     private String key;
-
+    private ImageContainer advertismentImage = new ImageContainer();
+    //private ArrayList<String> advertismentImage;
+    private String title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,14 +56,17 @@ public class MyAdvertismentDetailActivity extends AppCompatActivity {
         longDescription.setEnabled(false);
         shortDescription.setEnabled(false);
 
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference databaseReference = database.getReference();
+
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            String title = extras.getString("Title");
+            title = extras.getString("Title");
             String advertismentShortDescription = extras.getString("advertismentShortDescription");
             String advertismentLongDescription = extras.getString("advertismentLongDescription");
             String ownerPhoneNumber = extras.getString("ownerPhoneNumber");
             String locationS = extras.getString("location");
-            ArrayList<String> advertismentImage = extras.getStringArrayList("advertismentImage");
+            advertismentImage.overrideImage(extras.getStringArrayList("advertismentImage"));
             String isDeleted = extras.getString("isDeleted");
             key = extras.getString("key");
 
@@ -68,7 +74,7 @@ public class MyAdvertismentDetailActivity extends AppCompatActivity {
             longDescription.setText(advertismentLongDescription);
             shortDescription.setText(advertismentShortDescription);
             phoneNumber.setText(ownerPhoneNumber);
-            Glide.with(getApplicationContext()).load(advertismentImage.get(0)).diskCacheStrategy(DiskCacheStrategy.ALL).into(postPicture);
+            Glide.with(getApplicationContext()).load(advertismentImage.getImages().get(0)).diskCacheStrategy(DiskCacheStrategy.ALL).into(postPicture);
             location.setText(locationS);
         }
 
@@ -125,6 +131,7 @@ public class MyAdvertismentDetailActivity extends AppCompatActivity {
             public boolean onLongClick(View v) {
                 if(isValidContent()){
                     Toast.makeText(getApplicationContext(), "Szerkesztve", Toast.LENGTH_SHORT).show();
+                    databaseReference.child("advertisments").child(key).setValue(new Advertisment(advertismentImage.getImages(),title,shortDescription.getText().toString(),longDescription.getText().toString(), User.getInstance().getImageUrl(),0, User.getInstance().getPhoneNumb(),location.getText().toString(),"false", key));
                 }else {
                     Toast.makeText(getApplicationContext(), "Helytelenül kitöltött mezők!", Toast.LENGTH_SHORT).show();
                 }
@@ -134,8 +141,6 @@ public class MyAdvertismentDetailActivity extends AppCompatActivity {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference databaseReference = database.getReference();
                 databaseReference.child("advertisments").child(key).child("isDeleted").setValue("true");
                 Toast.makeText(getApplicationContext(), "delete", Toast.LENGTH_SHORT).show();
             }

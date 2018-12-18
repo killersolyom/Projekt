@@ -10,6 +10,14 @@ public class ImageContainer {
     public ImageContainer() {
     }
 
+    public ArrayList<String> getImages() {
+        return Images;
+    }
+
+    public void setImages(ArrayList<String> images) {
+        Images = images;
+    }
+
     public String getCurrentImage(){
         if(Images.size() == 1){
             return Images.get(0);
