@@ -20,6 +20,7 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import java.util.ArrayList;
 
 import ro.sapientia.ms.sapinews.R;
+import ro.sapientia.ms.sapinews.javaClasses.ImageContainer;
 import ro.sapientia.ms.sapinews.javaClasses.OnSwipeTouchListener;
 import ro.sapientia.ms.sapinews.javaClasses.User;
 
@@ -35,6 +36,7 @@ public class AdvertismentDetailActivity extends AppCompatActivity {
     private TextView phoneNumber;
     private ImageView profilePicture;
     private TextView creator;
+    private ImageContainer advertismentImage = new ImageContainer();
     private String TAG = "TAG_AdvertismentDetailActivity";
 
     @Override
@@ -60,14 +62,14 @@ public class AdvertismentDetailActivity extends AppCompatActivity {
             String advertismentProfilePicture = extras.getString("advertismentProfilePicture");
             String ownerPhoneNumber = extras.getString("ownerPhoneNumber");
             String locationS = extras.getString("location");
-            ArrayList<String> advertismentImage = extras.getStringArrayList("advertismentImage");
+            advertismentImage.overrideImage(extras.getStringArrayList("advertismentImage"));
 
             postTitle.setText(title);
             longDescription.setText(advertismentLongDescription);
             shortDescription.setText(advertismentShortDescription);
             Glide.with(getApplicationContext()).load(advertismentProfilePicture).diskCacheStrategy(DiskCacheStrategy.ALL).into(profilePicture);
             phoneNumber.setText(ownerPhoneNumber);
-            Glide.with(getApplicationContext()).load(advertismentImage.get(0)).diskCacheStrategy(DiskCacheStrategy.ALL).into(postPicture);
+            Glide.with(getApplicationContext()).load(advertismentImage.getCurrentImage()).diskCacheStrategy(DiskCacheStrategy.ALL).into(postPicture);
             location.setText(locationS);
             creator.setText(User.getInstance().getLastName());
         }
@@ -76,13 +78,15 @@ public class AdvertismentDetailActivity extends AppCompatActivity {
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String title = "Eladó bucugli\n\n";
-                String details = "Jó állapotban van és nem loptt!!! Vedd meg!\n";
-                String owner = "Jancsi: ";
-                String phone = "0786141697\n\n";
+                String title = postTitle.getText().toString()+"\n\n";
+                String details = longDescription.getText().toString()+"\n";
+                String owner = creator.getText().toString()+": ";
+                String phone = phoneNumber.getText().toString()+"\n";
+                String place = "Itt: "+location.getText().toString()+"\n\n";
                 Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
                 sharingIntent.setType("text/plain");
-                String shareBody = title+details+owner+phone;
+                String shareBody = title+details+owner+phone+"\nLink: "+advertismentImage.getCurrentImage();
+
                 sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
                 startActivity(Intent.createChooser(sharingIntent, "Megosztás"));
             }
@@ -121,11 +125,11 @@ public class AdvertismentDetailActivity extends AppCompatActivity {
         postPicture.setOnTouchListener(new OnSwipeTouchListener(getApplicationContext()) {
             public void onSwipeRight() {
 
-                Toast.makeText(getApplicationContext(), "right", Toast.LENGTH_SHORT).show();
+                Glide.with(getApplicationContext()).load(advertismentImage.getNextImage()).diskCacheStrategy(DiskCacheStrategy.ALL).into(postPicture);
             }
             public void onSwipeLeft() {
 
-                Toast.makeText(getApplicationContext(), "left", Toast.LENGTH_SHORT).show();
+                Glide.with(getApplicationContext()).load(advertismentImage.getPreviousImage()).diskCacheStrategy(DiskCacheStrategy.ALL).into(postPicture);
             }
         });
 

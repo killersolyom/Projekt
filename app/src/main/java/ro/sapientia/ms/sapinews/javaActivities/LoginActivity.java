@@ -121,7 +121,7 @@ public class LoginActivity extends AppCompatActivity {
                                     User.getInstance().setImageUrl(Objects.requireNonNull(value.getValue()).toString());
                                     //Log.d(TAG,"Kapott string URL: " + value.getValue().toString());
                                 }
-                                else if(Objects.equals(value.getKey(), "advertisments")){
+                                else if(Objects.equals(value.getKey(), "adKeys")){
                                     advKeys =(ArrayList<String>) value.getValue();
                                     Log.d(TAG,"Advertisments: " +advKeys.toString());
                                     User.getInstance().setAdKeys(advKeys);
