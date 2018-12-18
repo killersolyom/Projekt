@@ -119,9 +119,6 @@ public class AdvertismentDetailActivity extends AppCompatActivity {
         });
 
         postPicture.setOnTouchListener(new OnSwipeTouchListener(getApplicationContext()) {
-            public void onSwipeTop() {
-                Toast.makeText(getApplicationContext(), "top", Toast.LENGTH_SHORT).show();
-            }
             public void onSwipeRight() {
 
                 Toast.makeText(getApplicationContext(), "right", Toast.LENGTH_SHORT).show();
@@ -130,10 +127,6 @@ public class AdvertismentDetailActivity extends AppCompatActivity {
 
                 Toast.makeText(getApplicationContext(), "left", Toast.LENGTH_SHORT).show();
             }
-            public void onSwipeBottom() {
-                Toast.makeText(getApplicationContext(), "bottom", Toast.LENGTH_SHORT).show();
-            }
-
         });
 
     }
