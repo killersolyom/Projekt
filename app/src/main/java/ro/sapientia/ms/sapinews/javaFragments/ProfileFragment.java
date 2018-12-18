@@ -273,7 +273,7 @@ public class ProfileFragment extends Fragment {
         //Log.d(TAG, "elmentem innen, key: " + key);
         writeUser(firstNameInput.getText().toString(),lastNameInput.getText().toString(),phoneNumber.getText().toString(),emailInput.getText().toString(),addressInput.getText().toString());
         //Log.d(TAG,"useremail: " + user.getEmailAddress());
-        mListener = null;
+        //mListener = null;
     }
 
     private void writeUser(String firstName, String lastName, String phoneNumber, String emailAddress, String address){

@@ -74,7 +74,9 @@ public class HomeFragment extends Fragment {
                         //if(Objects.equals(value.getKey(), "advertisments")){
                             Advertisment adv = value.getValue(Advertisment.class);
                             Log.d(TAG,"tartalma: " + adv.toString());
-                            advertisments.add(adv);
+                            if(adv.getIsDeleted().equals("false")){
+                                advertisments.add(adv);
+                            }
                             adapter.notifyDataSetChanged();
                        // }
                     }
@@ -93,10 +95,7 @@ public class HomeFragment extends Fragment {
 
         View view =  inflater.inflate(R.layout.fragment_home, container, false);
         recycle = view.findViewById(R.id.recycler_view);
-        /*for(int i = 0; i < 20; i++){
-            advertisments.add(generateAdvertisment());
-            advertisments.get(i).setAdvertismentTitle( advertisments.get(i).getAdvertismentTitle()+" " + i );
-        }*/
+
         context = this.getContext();
         adapter = new MyAdapter(this.getContext(),advertisments,"GlobalAdvertisment");
         recycle.setLayoutManager(new LinearLayoutManager(this.getContext()));

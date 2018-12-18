@@ -11,10 +11,13 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
 import ro.sapientia.ms.sapinews.R;
+import ro.sapientia.ms.sapinews.javaClasses.Advertisment;
 import ro.sapientia.ms.sapinews.javaClasses.OnSwipeTouchListener;
 import ro.sapientia.ms.sapinews.javaClasses.User;
 
@@ -30,7 +33,7 @@ public class MyAdvertismentDetailActivity extends AppCompatActivity {
     private TextView phoneNumber;
     private EditText shortDescription;
     private EditText location;
-
+    private String key;
 
 
     @Override
@@ -45,10 +48,10 @@ public class MyAdvertismentDetailActivity extends AppCompatActivity {
         longDescription = findViewById(R.id.longDescription);
         shortDescription= findViewById(R.id.shortDescription);
         postTitle = findViewById(R.id.postTitle);
+        phoneNumber = findViewById(R.id.phoneNumber);
         location.setEnabled(false);
         longDescription.setEnabled(false);
         shortDescription.setEnabled(false);
-
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
@@ -58,6 +61,8 @@ public class MyAdvertismentDetailActivity extends AppCompatActivity {
             String ownerPhoneNumber = extras.getString("ownerPhoneNumber");
             String locationS = extras.getString("location");
             ArrayList<String> advertismentImage = extras.getStringArrayList("advertismentImage");
+            String isDeleted = extras.getString("isDeleted");
+            key = extras.getString("key");
 
             postTitle.setText(title);
             longDescription.setText(advertismentLongDescription);
@@ -129,6 +134,9 @@ public class MyAdvertismentDetailActivity extends AppCompatActivity {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference databaseReference = database.getReference();
+                databaseReference.child("advertisments").child(key).child("isDeleted").setValue("true");
                 Toast.makeText(getApplicationContext(), "delete", Toast.LENGTH_SHORT).show();
             }
         });
