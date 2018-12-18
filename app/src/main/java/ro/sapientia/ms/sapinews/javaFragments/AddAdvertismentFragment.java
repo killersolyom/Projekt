@@ -178,9 +178,9 @@ public class AddAdvertismentFragment extends Fragment {
                         //Log.d(TAG,imagesString.get(0));
                         //advKeys.add(key);
                         User.getInstance().setAdvKeysToArrayList(key);
-                        databaseReference.child("advertisments").child(key).setValue(new Advertisment(imagesString,title.getText().toString(),shortDescription.getText().toString(),longDescription.getText().toString(), User.getInstance().getImageUrl(),0, User.getInstance().getPhoneNumb()));
+                        databaseReference.child("advertisments").child(key).setValue(new Advertisment(imagesString,title.getText().toString(),shortDescription.getText().toString(),longDescription.getText().toString(), User.getInstance().getImageUrl(),0, User.getInstance().getPhoneNumb(),location.getText().toString()));
                         //User.getInstance().setAdKeys(advKeys);
-                        databaseReference.child("users").child(phoneNumber.getText().toString()).child("advertisments").setValue(User.getInstance().getAdKeys());
+                        databaseReference.child("users").child(phoneNumber.getText().toString()).child("adKeys").setValue(User.getInstance().getAdKeys());
                     }
                 })
                         .addOnFailureListener(new OnFailureListener() {

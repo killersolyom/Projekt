@@ -80,13 +80,14 @@ public class HomeFragment extends Fragment {
                     }
                 }
                 else {
+                    adapter.notifyDataSetChanged();
                     Log.d(TAG, "dataSnapshot is not extist.");
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                adapter.notifyDataSetChanged();
             }
         });
 
@@ -134,6 +135,7 @@ public class HomeFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+        adapter.notifyDataSetChanged();
     }
 
     public interface OnFragmentInteractionListener {
