@@ -57,7 +57,7 @@ public class AddAdvertismentFragment extends Fragment {
     private EditText location;
     private ProgressBar uploadPictureInProgress;
     private static final int PICK_IMAGE = 1;
-    private UriContainer imagesUri = new UriContainer();
+    private UriContainer images = new UriContainer();
     private ArrayList<String> imagesString = new ArrayList<>();
     private ArrayList<String> advKeys = new ArrayList<>();
     private String TAG = "TAG_ADDADVERTISMENT";
@@ -138,7 +138,7 @@ public class AddAdvertismentFragment extends Fragment {
                 final String key = databaseReference.push().getKey();
 
                 if (isValidContent()) {
-                    for(i = 0; i< imagesUri.getUri().size(); i++) {
+                    for(i = 0; i< images.getUri().size(); i++) {
                         //final int i_1 = i;
                         uploadPics(databaseReference, storageRef,key,i);
                     }
@@ -151,7 +151,7 @@ public class AddAdvertismentFragment extends Fragment {
                 }
             }
         });
-        if(!imagesUri.isEmpty()){
+        if(!images.isEmpty()){
             refreshView();
         }
 
@@ -159,7 +159,7 @@ public class AddAdvertismentFragment extends Fragment {
     }
 
     public void uploadPics(final DatabaseReference databaseReference, final StorageReference storageRef,final String key,final int i){
-        storageRef.child(Objects.requireNonNull(key)).child("adv" + i + ".jpg").putFile(imagesUri.getUri().get(i))
+        storageRef.child(Objects.requireNonNull(key)).child("adv" + i + ".jpg").putFile(images.getUri().get(i))
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {

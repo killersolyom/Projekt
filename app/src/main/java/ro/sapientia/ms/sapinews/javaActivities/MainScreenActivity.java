@@ -1,8 +1,6 @@
 package ro.sapientia.ms.sapinews.javaActivities;
 
-
-
-
+import ro.sapientia.ms.sapinews.R;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
