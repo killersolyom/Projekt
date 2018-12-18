@@ -10,6 +10,12 @@ public class ImageContainer {
     public ImageContainer() {
     }
 
+    public String getCurrentImage(){
+        if(Images.size() == 1){
+            return Images.get(0);
+        }
+        return Images.get(currentIndex);
+    }
     public String getNextImage(){
         if(Images.size() == 1){
             return Images.get(0);
@@ -47,5 +53,8 @@ public class ImageContainer {
         Images.add(image);
     }
 
+    public void overrideImage(ArrayList<String> Image){
+        Images = Image;
+    }
 
 }
