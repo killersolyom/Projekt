@@ -12,8 +12,9 @@ public class Advertisment {
     private String ownerPhoneNumber;
     private String location;
     private int viewedCounter = 0;
+    private String isDeleted;
 
-    public Advertisment(ArrayList<String> advertismentImage, String advertismentTitle, String advertismentShortDescription, String advertismentLongDescription, String advertismentProfilePicture, int viewedCounter, String ownerPhoneNumber, String location) {
+    public Advertisment(ArrayList<String> advertismentImage, String advertismentTitle, String advertismentShortDescription, String advertismentLongDescription, String advertismentProfilePicture, int viewedCounter, String ownerPhoneNumber, String location, String isDeleted) {
         this.advertismentImage = advertismentImage;
         this.advertismentTitle = advertismentTitle;
         this.advertismentShortDescription = advertismentShortDescription;
@@ -22,9 +23,18 @@ public class Advertisment {
         this.viewedCounter = viewedCounter;
         this.ownerPhoneNumber = ownerPhoneNumber;
         this.location = location;
+        this.isDeleted = isDeleted;
     }
 
     public Advertisment() {
+    }
+
+    public String getIsDeleted() {
+        return isDeleted;
+    }
+
+    public void setIsDeleted(String isDeleted) {
+        this.isDeleted = isDeleted;
     }
 
     public ArrayList<String> getAdvertismentImage() {

@@ -69,11 +69,19 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.RecyclerViewHolder
                             intent.putExtra("ownerPhoneNumber",advertisment.getOwnerPhoneNumber());
                             intent.putExtra("location",advertisment.getLocation());
                             intent.putExtra("advertismentImage", advertisment.getAdvertismentImage());
+                            intent.putExtra("isDeleted",advertisment.getIsDeleted());
                             startActivity(context,intent,null);
 
                         }else if(name.equals("MyAdvertisment")){
                             Intent intent = new Intent(context, MyAdvertismentDetailActivity.class);
                             intent.putExtra("Title",advertisment.getAdvertismentTitle());
+                            intent.putExtra("advertismentShortDescription",advertisment.getAdvertismentShortDescription());
+                            intent.putExtra("advertismentLongDescription",advertisment.getAdvertismentLongDescription());
+                            intent.putExtra("advertismentProfilePicture",advertisment.getAdvertismentProfilePicture());
+                            intent.putExtra("ownerPhoneNumber",advertisment.getOwnerPhoneNumber());
+                            intent.putExtra("location",advertisment.getLocation());
+                            intent.putExtra("advertismentImage", advertisment.getAdvertismentImage());
+                            intent.putExtra("isDeleted",advertisment.getIsDeleted());
                             startActivity(context,intent,null);
                         }
                 }

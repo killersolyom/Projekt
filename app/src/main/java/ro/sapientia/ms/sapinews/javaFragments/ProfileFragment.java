@@ -271,7 +271,7 @@ public class ProfileFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         //Log.d(TAG, "elmentem innen, key: " + key);
-        //writeUser(firstNameInput.getText().toString(),lastNameInput.getText().toString(),phoneNumber.getText().toString(),emailInput.getText().toString(),addressInput.getText().toString());
+        writeUser(firstNameInput.getText().toString(),lastNameInput.getText().toString(),phoneNumber.getText().toString(),emailInput.getText().toString(),addressInput.getText().toString());
         //Log.d(TAG,"useremail: " + user.getEmailAddress());
         mListener = null;
     }
@@ -284,7 +284,7 @@ public class ProfileFragment extends Fragment {
         user.setPhoneNumb(phoneNumber);
         user.setEmailAddress(emailAddress);
         user.setAddress(address);
-
+        user.setAdKeys(User.getInstance().getAdKeys());
         datebaseRef.child("users").child(phoneNumber).setValue(user);
     }
 

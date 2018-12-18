@@ -9,8 +9,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+
+import java.util.ArrayList;
+
 import ro.sapientia.ms.sapinews.R;
 import ro.sapientia.ms.sapinews.javaClasses.OnSwipeTouchListener;
+import ro.sapientia.ms.sapinews.javaClasses.User;
 
 public class MyAdvertismentDetailActivity extends AppCompatActivity {
 
@@ -18,7 +24,7 @@ public class MyAdvertismentDetailActivity extends AppCompatActivity {
     private ImageView postPicture;
     private ImageView deleteButton;
     private ImageView editButton;
-
+    private ImageView profilePicture;
     private EditText longDescription;
     private TextView postTitle;
     private TextView phoneNumber;
@@ -39,10 +45,27 @@ public class MyAdvertismentDetailActivity extends AppCompatActivity {
         longDescription = findViewById(R.id.longDescription);
         shortDescription= findViewById(R.id.shortDescription);
         postTitle = findViewById(R.id.postTitle);
-
         location.setEnabled(false);
         longDescription.setEnabled(false);
         shortDescription.setEnabled(false);
+
+
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            String title = extras.getString("Title");
+            String advertismentShortDescription = extras.getString("advertismentShortDescription");
+            String advertismentLongDescription = extras.getString("advertismentLongDescription");
+            String ownerPhoneNumber = extras.getString("ownerPhoneNumber");
+            String locationS = extras.getString("location");
+            ArrayList<String> advertismentImage = extras.getStringArrayList("advertismentImage");
+
+            postTitle.setText(title);
+            longDescription.setText(advertismentLongDescription);
+            shortDescription.setText(advertismentShortDescription);
+            phoneNumber.setText(ownerPhoneNumber);
+            Glide.with(getApplicationContext()).load(advertismentImage.get(0)).diskCacheStrategy(DiskCacheStrategy.ALL).into(postPicture);
+            location.setText(locationS);
+        }
 
         postPicture.setOnTouchListener(new OnSwipeTouchListener(getApplicationContext()) {
             public void onSwipeTop() {

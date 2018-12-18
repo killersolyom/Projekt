@@ -116,7 +116,7 @@
         android:scaleType="centerCrop"
         android:src="@drawable/shrek"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/Creator"
+        app:layout_constraintEnd_toStartOf="@+id/creator"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -147,7 +147,7 @@
         app:srcCompat="@drawable/report" />
 
     <TextView
-        android:id="@+id/Creator"
+        android:id="@+id/creator"
         android:layout_width="93dp"
         android:layout_height="41dp"
         android:layout_marginBottom="16dp"
