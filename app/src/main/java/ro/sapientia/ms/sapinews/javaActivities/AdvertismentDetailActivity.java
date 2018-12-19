@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.text.InputType;
 import android.util.Log;
@@ -16,8 +17,14 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 import ro.sapientia.ms.sapinews.R;
 import ro.sapientia.ms.sapinews.javaClasses.ImageContainer;
@@ -64,6 +71,7 @@ public class AdvertismentDetailActivity extends AppCompatActivity {
             String locationS = extras.getString("location");
             advertismentImage.overrideImage(extras.getStringArrayList("advertismentImage"));
 
+
             postTitle.setText(title);
             longDescription.setText(advertismentLongDescription);
             shortDescription.setText(advertismentShortDescription);
@@ -71,7 +79,28 @@ public class AdvertismentDetailActivity extends AppCompatActivity {
             phoneNumber.setText(ownerPhoneNumber);
             Glide.with(getApplicationContext()).load(advertismentImage.getCurrentImage()).diskCacheStrategy(DiskCacheStrategy.ALL).into(postPicture);
             location.setText(locationS);
-            creator.setText(User.getInstance().getLastName());
+
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference users = database.getReference();
+
+            assert ownerPhoneNumber != null;
+            users.child("users").child(ownerPhoneNumber).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.exists()){
+                        for(DataSnapshot value : dataSnapshot.getChildren()){
+                            if(Objects.equals(value.getKey(), "lastName")) {
+                                creator.setText(value.getValue().toString());
+                            }
+                        }
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                    Log.w(TAG, "Failed to read value.", databaseError.toException());
+                }
+            });
         }
 
 

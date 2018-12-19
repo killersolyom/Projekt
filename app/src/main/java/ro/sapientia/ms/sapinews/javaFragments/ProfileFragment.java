@@ -284,7 +284,9 @@ public class ProfileFragment extends Fragment {
         user.setPhoneNumb(phoneNumber);
         user.setEmailAddress(emailAddress);
         user.setAddress(address);
+        user.setImageUrl(User.getInstance().getImageUrl());
         user.setAdKeys(User.getInstance().getAdKeys());
+
         datebaseRef.child("users").child(phoneNumber).setValue(user);
     }
 

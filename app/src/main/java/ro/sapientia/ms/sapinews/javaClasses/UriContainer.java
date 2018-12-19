@@ -74,4 +74,9 @@ public class UriContainer {
         }
         return uri.get(currentIndex);
     }
+
+    public void erase(){
+        uri.clear();
+        currentIndex = 0;
+    }
 }

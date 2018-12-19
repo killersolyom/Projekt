@@ -44,10 +44,10 @@ public class MyAdvertismentsActivity extends AppCompatActivity {
 
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference ads = database.getReference();
+        final DatabaseReference ads = database.getReference();
 
         for(int i = 0; i < User.getInstance().getAdKeys().size(); i++){
-            String key = User.getInstance().getAdKeys().get(i);
+            final String key = User.getInstance().getAdKeys().get(i);
             Log.d(TAG,"key: " + key);
             ads.child("advertisments").child(key).addValueEventListener(new ValueEventListener() {
                 @Override
@@ -59,7 +59,9 @@ public class MyAdvertismentsActivity extends AppCompatActivity {
                             Log.d(TAG,"tartalma: " + dataSnapshot.getValue());
                             Advertisment adv = dataSnapshot.getValue(Advertisment.class);
                             // Log.d(TAG,"tartalma: " + adv.toString());
+                            adv.setAdvertismentProfilePicture(User.getInstance().getImageUrl());
                             if(adv.getIsDeleted().equals("false")){
+                                ads.child("advertisments").child(key).setValue(adv);
                                 advertisments.add(adv);
                             }
 

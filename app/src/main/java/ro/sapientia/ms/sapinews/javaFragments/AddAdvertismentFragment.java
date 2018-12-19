@@ -1,13 +1,16 @@
 package ro.sapientia.ms.sapinews.javaFragments;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,6 +36,7 @@ import com.google.firebase.storage.UploadTask;
 
 import ro.sapientia.ms.sapinews.R;
 import ro.sapientia.ms.sapinews.javaActivities.LoginActivity;
+import ro.sapientia.ms.sapinews.javaActivities.MainScreenActivity;
 import ro.sapientia.ms.sapinews.javaClasses.Advertisment;
 import ro.sapientia.ms.sapinews.javaClasses.UriContainer;
 import ro.sapientia.ms.sapinews.javaClasses.User;
@@ -55,7 +59,7 @@ public class AddAdvertismentFragment extends Fragment {
     private EditText longDescription;
     private EditText phoneNumber;
     private EditText location;
-    private ProgressBar uploadPictureInProgress;
+    private ProgressDialog uploadInProgress;
     private static final int PICK_IMAGE = 1;
     private UriContainer images = new UriContainer();
     private ArrayList<String> imagesString = new ArrayList<>();
@@ -97,9 +101,9 @@ public class AddAdvertismentFragment extends Fragment {
         longDescription = view.findViewById(R.id.longDescription);
         phoneNumber = view.findViewById(R.id.phoneNumber);
         location = view.findViewById(R.id.locationText);
-        uploadPictureInProgress = view.findViewById(R.id.updatingPicture);
-        uploadPictureInProgress.setVisibility(View.INVISIBLE);
         phoneNumber.setText(User.getInstance().getPhoneNumb());
+        firstPicture.setImageResource(R.color.light_gray);
+        secondPicture.setImageResource(R.color.light_gray);
 
         next.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -138,6 +142,10 @@ public class AddAdvertismentFragment extends Fragment {
                 final String key = databaseReference.push().getKey();
 
                 if (isValidContent()) {
+                    uploadInProgress = new ProgressDialog(getActivity());
+                    uploadInProgress.setMessage("Feltöltés...");
+                    uploadInProgress.setCancelable(false);
+                    uploadInProgress.show();
                     for(i = 0; i< images.getUri().size(); i++) {
                         //final int i_1 = i;
                         uploadPics(databaseReference, storageRef,key,i);
@@ -164,10 +172,12 @@ public class AddAdvertismentFragment extends Fragment {
                 .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                uploadPictureInProgress.setVisibility(View.INVISIBLE);
 
                 try {
                     Toast.makeText(getContext(), "Image upload sucessfull.", Toast.LENGTH_SHORT).show();
+                    uploadInProgress.dismiss();
+                    firstPicture.setImageResource(R.color.light_gray);
+                    secondPicture.setImageResource(R.color.light_gray);
                 }catch (Exception e){}
 
 
@@ -183,7 +193,14 @@ public class AddAdvertismentFragment extends Fragment {
                         if(i == (images.getUri().size()-1)){
                             User.getInstance().setAdvKeysToArrayList(key);
                             databaseReference.child("users").child(phoneNumber.getText().toString()).child("adKeys").setValue(User.getInstance().getAdKeys());
+                            title.setText("");
+                            shortDescription.setText("");
+                            longDescription.setText("");
+                            location.setText("");
+                            images.erase();
+                            imagesString.clear();
                         }
+
                     }
                 })
                         .addOnFailureListener(new OnFailureListener() {
@@ -203,7 +220,7 @@ public class AddAdvertismentFragment extends Fragment {
         .addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
             @Override
             public void onProgress(UploadTask.TaskSnapshot taskSnapshot) {
-                uploadPictureInProgress.setVisibility(View.VISIBLE);
+
             }
         });
     }

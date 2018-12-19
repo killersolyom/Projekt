@@ -68,6 +68,7 @@ public class HomeFragment extends Fragment {
         ads.child("advertisments").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                advertisments.clear();
                 if (dataSnapshot.exists()){
                     Log.d(TAG,"KULCS: "+dataSnapshot.getKey());
                     for(DataSnapshot value : dataSnapshot.getChildren()) {
