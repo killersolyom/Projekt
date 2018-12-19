@@ -60,8 +60,8 @@ public class MyAdvertismentsActivity extends AppCompatActivity {
                             Advertisment adv = dataSnapshot.getValue(Advertisment.class);
                             // Log.d(TAG,"tartalma: " + adv.toString());
                             adv.setAdvertismentProfilePicture(User.getInstance().getImageUrl());
-                            ads.child("advertisments").child(key).setValue(adv);
                             if(adv.getIsDeleted().equals("false")){
+                                ads.child("advertisments").child(key).setValue(adv);
                                 advertisments.add(adv);
                             }
 
