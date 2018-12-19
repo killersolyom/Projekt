@@ -34,7 +34,7 @@ public class ImageContainer {
             return Images.get(currentIndex);
         }
     }
-
+    
     public String  getPreviousImage(){
         if(Images.size() == 1){
             return Images.get(0);
