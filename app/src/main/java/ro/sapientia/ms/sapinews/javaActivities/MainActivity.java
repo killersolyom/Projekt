@@ -14,8 +14,7 @@ public class MainActivity extends AppCompatActivity {
     ImageView transparent_logo;
     Animation fadein;
     Animation fadeout;
-
-
+    
 
 
     @Override
@@ -47,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
                 Intent intent = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(intent);
-                //finish();
+                finish();
                 }
 
         };

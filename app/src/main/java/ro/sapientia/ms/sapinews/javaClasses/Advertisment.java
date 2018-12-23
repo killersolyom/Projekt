@@ -10,9 +10,12 @@ public class Advertisment {
     private String advertismentLongDescription = "";
     private String advertismentProfilePicture;
     private String ownerPhoneNumber;
+    private String location;
     private int viewedCounter = 0;
+    private String isDeleted;
+    private String key;
 
-    public Advertisment(ArrayList<String> advertismentImage, String advertismentTitle, String advertismentShortDescription, String advertismentLongDescription, String advertismentProfilePicture, int viewedCounter, String ownerPhoneNumber) {
+    public Advertisment(ArrayList<String> advertismentImage, String advertismentTitle, String advertismentShortDescription, String advertismentLongDescription, String advertismentProfilePicture, int viewedCounter, String ownerPhoneNumber, String location, String isDeleted, String key) {
         this.advertismentImage = advertismentImage;
         this.advertismentTitle = advertismentTitle;
         this.advertismentShortDescription = advertismentShortDescription;
@@ -20,13 +23,40 @@ public class Advertisment {
         this.advertismentProfilePicture = advertismentProfilePicture;
         this.viewedCounter = viewedCounter;
         this.ownerPhoneNumber = ownerPhoneNumber;
+        this.location = location;
+        this.isDeleted = isDeleted;
+        this.key = key;
     }
 
     public Advertisment() {
     }
 
+    public String getIsDeleted() {
+        return isDeleted;
+    }
+
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
+    }
+
+    public void setIsDeleted(String isDeleted) {
+        this.isDeleted = isDeleted;
+    }
+
     public ArrayList<String> getAdvertismentImage() {
         return advertismentImage;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public void setAdvertismentImage(ArrayList<String> advertismentImage) {

@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
@@ -38,14 +39,15 @@ import java.util.concurrent.TimeUnit;
 
 public class LoginActivity extends AppCompatActivity {
 
-    TextView have_account;
-    Button login;
-    EditText phone_PhoneNum;
-    String TAG = "TAG_LOGIN";
-    String number;
+    private TextView have_account;
+    private Button login;
+    private EditText phone_PhoneNum;
+    private String TAG = "TAG_LOGIN";
+    private String number;
     private String verificationId;
     private FirebaseAuth mAuth;
     private ArrayList<String> advKeys = new ArrayList<>();
+    private boolean doubleBackToExitPressedOnce = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -119,25 +121,14 @@ public class LoginActivity extends AppCompatActivity {
                                     User.getInstance().setImageUrl(Objects.requireNonNull(value.getValue()).toString());
                                     //Log.d(TAG,"Kapott string URL: " + value.getValue().toString());
                                 }
-                                else if(Objects.equals(value.getKey(), "advertisments")){
-                                    //Log.d(TAG,"Advertisments: " + value.getValue());
-                                    //User.getInstance().setAdKeys(value.getValue(ArrayList.class));
-                                    //Log.d(TAG,"Advertisments: " +value.getValue(ArrayList.class));
+                                else if(Objects.equals(value.getKey(), "adKeys")){
                                     advKeys =(ArrayList<String>) value.getValue();
                                     Log.d(TAG,"Advertisments: " +advKeys.toString());
                                     User.getInstance().setAdKeys(advKeys);
-                                    //advKeys.add(value.getValue().toString());
-                                    //User.getInstance().setAdvKeysToArrayList(value.getValue().toString());
-                                    //User.getInstance().setAdKeys(adv);
                                 }
-                                //User user = value.getValue(User.class);
+
                             }
-                            //User.getInstance().setAdKeys(advKeys);
-                            //User.getInstance().setPhoneNumb(tmp);
-                            //User user = User.getInstance();
-                            //Log.d(TAG,"tartalma: " + value.toString());
-                            //Log.d(TAG,"User phoneNumber: " + user.getPhoneNumb());
-                                //Log.d(TAG, "letezik status: " + status);
+
                                 LayoutInflater inflater = getLayoutInflater();
                                 View dialoglayout = inflater.inflate(R.layout.custom_aleartdialog, null);
 
@@ -258,6 +249,26 @@ public class LoginActivity extends AppCompatActivity {
             Toast.makeText(LoginActivity.this,e.getMessage(),Toast.LENGTH_SHORT).show();
         }
     };
+
+    @Override
+    public void onBackPressed() {
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            finish();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, "Kilépéshez nyomja meg mégegyszer a vissza gombot!", Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
+    }
 
     @Override
     protected void onPause() {

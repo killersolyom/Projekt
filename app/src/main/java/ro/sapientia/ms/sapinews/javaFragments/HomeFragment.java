@@ -68,34 +68,35 @@ public class HomeFragment extends Fragment {
         ads.child("advertisments").addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                advertisments.clear();
                 if (dataSnapshot.exists()){
                     Log.d(TAG,"KULCS: "+dataSnapshot.getKey());
                     for(DataSnapshot value : dataSnapshot.getChildren()) {
                         //if(Objects.equals(value.getKey(), "advertisments")){
                             Advertisment adv = value.getValue(Advertisment.class);
                             Log.d(TAG,"tartalma: " + adv.toString());
-                            advertisments.add(adv);
+                            if(adv.getIsDeleted().equals("false")){
+                                advertisments.add(adv);
+                            }
                             adapter.notifyDataSetChanged();
                        // }
                     }
                 }
                 else {
+                    adapter.notifyDataSetChanged();
                     Log.d(TAG, "dataSnapshot is not extist.");
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
-
+                adapter.notifyDataSetChanged();
             }
         });
 
         View view =  inflater.inflate(R.layout.fragment_home, container, false);
         recycle = view.findViewById(R.id.recycler_view);
-        /*for(int i = 0; i < 20; i++){
-            advertisments.add(generateAdvertisment());
-            advertisments.get(i).setAdvertismentTitle( advertisments.get(i).getAdvertismentTitle()+" " + i );
-        }*/
+
         context = this.getContext();
         adapter = new MyAdapter(this.getContext(),advertisments,"GlobalAdvertisment");
         recycle.setLayoutManager(new LinearLayoutManager(this.getContext()));
@@ -107,17 +108,6 @@ public class HomeFragment extends Fragment {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
-    }
-
-    public Advertisment generateAdvertisment(){
-        Advertisment advertisments = new Advertisment();
-        advertisments.setAdvertismentTitle("Teszt");
-        //advertisments.setAdvertismentDetails("Ez egy teszt");
-        advertisments.setAdvertismentShortDescription("Ez egy teszt");
-        advertisments.setViewedCounter(66);
-        //advertisments.setAdvertismentImage("https://46yuuj40q81w3ijifr45fvbe165m-wpengine.netdna-ssl.com/wp-content/uploads/2018/08/horseshoe-bend-600x370.jpg");
-        advertisments.setAdvertismentProfilePicture("https://coubsecure-s.akamaihd.net/get/b153/p/coub/simple/cw_timeline_pic/dc084aa3631/dffafd7f8fc57eeaf2c71/ios_large_1482287026_image.jpg");
-        return advertisments;
     }
 
     @Override
@@ -134,7 +124,9 @@ public class HomeFragment extends Fragment {
     @Override
     public void onDetach() {
         super.onDetach();
+        adapter.notifyDataSetChanged();
     }
+
 
     public interface OnFragmentInteractionListener {
         void onFragmentInteraction(Uri uri);

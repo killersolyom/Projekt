@@ -13,6 +13,8 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import ro.sapientia.ms.sapinews.javaActivities.AdvertismentDetailActivity;
 import ro.sapientia.ms.sapinews.javaActivities.MyAdvertismentDetailActivity;
@@ -56,18 +58,43 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.RecyclerViewHolder
             holder.counter.setText(advertisment.getViewedCounter()+"");
             Glide.with(context).load(advertisment.getAdvertismentImage().get(0)).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.advertismentPicture);
             Glide.with(context).load(advertisment.getAdvertismentProfilePicture()).diskCacheStrategy(DiskCacheStrategy.ALL).into(holder.profilePicture);
+
             holder.advertismentPicture.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
 
                         if(name.equals("GlobalAdvertisment")){
+
                             Intent intent = new Intent(context, AdvertismentDetailActivity.class);
                             intent.putExtra("Title",advertisment.getAdvertismentTitle());
+                            intent.putExtra("advertismentShortDescription",advertisment.getAdvertismentShortDescription());
+                            intent.putExtra("advertismentLongDescription",advertisment.getAdvertismentLongDescription());
+                            intent.putExtra("advertismentProfilePicture",advertisment.getAdvertismentProfilePicture());
+                            intent.putExtra("ownerPhoneNumber",advertisment.getOwnerPhoneNumber());
+                            intent.putExtra("location",advertisment.getLocation());
+                            intent.putExtra("advertismentImage", advertisment.getAdvertismentImage());
+                            intent.putExtra("isDeleted",advertisment.getIsDeleted());
+                            intent.putExtra("key",advertisment.getKey());
+                            int counter = advertisment.getViewedCounter();
+                            intent.putExtra("counter",counter+1);
+
+                            FirebaseDatabase database = FirebaseDatabase.getInstance();
+                            DatabaseReference ads = database.getReference();
+                            ads.child("advertisments").child(advertisment.getKey()).child("viewedCounter").setValue(counter+1);
+
                             startActivity(context,intent,null);
 
                         }else if(name.equals("MyAdvertisment")){
                             Intent intent = new Intent(context, MyAdvertismentDetailActivity.class);
                             intent.putExtra("Title",advertisment.getAdvertismentTitle());
+                            intent.putExtra("advertismentShortDescription",advertisment.getAdvertismentShortDescription());
+                            intent.putExtra("advertismentLongDescription",advertisment.getAdvertismentLongDescription());
+                            intent.putExtra("advertismentProfilePicture",advertisment.getAdvertismentProfilePicture());
+                            intent.putExtra("ownerPhoneNumber",advertisment.getOwnerPhoneNumber());
+                            intent.putExtra("location",advertisment.getLocation());
+                            intent.putExtra("advertismentImage", advertisment.getAdvertismentImage());
+                            intent.putExtra("isDeleted",advertisment.getIsDeleted());
+                            intent.putExtra("key",advertisment.getKey());
                             startActivity(context,intent,null);
                         }
                 }
