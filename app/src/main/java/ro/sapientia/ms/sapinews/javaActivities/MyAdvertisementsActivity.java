@@ -6,11 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.widget.ImageView;
-import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -18,25 +14,25 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import ro.sapientia.ms.sapinews.R;
-import ro.sapientia.ms.sapinews.javaClasses.Advertisment;
+import ro.sapientia.ms.sapinews.javaClasses.Advertisement;
 import ro.sapientia.ms.sapinews.javaClasses.MyAdapter;
 import ro.sapientia.ms.sapinews.javaClasses.User;
 
 import java.util.ArrayList;
 
-public class MyAdvertismentsActivity extends AppCompatActivity {
+public class MyAdvertisementsActivity extends AppCompatActivity {
 
-    private ArrayList<Advertisment> advertisments = new ArrayList<>();
+    private ArrayList<Advertisement> advertisments = new ArrayList<>();
     private RecyclerView recyclerView;
     private String TAG = "TAG_MYADVERTISMENTSACTIVITY";
     private MyAdapter adapter;
-    public MyAdvertismentsActivity() {
+    public MyAdvertisementsActivity() {
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_advertisments);
+        setContentView(R.layout.activity_my_advertisements);
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
@@ -57,7 +53,7 @@ public class MyAdvertismentsActivity extends AppCompatActivity {
                         //for(DataSnapshot value : dataSnapshot.getChildren()) {
                             //if(Objects.equals(value.getKey(), "advertisments")){
                             Log.d(TAG,"tartalma: " + dataSnapshot.getValue());
-                            Advertisment adv = dataSnapshot.getValue(Advertisment.class);
+                            Advertisement adv = dataSnapshot.getValue(Advertisement.class);
                             // Log.d(TAG,"tartalma: " + adv.toString());
                             adv.setAdvertismentProfilePicture(User.getInstance().getImageUrl());
                             if(adv.getIsDeleted().equals("false")){
@@ -92,8 +88,8 @@ public class MyAdvertismentsActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 
-    public Advertisment generateAdvertisment(){
-        Advertisment advertisments = new Advertisment();
+    public Advertisement generateAdvertisment(){
+        Advertisement advertisments = new Advertisement();
         advertisments.setAdvertismentTitle("Teszt");
         advertisments.setAdvertismentShortDescription("Ez egy teszt");
         advertisments.setViewedCounter(66);

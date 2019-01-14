@@ -7,24 +7,17 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.MotionEventCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import ro.sapientia.ms.sapinews.javaFragments.AddAdvertismentFragment;
+import ro.sapientia.ms.sapinews.javaFragments.AddAdvertisementFragment;
 import ro.sapientia.ms.sapinews.javaFragments.HomeFragment;
 import ro.sapientia.ms.sapinews.javaFragments.ProfileFragment;
-import ro.sapientia.ms.sapinews.R;
 import ro.sapientia.ms.sapinews.javaClasses.User;
 
-public class MainScreenActivity extends AppCompatActivity implements AddAdvertismentFragment.OnFragmentInteractionListener,ProfileFragment.OnFragmentInteractionListener,HomeFragment.OnFragmentInteractionListener {
+public class MainScreenActivity extends AppCompatActivity implements AddAdvertisementFragment.OnFragmentInteractionListener,ProfileFragment.OnFragmentInteractionListener,HomeFragment.OnFragmentInteractionListener {
 
     //private TextView mTextMessage;
     private User user = User.getInstance();
@@ -51,7 +44,7 @@ public class MainScreenActivity extends AppCompatActivity implements AddAdvertis
                     accTransaction.commit();
                     return true;
                 case R.id.navigation_add:
-                    AddAdvertismentFragment addFragment = new AddAdvertismentFragment();
+                    AddAdvertisementFragment addFragment = new AddAdvertisementFragment();
                     FragmentTransaction addTransaction = getSupportFragmentManager().beginTransaction();
                     addTransaction.replace(R.id.fragment_container, addFragment);
                     addTransaction.commit();

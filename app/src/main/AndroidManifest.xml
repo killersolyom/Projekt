@@ -35,9 +35,9 @@
             android:label="@string/title_activity_main2"
             android:screenOrientation="portrait" />
         android:label="@string/title_activity_main2" />
-        <activity android:name=".javaActivities.MyAdvertismentsActivity" />
-        <activity android:name=".javaActivities.AdvertismentDetailActivity" />
-        <activity android:name=".javaActivities.MyAdvertismentDetailActivity"></activity>
+        <activity android:name=".javaActivities.MyAdvertisementsActivity" />
+        <activity android:name=".javaActivities.AdvertisementDetailActivity" />
+        <activity android:name=".javaActivities.MyAdvertisementDetailActivity"></activity>
     </application>
 
 </manifest>
