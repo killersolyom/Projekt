@@ -14,15 +14,13 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
-
 import ro.sapientia.ms.sapinews.R;
-import ro.sapientia.ms.sapinews.javaClasses.Advertisment;
+import ro.sapientia.ms.sapinews.javaClasses.Advertisement;
 import ro.sapientia.ms.sapinews.javaClasses.ImageContainer;
 import ro.sapientia.ms.sapinews.javaClasses.OnSwipeTouchListener;
 import ro.sapientia.ms.sapinews.javaClasses.User;
 
-public class MyAdvertismentDetailActivity extends AppCompatActivity {
+public class MyAdvertisementDetailActivity extends AppCompatActivity {
 
     private ImageView shareButton;
     private ImageView postPicture;
@@ -41,7 +39,7 @@ public class MyAdvertismentDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_my_advertisment_detail);
+        setContentView(R.layout.activity_my_advertisement_detail);
         shareButton = findViewById(R.id.shareButton);
         editButton = findViewById(R.id.editButton);
         postPicture = findViewById(R.id.postPicture);
@@ -131,7 +129,7 @@ public class MyAdvertismentDetailActivity extends AppCompatActivity {
             public boolean onLongClick(View v) {
                 if(isValidContent()){
                     Toast.makeText(getApplicationContext(), "Szerkesztve", Toast.LENGTH_SHORT).show();
-                    databaseReference.child("advertisments").child(key).setValue(new Advertisment(advertismentImage.getImages(),title,shortDescription.getText().toString(),longDescription.getText().toString(), User.getInstance().getImageUrl(),0, User.getInstance().getPhoneNumb(),location.getText().toString(),"false", key));
+                    databaseReference.child("advertisments").child(key).setValue(new Advertisement(advertismentImage.getImages(),title,shortDescription.getText().toString(),longDescription.getText().toString(), User.getInstance().getImageUrl(),0, User.getInstance().getPhoneNumb(),location.getText().toString(),"false", key));
                 }else {
                     Toast.makeText(getApplicationContext(), "Helytelenül kitöltött mezők!", Toast.LENGTH_SHORT).show();
                 }

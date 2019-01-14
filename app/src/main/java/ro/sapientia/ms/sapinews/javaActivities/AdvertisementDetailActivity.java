@@ -23,15 +23,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.util.ArrayList;
 import java.util.Objects;
 
 import ro.sapientia.ms.sapinews.R;
 import ro.sapientia.ms.sapinews.javaClasses.ImageContainer;
 import ro.sapientia.ms.sapinews.javaClasses.OnSwipeTouchListener;
-import ro.sapientia.ms.sapinews.javaClasses.User;
 
-public class AdvertismentDetailActivity extends AppCompatActivity {
+public class AdvertisementDetailActivity extends AppCompatActivity {
 
     private ImageView shareButton;
     private ImageView postPicture;
@@ -49,7 +47,7 @@ public class AdvertismentDetailActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_advertisment_detail);
+        setContentView(R.layout.activity_advertisement_detail);
         shareButton = findViewById(R.id.shareButton);
         postPicture = findViewById(R.id.postPicture);
         reportButton = findViewById(R.id.reportButton);
@@ -124,9 +122,9 @@ public class AdvertismentDetailActivity extends AppCompatActivity {
         reportButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(AdvertismentDetailActivity.this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(AdvertisementDetailActivity.this);
                 builder.setTitle("Jelentés indoka: ");
-                final EditText input = new EditText(AdvertismentDetailActivity.this);
+                final EditText input = new EditText(AdvertisementDetailActivity.this);
                 input.setInputType(InputType.TYPE_CLASS_TEXT);
                 builder.setView(input);
                 builder.setPositiveButton("Jelent", new DialogInterface.OnClickListener() {
@@ -136,7 +134,7 @@ public class AdvertismentDetailActivity extends AppCompatActivity {
                        if(reportText.length() > 10){
 
                        }else {
-                           Toast.makeText(AdvertismentDetailActivity.this,"Bővebben írja körül a problémát!",Toast.LENGTH_SHORT).show();
+                           Toast.makeText(AdvertisementDetailActivity.this,"Bővebben írja körül a problémát!",Toast.LENGTH_SHORT).show();
                        }
                     }
                 });

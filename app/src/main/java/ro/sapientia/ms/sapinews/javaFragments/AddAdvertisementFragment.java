@@ -3,52 +3,38 @@ package ro.sapientia.ms.sapinews.javaFragments;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import ro.sapientia.ms.sapinews.R;
-import ro.sapientia.ms.sapinews.javaActivities.LoginActivity;
-import ro.sapientia.ms.sapinews.javaActivities.MainScreenActivity;
-import ro.sapientia.ms.sapinews.javaClasses.Advertisment;
+import ro.sapientia.ms.sapinews.javaClasses.Advertisement;
 import ro.sapientia.ms.sapinews.javaClasses.UriContainer;
 import ro.sapientia.ms.sapinews.javaClasses.User;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Objects;
 
-import static android.support.constraint.Constraints.TAG;
 
-
-public class AddAdvertismentFragment extends Fragment {
+public class AddAdvertisementFragment extends Fragment {
     private ImageView firstPicture;
     private ImageView secondPicture;
     private ImageView next;
@@ -67,14 +53,14 @@ public class AddAdvertismentFragment extends Fragment {
     private String TAG = "TAG_ADDADVERTISMENT";
    // private OnFragmentInteractionListener mListener;
 
-    public AddAdvertismentFragment() {
+    public AddAdvertisementFragment() {
         // Required empty public constructor
     }
 
 
 
-    public static AddAdvertismentFragment newInstance() {
-        AddAdvertismentFragment fragment = new AddAdvertismentFragment();
+    public static AddAdvertisementFragment newInstance() {
+        AddAdvertisementFragment fragment = new AddAdvertisementFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -90,7 +76,7 @@ public class AddAdvertismentFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_add_advertisment, container, false);
+        View view =  inflater.inflate(R.layout.fragment_add_advertisement, container, false);
         firstPicture = view.findViewById(R.id.imageFirst);
         secondPicture = view.findViewById(R.id.imageSecond);
         next = view.findViewById(R.id.nextButton);
@@ -188,7 +174,7 @@ public class AddAdvertismentFragment extends Fragment {
                         imagesString.add(uri.toString());
                         //Log.d(TAG,imagesString.get(0));
                         //advKeys.add(key);
-                        databaseReference.child("advertisments").child(key).setValue(new Advertisment(imagesString,title.getText().toString(),shortDescription.getText().toString(),longDescription.getText().toString(), User.getInstance().getImageUrl(),0, User.getInstance().getPhoneNumb(),location.getText().toString(),"false", key));
+                        databaseReference.child("advertisments").child(key).setValue(new Advertisement(imagesString,title.getText().toString(),shortDescription.getText().toString(),longDescription.getText().toString(), User.getInstance().getImageUrl(),0, User.getInstance().getPhoneNumb(),location.getText().toString(),"false", key));
                         //User.getInstance().setAdKeys(advKeys);
                         if(i == (images.getUri().size()-1)){
                             User.getInstance().setAdvKeysToArrayList(key);

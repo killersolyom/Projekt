@@ -1,7 +1,6 @@
 package ro.sapientia.ms.sapinews.javaFragments;
 
 import android.content.Context;
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -20,14 +19,11 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import ro.sapientia.ms.sapinews.R;
-import ro.sapientia.ms.sapinews.javaActivities.LoginActivity;
-import ro.sapientia.ms.sapinews.javaActivities.SignUpActivity;
-import ro.sapientia.ms.sapinews.javaClasses.Advertisment;
+import ro.sapientia.ms.sapinews.javaClasses.Advertisement;
 import ro.sapientia.ms.sapinews.javaClasses.MyAdapter;
 import ro.sapientia.ms.sapinews.javaClasses.User;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 
 public class HomeFragment extends Fragment {
@@ -35,7 +31,7 @@ public class HomeFragment extends Fragment {
     private Context context = null;
     private OnFragmentInteractionListener mListener;
     private User user = User.getInstance();
-    private ArrayList<Advertisment> advertisments = new ArrayList<>();
+    private ArrayList<Advertisement> advertisments = new ArrayList<>();
     private RecyclerView recycle;
     private MyAdapter adapter;
     private String TAG = "TAG_HOMEFRAGMENT";
@@ -73,7 +69,7 @@ public class HomeFragment extends Fragment {
                     Log.d(TAG,"KULCS: "+dataSnapshot.getKey());
                     for(DataSnapshot value : dataSnapshot.getChildren()) {
                         //if(Objects.equals(value.getKey(), "advertisments")){
-                            Advertisment adv = value.getValue(Advertisment.class);
+                            Advertisement adv = value.getValue(Advertisement.class);
                             Log.d(TAG,"tartalma: " + adv.toString());
                             if(adv.getIsDeleted().equals("false")){
                                 advertisments.add(adv);

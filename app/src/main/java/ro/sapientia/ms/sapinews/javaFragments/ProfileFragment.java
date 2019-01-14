@@ -25,7 +25,7 @@ import com.bumptech.glide.Glide;
 
 import ro.sapientia.ms.sapinews.R;
 import ro.sapientia.ms.sapinews.javaActivities.MainActivity;
-import ro.sapientia.ms.sapinews.javaActivities.MyAdvertismentsActivity;
+import ro.sapientia.ms.sapinews.javaActivities.MyAdvertisementsActivity;
 import ro.sapientia.ms.sapinews.javaClasses.User;
 
 import com.google.android.gms.tasks.OnFailureListener;
@@ -114,7 +114,7 @@ public class ProfileFragment extends Fragment {
         myAdvertisments.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), MyAdvertismentsActivity.class);
+                Intent intent = new Intent(getActivity(), MyAdvertisementsActivity.class);
                 startActivity(intent);
             }
         });

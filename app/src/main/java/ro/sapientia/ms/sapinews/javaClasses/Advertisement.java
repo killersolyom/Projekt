@@ -2,7 +2,7 @@ package ro.sapientia.ms.sapinews.javaClasses;
 
 import java.util.ArrayList;
 
-public class Advertisment {
+public class Advertisement {
 
     private ArrayList<String> advertismentImage;
     private String advertismentTitle = "";
@@ -15,7 +15,7 @@ public class Advertisment {
     private String isDeleted;
     private String key;
 
-    public Advertisment(ArrayList<String> advertismentImage, String advertismentTitle, String advertismentShortDescription, String advertismentLongDescription, String advertismentProfilePicture, int viewedCounter, String ownerPhoneNumber, String location, String isDeleted, String key) {
+    public Advertisement(ArrayList<String> advertismentImage, String advertismentTitle, String advertismentShortDescription, String advertismentLongDescription, String advertismentProfilePicture, int viewedCounter, String ownerPhoneNumber, String location, String isDeleted, String key) {
         this.advertismentImage = advertismentImage;
         this.advertismentTitle = advertismentTitle;
         this.advertismentShortDescription = advertismentShortDescription;
@@ -28,7 +28,7 @@ public class Advertisment {
         this.key = key;
     }
 
-    public Advertisment() {
+    public Advertisement() {
     }
 
     public String getIsDeleted() {
@@ -113,7 +113,7 @@ public class Advertisment {
 
     @Override
     public String toString() {
-        return "Advertisment{" +
+        return "Advertisement{" +
                 "advertismentImage=" + advertismentImage +
                 ", advertismentTitle='" + advertismentTitle + '\'' +
                 ", advertismentShortDescription='" + advertismentShortDescription + '\'' +

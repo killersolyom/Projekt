@@ -59,7 +59,7 @@ public class LoginActivity extends AppCompatActivity {
         login = findViewById(R.id.btn_signIn);
         phone_PhoneNum = findViewById(R.id.phone_PhoneNum);
         phone_PhoneNum.setText("+40");
-        phone_PhoneNum.setText("+40758945982");
+        //phone_PhoneNum.setText("+40758945982");
 
         have_account.setOnClickListener(new View.OnClickListener() {
             @Override

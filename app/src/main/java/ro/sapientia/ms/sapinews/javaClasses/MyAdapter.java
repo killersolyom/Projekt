@@ -16,8 +16,8 @@ import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import ro.sapientia.ms.sapinews.javaActivities.AdvertismentDetailActivity;
-import ro.sapientia.ms.sapinews.javaActivities.MyAdvertismentDetailActivity;
+import ro.sapientia.ms.sapinews.javaActivities.AdvertisementDetailActivity;
+import ro.sapientia.ms.sapinews.javaActivities.MyAdvertisementDetailActivity;
 import ro.sapientia.ms.sapinews.R;
 
 import java.util.ArrayList;
@@ -31,11 +31,11 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.RecyclerViewHolder
     TextView details;
     TextView counter;
 
-    private ArrayList<Advertisment> advertisments = new ArrayList<>();
+    private ArrayList<Advertisement> advertisments = new ArrayList<>();
     private Context context;
     private String name = "";
 
-    public MyAdapter(Context context, ArrayList<Advertisment> advertisment, String name) {
+    public MyAdapter(Context context, ArrayList<Advertisement> advertisment, String name) {
         this.context = context;
         advertisments = advertisment;
         this.name = name;
@@ -45,14 +45,14 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.RecyclerViewHolder
     @Override
     public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         return new RecyclerViewHolder(
-                LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_advertisment, parent, false));
+                LayoutInflater.from(parent.getContext()).inflate(R.layout.recyclerview_advertisement, parent, false));
     }
 
     @Override
     public void onBindViewHolder( final RecyclerViewHolder holder, int position) {
 
         try {
-            final Advertisment advertisment  = advertisments.get(position);
+            final Advertisement advertisment  = advertisments.get(position);
             holder.title.setText(advertisment.getAdvertismentTitle());
             holder.details.setText(advertisment.getAdvertismentShortDescription());
             holder.counter.setText(advertisment.getViewedCounter()+"");
@@ -65,7 +65,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.RecyclerViewHolder
 
                         if(name.equals("GlobalAdvertisment")){
 
-                            Intent intent = new Intent(context, AdvertismentDetailActivity.class);
+                            Intent intent = new Intent(context, AdvertisementDetailActivity.class);
                             intent.putExtra("Title",advertisment.getAdvertismentTitle());
                             intent.putExtra("advertismentShortDescription",advertisment.getAdvertismentShortDescription());
                             intent.putExtra("advertismentLongDescription",advertisment.getAdvertismentLongDescription());
@@ -85,7 +85,7 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.RecyclerViewHolder
                             startActivity(context,intent,null);
 
                         }else if(name.equals("MyAdvertisment")){
-                            Intent intent = new Intent(context, MyAdvertismentDetailActivity.class);
+                            Intent intent = new Intent(context, MyAdvertisementDetailActivity.class);
                             intent.putExtra("Title",advertisment.getAdvertismentTitle());
                             intent.putExtra("advertismentShortDescription",advertisment.getAdvertismentShortDescription());
                             intent.putExtra("advertismentLongDescription",advertisment.getAdvertismentLongDescription());
