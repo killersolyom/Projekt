@@ -76,19 +76,14 @@ public class MyAdvertisementDetailActivity extends AppCompatActivity {
         }
 
         postPicture.setOnTouchListener(new OnSwipeTouchListener(getApplicationContext()) {
-            public void onSwipeTop() {
-                Toast.makeText(getApplicationContext(), "top", Toast.LENGTH_SHORT).show();
-            }
             public void onSwipeRight() {
-                Toast.makeText(getApplicationContext(), "right", Toast.LENGTH_SHORT).show();
+
+                Glide.with(getApplicationContext()).load(advertismentImage.getNextImage()).diskCacheStrategy(DiskCacheStrategy.ALL).into(postPicture);
             }
             public void onSwipeLeft() {
-                Toast.makeText(getApplicationContext(), "left", Toast.LENGTH_SHORT).show();
-            }
-            public void onSwipeBottom() {
-                Toast.makeText(getApplicationContext(), "bottom", Toast.LENGTH_SHORT).show();
-            }
 
+                Glide.with(getApplicationContext()).load(advertismentImage.getPreviousImage()).diskCacheStrategy(DiskCacheStrategy.ALL).into(postPicture);
+            }
         });
         shareButton.setOnClickListener(new View.OnClickListener() {
             @Override
